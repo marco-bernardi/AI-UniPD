@@ -131,7 +131,7 @@
     
 \end{enumerate}
 
-\section{Informed Search}
+\section{Informed Search}\label{sec-informedsearch}
 \begin{enumerate}[label=\textbf{IS.\arabic*}]
     \item Define the concept of informed search, and describe the greedy search and the A\textsuperscript{*} algorithm.
     Discuss the properties (optimality, completeness, time and space complexity) and conditions of applicability of the two algorithms.
@@ -210,15 +210,126 @@
     Formally prove its optimality prop-erties.
     Finally, discuss the memory usage issues of A\textsuperscript{*} and how this can be solved/reduced.
 
-\end{enumerate}
+    \item Describe the concept of admisible heuristic function, and give the formal definition of heuristic admisible and consistent.
+    Choose a domain and give an example of two heuristic functions $h_1$ and $h_2$, they are both admisible and $h_1$ dominates $h_2$.
+    Discuss how a heuristic function can be systematically constructed.
 
-\section{First Call 23-01-2023}
-\begin{enumerate}[label=\textbf{A.\arabic*}]
+    \textcolor{green}{\textbf{Answer:}}
+
+    A heuristic function is a function that estimates the cost of the cheapest path from the node \textit{n} to a goal node.
+    A heuristic function is \textbf{admissible} if it never overestimates the cost to reach the goal ($h(n) \leq h^*(n)$).
+    A heuristic function is \textbf{consistent} if $h(n) \leq c(n,a,n') + h(n')$ where $n$ is the current node, 
+    $a$ is the action that leads to $n'$ and $n'$ is the successor of $n$.
+    Given two heuristic functions $h_1$ and $h_2$, $h_1$ dominates $h_2$ if $h_1(n) \geq h_2(n)$ for all nodes $n$; for research purposes,
+    it's better to use the dominant heuristic function. (but should not be too expensive to compute)
+
+    Example 8-puzzle:
+    \begin{itemize}
+        \item $h_1(n)$ = number of misplaced tiles
+        \item $h_2(n)$ = total Manhattan distance
+    \end{itemize}
+
+    An heuristic function can be systematically constructed by relaxing the problem.
+    In the 8-puzzle example, the relaxed problem is to move the tiles without considering the other tiles.
+    The optimal solution cost of a relaxed problem is no greater than the optimal solution cost of the real problem.
+\end{enumerate}
+\subsection{Iterative Improvement Algorithms}\label{iterativeimprovement}
+\begin{enumerate}[label=\textbf{IS.II.\arabic*}]
     \item Introduce hill-climbing search, appropriately placing it among the various categories of problem solving approaches we discussed in class.
     Present the variants, the properties, and in the case of a search with restart, formally demonstrate the result relative to the number of expected searches before finding an optimal solution.
 
     \textcolor{green}{\textbf{Answer:}}
+    Hill-climbing search is an iterative improvement algorithm making part of the local search algorithms (informed search: use problem-specific knowledge beyond the definition of the problem itself).
+    Hill-climbing follow the iterative improvement paradigm, where the goal state itself is the solution and the path to reach it is irrelevant.
+    As a local search algorithm, it doesn't keep track of the search tree, but only of the current state and try to improve it.
 
+    Hill-climbing search at each iteration selects the best successor among the neighbors of the current state, and replaces the current state with it.
+    (or lowest heuristic cost if a heuristic function is used)
+    Hill-climbing is \textbf{not complete} because it never makes downhill moves, so it can get stuck in a local maximum.
+
+    Problems:\\
+    if the neighbors solutions are equivalent it can get stuck in a shoulder, otherwise if the neighbors solutions are worse it can get stuck in a local maximum.
+    If we've ridges (a sequence of local maxima not directly connected to each other) it will difficult to move from one local maximum to another.
+    In continuous space, it is difficult to pick the ``right'' step size and convergence can be very slow.
+    
+
+    For outlast this problems, we can use:
+    \begin{itemize}
+        \item plateaux (flat values for h):
+        \begin{itemize}
+            \item allow sideways moves (moves to neighbors with equal h value), but if there are no uphill moves (flat maximum), 
+            an infinite loop will occur; so for outlast this side-problem we can put a limit on the number of sideways moves.
+        \end{itemize}
+        \item local maxima:
+        \begin{itemize}
+            \item \textbf{Stochastic hill climbing}(): choose at random from among the uphill moves; the probability of selection can vary with the steepness of the uphill move.
+            This usually converges more slowly than regular hill climbing, but it can drive to better solutions.
+            \item \textbf{random restart hill climbing}: 
+            it conducts a series of hill-climbing searches from randomly generated initial states.
+            If p is the probability to find an optimal solution in a single search, the expected number of searches before finding an optimal solution is $1/p$.
+            
+            We can derive the probability $1/p$ as follows:
+            \begin{equation}
+                x_i = 
+                \begin{cases}
+                    0 & \text{if i-th search doesn't find an optimal solution}\\ 
+                    1 & \text{if i-th search finds an optimal solution}
+                \end{cases}
+            \end{equation}
+            We known that $\forall i$, $p = P(x_i = 1) = p$, and $P(x_i = 0) = 1 - p$.
+            Variables $x_i$ are mutually independent, we have a Bernoulli Process for which we can use the geometric distribution 
+            to calculate the expected number of searches before finding an optimal solution.
+            The probability that the $k-th$ search finds an optimal solution is
+            \begin{equation}
+                P((\sum_{j=1}^{k-1} x_j = 0)\land(x_k = 1)) = (1-p)^{k-1}p
+            \end{equation}
+            The expected value of the quantity we are interested in is then:
+            \begin{equation}
+                \begin{split}
+                    \sum_{k=1}^{\infty} k{(1-p)}^{k-1}p = & p\sum_{k=1}^{\infty} k{(1-p)}^{k-1}\\
+                        = & -p\sum_{k=1}^{\infty} d\frac{(1-p)^k}{dp}\\
+                        = & -p\frac{d}{dp}(\sum_{k=0}^{\infty} {(1-p)}^k-1) = -p\frac{d}{dp}(\frac{1}{p}-1)\\
+                        = & p\frac{1}{p^2}= \frac{1}{p}
+                \end{split}
+            \end{equation}
+        \end{itemize}
+        For random walk algo is \textbf{complete} but extremely inefficient.
+
+    \end{itemize}\label{hillclimbing}
+    \item Local search algorithms:
+    
+    \textcolor{green}{\textbf{Answer:}}
+    \begin{itemize}
+        \item \textbf{hill climbing}: refer to previous question \ref{sec-informedsearch}.
+        \item \textbf{simulated annealing}: it's a combination between hill climbing and random walk. 
+        It allows ``bad'' moves, but gradually decreases their size and frequency.
+        The probability of selecting a ``bad'' move is controlled by a parameter $T$ called ``temperature'', $T$ is gradually decreased.
+        The algorithm halts when a certain criterion is met (e.g. $T$ is less than a certain threshold).
+        Bad moves are more likely to be selected at the beginning, and less likely as the temperature decreases.
+        If $T$ descreased slowly enough $\Rightarrow$ always reach best state $x^*$.
+        \item \textbf{local beam search}: it keeps track of $k$ states instead of one.
+        It starts with $k$ randomly generated states, and at each iteration it generates all the successors of the $k$ states and selects the best $k$ successors.
+        It halts when a goal state is found or when a certain criterion is met, otherwise it selects the best $k$ successors and repeat the process.
+
+        \textbf{Problem}: often all $k$ states end on same local hill.
+
+        \textbf{Idea}: choose $k$ successors randomly, biased towards better states: stochastic beam search.
+        
+        \item \textbf{genetic algorithms}: it's a variant of stochastic beam search in which successors
+        states are generated by combining two parent states rather than by modifying a single state.
+        \begin{enumerate}
+            \item are considered the best states of the current population
+            \item they are combined to generate a new population
+            \item there is a mutation probability $p_m$ that a state is randomly modified to explore new areas of the search space
+            \item the algorithm try to converge to an acceptable solution.
+        \end{enumerate}
+
+
+    \end{itemize}
+\end{enumerate}
+
+\section{First Call 23-01-2023}
+\begin{enumerate}[label=\textbf{A.\arabic*}]
     \item In the context of adversarial search, explain in detail how games with elements of chance can be deal with. 
     In the case of resources limit, explain what is the property of the evaluation function that allows the search to preserve optimal decision (i.e. obtained with no resources limit). 
     Finally, explain why the same approach is not returning an optimal strategy in the case of partially observable games.
