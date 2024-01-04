@@ -1,7 +1,8 @@
 name: Build LaTeX document
 on: 
-    tags:
-        - '*.*.*' # semantic versioning 
+  push:
+    branches:
+      - master
 jobs:
   build_latex:
     runs-on: ubuntu-latest
