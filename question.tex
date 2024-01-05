@@ -371,14 +371,83 @@
     \end{itemize}
 
 \end{enumerate}
-\section{First Call 23-01-2023}
-\begin{enumerate}[label=\textbf{A.\arabic*}]
+\section{Adversarial Search}
+\begin{enumerate}[label=\textbf{AS.\arabic*}]
     \item In the context of adversarial search, explain in detail how games with elements of chance can be deal with. 
-    In the case of resources limit, explain what is the property of the evaluation function that allows the search to preserve optimal decision (i.e. obtained with no resources limit). 
+    In the case of resources limit, explain what is the property of the evaluation function that allows the search to 
+    preserve optimal decision (i.e. obtained with no resources limit). 
     Finally, explain why the same approach is not returning an optimal strategy in the case of partially observable games.
 
     \textcolor{green}{\textbf{Answer:}}
+    In the context of adversarial search, non deterministic games are games with elements of chance 
+    introduced by some events like dice rolls or card-shuffling.
+    There are two types of non deterministic games: \textbf{perfect information} (backgammon or monopoli) and \textbf{imperfect information} (card games).
+    We can deal with non deterministic games by using $\alpha - \beta$ pruning, that is a generalization of the minimax algorithm.
 
+    \textbf{Minimax algorithm} is a recursive algorithm for choosing the next move in an n-player game, 
+    it achieve the best payoff assuming that the opponent is also playing optimally.
+    It is based on the idea of \textbf{minimizing the maximum loss}, 
+    that is the best we can do is to choose the move that minimize the maximum loss.
+    Minimax it's \textbf{complete} if tree is finite and \textbf{optimal} if both players play optimally.
+    It has a \textbf{time complexity} of $O(b^m)$ and a \textbf{space complexity} of $O(bm)$ (depth-first exploration).
+
+    \textbf{Minimax} can explore the whole tree also if it's not necessary, 
+    so we can use $\alpha - \beta$ pruning to avoid this problem: 
+    if it find a value $n$ less than the upper bound of another path, it halts the exploration of the current path.
+
+    $\alpha$ = best choice for the max player along the path to the root.
+
+    $\beta$ = best choice for the min player along the path to the root.
+
+    \textbf{Properties} of $\alpha - \beta$ pruning:
+    \begin{itemize}
+        \item pruning doesn't affect final result
+        \item a good ordering of the moves improves the effectiveness of pruning
+        \item perfect order(MAX: from highest to lowest, MIN: from lowest to highest) $\Rightarrow$ time complexity (almost) $O(b^{m/2})$
+        \item doubles the depth of exploration
+    \end{itemize}
+
+    $alpha - \beta$ pruning suite well for games with perfect information; it work also for non-deterministic games.
+    In the case of non-deterministic games, the states doesn't have definite values, we can compute only the expected value of a state.
+    \textbf{Expectiminimax algorithm} help us to handle this problem, that works like minimax 
+    except that it also handle chance nodes.
+    It compute the expected value of a state by multiplying the probability of each outcome by the utility of that outcome.
+    The upper bound of a node is the sum of the expected values of its children.
+    Stronger pruning can be obtained if possible to bound the leaves values.
+
+    \textbf{Problem:} Resources limit, in real world we have limited resources, so we can't explore the whole tree.
+    
+    \textbf{Solution:} evaluation function \& cutoff test.
+
+    An evaluation function is used to estimate the expected utility of the game from a given state.
+        An EV function should order the terminal states: 
+        states that are wins must evaluate higher than states that are draws or losses.
+        The computation must not take too long.
+        Most EV function work by calculating various features of the states.
+        With a good EV function, we can explore the tree to a limited depth (CUTOFF), obtaing a good approximation of the true minimax value.
+        Cutoff should be apply only to quiescent states (states in which the game is unlikely to change drastically in the near future).
+        Non quiescent states can be expanded further until a quiescent state is reached.
+    
+    With this approach, there is still a difficult problem to outlast: the horizon effect.
+    The horizon effect is the problem that the agent can't see beyond a certain depth, so it can't see a threat or an opportunity.
+    This cannot be avoided, but we can temporarly avoid it by delaying tatics; for mitigate it we can use the \textbf{SINGULAR EXTENSION}.
+
+    \item In the context of adversarial search, discuss how huge search spaces, such as those gen-erated by the game of chess or Go, can be computationally managed.
+    Also explain how the algorithm $\alpha - \beta$ pruning can help in such cases.
+
+    \textcolor{green}{\textbf{Answer:}}
+
+    \item Describe the $\alpha - \beta$ pruning algorithm in detail. Prove its complexity in the best case.
+    
+    \textcolor{green}{\textbf{Answer:}}
+
+    \item 
+
+
+\end{enumerate}
+
+\section{First Call 23-01-2023}
+\begin{enumerate}[label=\textbf{A.\arabic*}]
     \item In the context of inference in propositional logic, explain what is the role of horns form, discussing its strengths and weaknesses.
     
     \textcolor{green}{\textbf{Answer:}}
@@ -430,10 +499,7 @@
 
 \section{Example 2020/2021}
 \begin{enumerate}[label=\textbf{C.\arabic*}]
-    \item In the context of adversarial search, discuss how huge search spaces, such as those gen-erated by the game of chess or Go, can be computationally managed.
-    Also explain howthe algorithm $\alpha - \beta$ pruning can help in such cases.
 
-    \textcolor{green}{\textbf{Answer:}}
 
     \item In the context of first order logic, describe in a complete and exhaustive way the Unifica-tion algorithm, further explaining why this is particularly useful for logical inference.
     Explain in which case the logic inference couldn't help a smart agent.
