@@ -403,7 +403,7 @@
     \begin{itemize}
         \item pruning doesn't affect final result
         \item a good ordering of the moves improves the effectiveness of pruning
-        \item perfect order(MAX: from highest to lowest, MIN: from lowest to highest) $\Rightarrow$ time complexity (almost) $O(b^{m/2})$
+        \item perfect order (MAX\@: from highest to lowest, MIN\@: from lowest to highest) $\Rightarrow$ time complexity (almost) $O(b^{m/2})$
         \item doubles the depth of exploration
     \end{itemize}
 
@@ -430,7 +430,15 @@
     
     With this approach, there is still a difficult problem to outlast: the horizon effect.
     The horizon effect is the problem that the agent can't see beyond a certain depth, so it can't see a threat or an opportunity.
-    This cannot be avoided, but we can temporarly avoid it by delaying tatics; for mitigate it we can use the \textbf{SINGULAR EXTENSION}.
+    This cannot be avoided, but we can temporarly avoid it by delaying tatics; for mitigate it we can use the \textbf{SINGULAR EXTENSION} 
+    (Find and remember move that is clearly better than others, and consider it if is it legal when the search reaches the normal depth limit).
+
+    The previous approaches are not returning an optimal strategy in the case of partially observable games; in this types of games, 
+    the agent doesn't know the initial state of the game.
+    We can try to predict the optimal move with $N$ deals, during this process all the possible moves are considered and weighted by their probability 
+    to get the expected value of the state, will be picked the action that wins most tricks on average;
+    this will lead most of the time to a non-optimal strategy.
+    In this type of games, value of an action depends on the information state or belief state the agent is in.
 
     \item In the context of adversarial search, discuss how huge search spaces, such as those gen-erated by the game of chess or Go, can be computationally managed.
     Also explain how the algorithm $\alpha - \beta$ pruning can help in such cases.
@@ -440,17 +448,80 @@
     \item Describe the $\alpha - \beta$ pruning algorithm in detail. Prove its complexity in the best case.
     
     \textcolor{green}{\textbf{Answer:}}
+\end{enumerate}
+\section{Propositional Logic}
+\begin{enumerate}[label=\textbf{PL.\arabic*}]
+    \item Give the abstract definition of knowledge-based agent, discussing its various components. 
+    In addition, in the case of propositional logic, introduce how inference can be made by enumeration, discussing its algorithmic and computational complexity aspects.
+    
+    \textcolor{green}{\textbf{Answer:}}
+    A knowledge-based agent is an agent that uses an internal representation of the world to decide what actions to perform.
+    The central component of a knowledge-based agent is the \textbf{knowledge base}, 
+    that is a set of sentences in a knowledge representation language 
+    and it represents the agent's knowledge about the world and may initial contain some background knowledge.
 
-    \item 
+    A knowledge-based agent has also a \textbf{inference engine}, a component that uses the knowledge base to infer new information.
+    Usually you can comunicate with the agent through these operations: \textit{tell} and \textit{ask}.
 
+    A knowledge-based agent must be able to:
+    \begin{itemize}
+        \item Represent states, actions, etc.
+        \item Incorporate new percepts
+        \item Update internal representations of the world
+        \item Deduce hidden properties of the world
+        \item Deduce appropriate actions
+    \end{itemize}
+
+    In the case of propositional logic, inference can be made by enumeration, that is a general algorithm for enumerating all the models of a sentence.
+    The algorithm consists in enumerating all models, and check that $\alpha$ is true in every model in which $KB$ is true.
+    Models are assignments of \textit{true} or \textit{false} to each propositional symbol.
+    The algorithm is \textbf{sound}\footnote{Soundness: $i$ is sound if whenever $KB\vdash_i\alpha$ 
+    (sentence $\alpha$ can be derived from $KB$ by inference procedure $i$), it is also true that $KB\vDash\alpha$ } because it implements directly the definition of entailment, 
+    and it is \textbf{complete}\footnote{Completness: $i$ is complete if whenever $KB\vDash\alpha$, it is also true that $KB\vdash_i\alpha$} because it works for any $KB$ and $\alpha$ and always terminates.
+
+    If $KB$ and $\alpha$ contain $n$ symbols in all, then there are $2^n$ models.
+    Thus, the time complexity of the algorithm is $O(2^n)$ and the space complexity is $O(n)$ because the enumeration is depth-first.
+    Unfortunately, this algorithm is co-NP-complete, so every known inference algorithm for propositional logic has a 
+    worst-case time complexity that is exponential in the size of the input.
+
+    \item In the context of propositional logic, explain in detail the Forward-chaining algorithm, discussing its algorithmic and computational complexity aspects.
+    
+    \textcolor{green}{\textbf{Answer:}}
+
+
+
+    \item In the context of inference in propositional logic, explain what is the role of horns form, discussing its strengths and weaknesses.
+    
+    \textcolor{green}{\textbf{Answer:}}
+    
+    Truth methods (are useful for testing the validity of a sentence) divide into two classes:
+    \begin{itemize}
+        \item \textbf{Model checking}: it checks if a given model satisfies a sentence. (Truth table enumeration is an example of model checking)
+        \item \textbf{Application of inference rules}: it uses logical entailment to determine the truth of a sentence. (Generation of new sentences from old ones)
+    \end{itemize}
+
+    Truth table enumeration holds a problem: it is exponential in the number of propositional symbols.
+    We need to find a more efficient way to determine if $\alpha$ is entailed by $KB$.
+    Basically, we need to find the equivalent sentences written in a different way, so we can avoid them.
+    We can use a \textbf{normal form}, that is characterized by the horn form.
+
+    With the horn form $KB$ is a conjunction of Horn clauses\footnote{Horn clauses are a disjunction of literals with at most one positive literal} where: 
+    \begin{itemize}
+        \item proposition symbol
+        \item (conjunction of symbols) $\Rightarrow$ symbol
+    \end{itemize} 
+    
+    Horn form simplified the inference process, lowing the complexity from exponential to polynomial.
+    Lowering the complexity is a huge improvement, but it's come with a cost: less expressive power.
+
+    It can be use with the \textbf{forward chaining} and \textbf{backward chaining} algorithms.
 
 \end{enumerate}
 
 \section{First Call 23-01-2023}
 \begin{enumerate}[label=\textbf{A.\arabic*}]
-    \item In the context of inference in propositional logic, explain what is the role of horns form, discussing its strengths and weaknesses.
-    
-    \textcolor{green}{\textbf{Answer:}}
+
+
 
     \item In the context of inference in the first-order logic, introduce the resolution rule. 
     Discuss in what form the clauses must be represented in order to apply effectively the resolution and how this form can be obtained.\label{l}
@@ -473,11 +544,6 @@
     \item In the context of informed search, present the approaches discussed in class to manage the case in which the path to reach a goal state is irrelevant. 
     For each approach discuss conditions of applicability, strengths and weaknesses.
     
-    \textcolor{green}{\textbf{Answer:}}
-
-    \item Give the abstract definition of knowledge-based agent, discussing its various components. 
-    In addition, in the case of propositional logic, introduce how inference can be made by enumeration, discussing its algorithmic and computational complexity aspects.
-
     \textcolor{green}{\textbf{Answer:}}
 
     \item (Similar to A3 non va l'autolabel dc) In the context of inference in first-order logic, introduce the resolution rule.
