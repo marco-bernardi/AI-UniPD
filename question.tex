@@ -4,6 +4,7 @@
 \usepackage{amsmath,amssymb,amsthm,amsfonts}
 \usepackage{color}
 \usepackage{enumitem}
+\usepackage{caption}
 
 % MAKE TITLE AND AUTHOR
 \title{AI Questions \& Answers}
@@ -473,7 +474,7 @@
     \end{itemize}
 
     In the case of propositional logic, inference can be made by enumeration, that is a general algorithm for enumerating all the models of a sentence.
-    The algorithm consists in enumerating all models, and check that $\alpha$ is true in every model in which $KB$ is true.
+    The algorithm consists in enumerating all models, and check that $\alpha$ is true in every model in which $KB$ is true ($KB\vDash \alpha$).
     Models are assignments of \textit{true} or \textit{false} to each propositional symbol.
     The algorithm is \textbf{sound}\footnote{Soundness: $i$ is sound if whenever $KB\vdash_i\alpha$ 
     (sentence $\alpha$ can be derived from $KB$ by inference procedure $i$), it is also true that $KB\vDash\alpha$ } because it implements directly the definition of entailment, 
@@ -488,8 +489,43 @@
     
     \textcolor{green}{\textbf{Answer:}}
 
+    Given a knowledge base $KB$ the idea is to fire any rule whose premises are satisfied in $KB$, and add the conclusion to $KB$ until query is found.
+    \begin{enumerate}[label=\roman*.]
+        \item Set the known leaves ($KB$)
+        \item Inference propagates up the graph as far as possible
+        \item if conjunction are found, waits until all conjuncts are known before proceeding
+    \end{enumerate}
 
+    The algorithm is \textbf{sound} (every inference is an application of modus ponens, we're working with Horn clauses)
+    and \textbf{complete} (every entailed atomic sentence will be derived).
+    Proof of completeness:
+    \begin{enumerate}
+        \item FC reaches a fixed point (no new atomic sentences can be inferred)
+        \item Consider the final state as a model $m$, assigning true/false to symbols (inferred table: the table contains true for every inferred symbol, false otherwise)
+        \item every clause in the original KB is true in $m$ (because it's a fixed point)
+        Proof: assume the opposite, then there is a clause that is false in $m$: 
+        
+        $a_1\land\ldots\land a_k\Rightarrow b$ is false in $m$.
+        
+        $a_1\land\ldots\land a_k$ in the model must be true, so $b$ must be false, but $b$ is in the inferred table, 
+        so it must be true $\Rightarrow$ contradiction: the algorithm has not reached a fixed point.
+        \item $m$ is a model of $KB$
+        \item if $KB\vDash q,q$ is true in every model of $KB$, including $m$
+    \end{enumerate}
+    It runs in \textbf{linear time}.
 
+    Forward-chaining is an example of the general concept of \textbf{data-driven} (unconscious processing) reasoning, that is the reasoning is driven by known data.
+    One disadvantage of this approach is that it may do a lot of work that is irrelevant to the goal.
+
+    \item In the context of propositional logic, explain in detail the Backward-chaining algorithm, discussing its algorithmic and computational complexity aspects.
+    
+    \textcolor{green}{\textbf{Answer:}}
+    Backward-chaining is a goal-driven algorithm (unlike forward-chaining that is data-driven), that is the reasoning is driven by the query.
+    In fact the idea is to work backward from the query $q$.
+    If $q$ is known true, then no work is needed; otherwise we must find the premises that imply $q$.
+    Avoid repeated work by keeping track of subgoals that have already been proved true, 
+    and avoid loops by checking if a subgoal is already on the goal stack.
+    Complexity of BC can be much less than linear in the size of the KB\@.
     \item In the context of inference in propositional logic, explain what is the role of horns form, discussing its strengths and weaknesses.
     
     \textcolor{green}{\textbf{Answer:}}
@@ -508,13 +544,83 @@
     With the horn form $KB$ is a conjunction of Horn clauses\footnote{Horn clauses are a disjunction of literals with at most one positive literal} where: 
     \begin{itemize}
         \item proposition symbol
-        \item (conjunction of symbols) $\Rightarrow$ symbol
+        \item (conjunction of symbols) $\Rightarrow$ symbol 
     \end{itemize} 
-    
-    Horn form simplified the inference process, lowing the complexity from exponential to polynomial.
+    \textbf{Modus Ponens} is a inference rule that can be used with the horn form: 
+    \begin{equation}
+        \frac{\alpha_1,\ldots\alpha_n,\qquad \alpha_1\land\ldots\land\alpha_n\Rightarrow\beta}{\beta}
+    \end{equation}
+    Horn form simplifies the inference process, lowing the complexity from exponential to polynomial.
     Lowering the complexity is a huge improvement, but it's come with a cost: less expressive power.
 
-    It can be use with the \textbf{forward chaining} and \textbf{backward chaining} algorithms.
+    It can be used with the \textbf{forward chaining} and \textbf{backward chaining} algorithms.
+
+    \item In the context of inference in first-order logic, introduce the resolution rule.
+    Discuss in what form the clauses need to be represented in order to efficiently enforce the resolution and how that form can be achieved.
+    Finally, present the various strategies that have been proposed regarding the choice of clauses to be used during the inference.
+    
+    \textcolor{green}{\textbf{Answer:}}
+
+    Resolution yields a complete inference algorithm when coupled with any complete search algorithm.
+    This rule applies only to clauses that is a disjunction of literals: 
+    every sentence of propositional logic can be converted into an equivalent conjunction of clauses $\Rightarrow$ conjunctive normal form (CNF).
+
+    Resolution rule:
+    \begin{equation}
+        \frac{\ell_1\lor\ldots\lor\ell_k,\qquad m_1\lor\ldots\lor m_n}{\ell_1\lor\ldots\lor\ell_{i-1}\lor\ell_{i+1}\lor\ldots\lor\ell_k\lor m_1\lor\ldots\lor m_{j-1}\lor m_{j+1}\lor\ldots\lor m_n}
+    \end{equation}
+
+    Resolution algorithm:
+    \begin{enumerate}[label=\arabic*.]
+        \item Convert $KB \land \neg\alpha$ to CNF
+        \item Appply resolution rule to resulting clauses
+        \item Each pair that contains complementary literals is resolved to produce a new clause
+        \item The process is repeated until one of two things happens:
+        \begin{itemize}
+            \item there are no new clauses that can be added, $KB$ does not entail $\alpha$
+            \item two clauses resolve to yield the empty clause $\Rightarrow$ $\alpha$ is entailed by $KB$ (The empty clause is equivalent to false, because disjunction is true only if at least one of the disjuncts is true)
+        \end{itemize}
+    \end{enumerate}
+
+    The algorithm is sound because it implements directly the definition of entailment, 
+    and it is complete because it works for any $KB$ and $\alpha$ and always terminates.
+
+    \textbf{Proof of completeness}:
+
+    The completeness theorem for resolution in propositional logic is called the ground resolution theorem:
+    \begin{center}
+        \textit{
+        If a set of clauses is unsatisfiable, then the resolution closure of those clauses contains the empty clause. 
+        (Resolution Closure: the set of all clauses that can be derived by repeated application of the resolution rule)
+        }
+    \end{center}
+    The proof of this theorem is proved by demonstrating its contrapositive:
+    \begin{center}
+        \textit{
+        If the resolution closure of a set of clauses does not contain the empty clause, then the set of clauses is satisfiable.
+        }
+    \end{center}
+
+    \begin{enumerate}
+        \item Construct a model for $S$ with suitable truth value for $P_1,\ldots,P_k$:
+        
+        For $i$ from $1$ to $k$:
+        \begin{itemize}
+            \item if a clause in $RC(S)$ contains $\lnot P_i$ and all its other literals are false under the assignment choosen for $P_1,\ldots,P_{i-1}$, 
+            then assign false to $P_i$.
+            \item Otherwise, assign true to $P_i$.       
+        \end{itemize}
+        \item Show that the the previous point always ends up with a model for $S$, this is done by induction:
+        \begin{itemize}
+            \item Base case: $i = 1$:
+            
+            we can't have $\lnot P_1$ and $P_1$ in the same clause otherwise the empty clause would be generated.
+            So $P_1 \leftarrow false$ if $\lnot P_1$ occurs in $S$, otherwise $P_1 \leftarrow true$.
+            \item Case $i$:
+            
+        \end{itemize}
+    \end{enumerate}
+
 
 \end{enumerate}
 
@@ -544,11 +650,6 @@
     \item In the context of informed search, present the approaches discussed in class to manage the case in which the path to reach a goal state is irrelevant. 
     For each approach discuss conditions of applicability, strengths and weaknesses.
     
-    \textcolor{green}{\textbf{Answer:}}
-
-    \item (Similar to A3 non va l'autolabel dc) In the context of inference in first-order logic, introduce the resolution rule.
-    Discuss in what form the clauses need to be represented in order to efficiently enforce the resolution and how that form can be achieved.
-    Finally, present the various strategies that have been proposed regarding the choice of clauses to be used during the inference.
     \textcolor{green}{\textbf{Answer:}}
 
     \item What does a Bayesian Network consist of? 
