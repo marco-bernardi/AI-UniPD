@@ -8,7 +8,14 @@
 
 % MAKE TITLE AND AUTHOR
 \title{AI Questions \& Answers}
-\author{Marco Bernardi}
+\author{
+    Marco Bernardi
+    \and
+    Andrea Auletta
+    \and
+    Aulo
+}
+
 \date{\today}
 \begin{document}
 \maketitle
@@ -539,13 +546,17 @@
     Truth table enumeration holds a problem: it is exponential in the number of propositional symbols.
     We need to find a more efficient way to determine if $\alpha$ is entailed by $KB$.
     Basically, we need to find the equivalent sentences written in a different way, so we can avoid them.
-    We can use a \textbf{normal form}, that is characterized by the horn form.
+    Some real-world knowledgebases satisfy certain restrictions on the form of sentences  they contain, 
+    which enables them to use a more restricted and efficient inference algorithm
+    One such restricted forn is the \textbf{Horn form}.
 
     With the horn form $KB$ is a conjunction of Horn clauses\footnote{Horn clauses are a disjunction of literals with at most one positive literal} where: 
     \begin{itemize}
         \item proposition symbol
         \item (conjunction of symbols) $\Rightarrow$ symbol 
-    \end{itemize} 
+    \end{itemize}
+    Every definite clause can be written as an implication whose premise is a conjunctionof positive literals and whose conclusion is a single positive literal.
+    
     \textbf{Modus Ponens} is a inference rule that can be used with the horn form: 
     \begin{equation}
         \frac{\alpha_1,\ldots\alpha_n,\qquad \alpha_1\land\ldots\land\alpha_n\Rightarrow\beta}{\beta}
@@ -555,10 +566,10 @@
 
     It can be used with the \textbf{forward chaining} and \textbf{backward chaining} algorithms.
 
-    \item In the context of inference in first-order logic, introduce the resolution rule.
-    Discuss in what form the clauses need to be represented in order to efficiently enforce the resolution and how that form can be achieved.
-    Finally, present the various strategies that have been proposed regarding the choice of clauses to be used during the inference.
-    
+    \item In the context of inference in propositional logic, introduce the resolution rule.
+    Then, explain how the resolution algorithm works.
+    Finally, prove its completeness.
+
     \textcolor{green}{\textbf{Answer:}}
 
     Resolution yields a complete inference algorithm when coupled with any complete search algorithm.
@@ -614,29 +625,208 @@
         \begin{itemize}
             \item Base case: $i = 1$:
             
-            we can't have $\lnot P_1$ and $P_1$ in the same clause otherwise the empty clause would be generated.
+            cannot be than $\lnot P_1$ and $P_1$ simultaneously appear in $S$ otherwise the empty clause will appear in $RC(S)$.
             So $P_1 \leftarrow false$ if $\lnot P_1$ occurs in $S$, otherwise $P_1 \leftarrow true$.
-            \item Case $i$:
-            
+            \item Case $i$: Assume a partial model $m_(i-1)$ for symbols $P_1,\ldots,P_{i-1}\Rightarrow$ it is not possible to assign a truth value to $P_i$ if $RC(S)$
+            contains clauses:
+            \begin{itemize}
+                \item $C\equiv B\lor P_i$ and $C'\equiv B'\lor\lnot P_i$, where $B$ and $B'$ only contain symbols in \{$P_1,\ldots,P_{i-1}$\}
+                \item both $B$ and $B'$ are false under $m_{i-1}$
+            \end{itemize}
+            In the case we had these clauses the resolution of them will return $B\lor B'$, so either $B$ or $B'$ should be true by the induction hypothesis. 
+            This means that:
+            \begin{itemize}
+                \item if $B$ is true $\Rightarrow$ $P_i$ is false
+                \item if $B'$ is true $\Rightarrow$ $P_i$ is true
+            \end{itemize}
+            Thus it will be possible to extend model $m_{i-1}$ to either $m_i = m_{i-1}\cup\{P_i \leftarrow false\}$ or $m_i = m_{i-1}\cup\{P_i \leftarrow true\}$.
+            So it's possible to extend the model up to $k$ and $S$ is satisfiable.
         \end{itemize}
     \end{enumerate}
+\end{enumerate}
+\section{First-Order Logic}
+\begin{enumerate}[label=\textbf{FOL.\arabic*}]
 
+    \item Describe the fundamental elements to be able to carry out inference in the first-order logic through the resolution rule.
+    Discuss the various strategies used by the resolution rule, highlighting the strengths and weaknesses.
+    At the end discuss the computational aspects.
+
+    \textcolor{green}{\textbf{Answer:}}
+    The fundamental elements of first-order logic are:
+    \begin{itemize}
+        \item \textbf{Constants}: represent objects in the domain of discourse.
+        \item \textbf{Predicates}: represent properties of objects in the domain of discourse.
+        \item \textbf{Functions}: represent relations between objects in the domain of discourse.
+        \item \textbf{Variables}: represent unspecified objects in the domain of discourse.
+        \item \textbf{Connectives}: $\land,\lor,\lnot,\Rightarrow,\Leftrightarrow$.
+        \item \textbf{Quantifiers}: $\forall,\exists$.
+        \item \textbf{Equality}: $=$.
+    \end{itemize}
+    Senteces are true with respect to a model and an interpretation.
+
+    The idea is to use the quantifiers to do inference and recondut to the inference in propositional logic, example:
+    \begin{itemize}
+        \item\textbf{Universal quantification}: $\forall x P(x)$, it's true in a model $m$ $\iff P$ is true with $x$ being each 
+        possible object in the model.
+
+        \textbf{Universal instantiation}: every instance of a universally quantified sentence is entailed by: 
+        \begin{equation}
+            \frac{\forall v \quad \alpha}{SUBST(\{v/g\},\alpha)}
+        \end{equation}
+        for any variable $v$ and ground term $g$. It can be applied serveral times to add new sentences, the new $KB$ is equivalent to the original one.
+        \item\textbf{Existential quantification}: $\exists x P(x)$, it's true in a model $m$ $\iff P$ is true with $x$ being 
+        at least one object in the model.
+        \textbf{Existential instantiation}: for any sentece $\alpha$, variable $v$ and constant symbol $k$ that does not appear elsewhere in the KB:
+        \begin{equation}
+            \frac{\exists v \quad \alpha}{SUBST(\{v/k\},\alpha)}
+        \end{equation}
+        EI can be applied only once to replace the existential sentece, the new $KB$ is not equivalent to the original one, but it satisfiable
+        if the original one is.
+    \end{itemize}
+
+    \item In the context of first order logic, describe in a complete and exhaustive way the Unification algorithm, further explaining why this is particularly useful for logical inference
+    
+    \textcolor{green}{\textbf{Answer:}}
+
+    Proprositional logic seems to generate lots of irrelevant sentences:
+    \begin{center}
+        With $p$ $k-ary$ Predicates and $n$ constants, there are $p\cdot n^k$ instantiations.
+    \end{center}
+
+    If there is some substitution $\theta$ that makes each of the conjuncts of the premise of the implication identical 
+    to senteces already in the KB, then we can assert the conclusion of the implication.
+    This inferece process is called \textbf{Generalize Modus Ponens}:
+    \begin{equation}
+        \frac{p1',p2',\ldots,p'_n,\quad (p_1\land p_2\land\ldots\land p_n \Rightarrow q)}
+        {q\theta}
+    \end{equation}
+
+    Soundness GMP:
+
+    For any definite clause $p$, we have $p\vDash p\theta$ by UI.
+    \begin{itemize}
+        \item $(p_1\land\ldots\land p_n \Rightarrow q)\vDash(p_1\land\ldots\land p_n \Rightarrow q)\theta=(p_1\theta\land\ldots p_n\theta\Rightarrow q\theta)$
+        \item $p'_1\land\ldots\land p_n \vDash p'_1\land\ldots\land p'_n\vDash p'_1\theta\land\ldots\land p'_n\theta$
+        \item From 1 and 2, $q\theta$ follows by ordinary Modus Ponens.
+    \end{itemize}
+
+    \textbf{Unification} is a process that find substitutions for variables that make two sentences identical.
+    We can get the inference immediately if we can find a substitution $\theta$ such that $\alpha\theta = \beta\theta$.
+    For avoiding failures, we need to eliminate overlap of variables in $\alpha$ and $\beta$ $\Rightarrow$ \textbf{Standardizing apart}:
+    each sentece have to use different variables name (we can rename variables in a sentence without changing its meaning).
+
+    \textbf{Unification algorithm}:
+    The algorithm works by comparing the structuresof the inputs, element by element.
+    The substitution $\theta$ that is the argument to UNIFY is builtup along the way and is used to make sure that later comparisons are consistent with bindingsthat were established earlier.
+
+    \textbf{Problem}: there could be more than one such unifier $\Rightarrow$ for each pair of sentences we need to find the most general unifier
+    (MGU\@: that one which places the fewest restrictions on the variables), 
+    that is unique up to renaming and substitution of variables.
+
+    This algorithm is particularly useful for logical inference because it is used in algorithms for logical inference like forward/backward chaining and resolution.
+
+
+    \item In the context of inference in first-order logic, introduce the resolution rule.
+    Discuss in what form the clauses need to be represented in order to efficiently enforce the resolution and how that form can be achieved.
+    Finally, present the various strategies that have been proposed regarding the choice of clauses to be used during the inference.
+
+    \textcolor{green}{\textbf{Answer:}}
+
+    The resolution rule is an inferece procedure based on the resolution for propositional logic and extended to first-order logic.
+    It requires senteces to  be in \textbf{conjunctive normal form} (CNF\@: a conjunction of clauses, where a clause is a disjunction of literals).
+    For achieving this form, we must follow these steps:
+    \begin{enumerate}
+        \item \textbf{Eliminate implications}: $p\Rightarrow q$ is equivalent to $\lnot p\lor q$.
+        \item \textbf{Move negation inwards}: we need rules for negated quantifiers:
+        \begin{itemize}
+            \item $\lnot\forall x P(x)$ is equivalent to $\exists x \lnot P(x)$
+            \item $\lnot\exists x P(x)$ is equivalent to $\forall x \lnot P(x)$
+        \end{itemize}
+        \item \textbf{Standardize variables}: rename variables to avoid conflicts.
+        \item \textbf{Skolemize}: eliminate existential quantifiers by replacing it with Skolem functions.
+        In the existential instantiation rule, we drop the quantifier and substitute the variable with another one creating only ONE new sentence.
+        When the existential instantiation can't be appplied (The sentece doesn't match the pattern $\exists v\text{  }\alpha$), we replace 
+        the existential quantifier variables with Skolem functions which has as arguments the universally quantified variables in whoose scope the existential quantifier appears.
+
+        \item \textbf{Drop universal quantifiers}: we can drop universal quantifiers because they are implicit in CNF\@.
+        \item \textbf{Distribute $\lor$ over $\land$}: $p\lor(q\land r)$ is equivalent to $(p\lor q)\land(p\lor r)$.
+    \end{enumerate}
+
+    Once the sentences are in CNF, we can apply the resolution rule:
+
+    Two sentences (standarding apart) are resolvable if they contain complementary literals: propositional literals are complementary if one unifies with the negation of the other.
+    Thus we have:
+    \begin{equation}
+        \frac{\ell_1\lor\ldots\lor \ell_k,\quad m_1\lor\ldots\lor m_n}
+        {SUBST(\theta,\ell_1\lor\ldots\lor\ell_{i-1}\lor\ell_{i+1}\lor\ldots\lor\ell_k\lor m_1\lor\ldots\lor m_{j-1}\lor m_{j+1}\lor\ldots\lor m_n)}
+    \end{equation}
+    where $UNIFY(\ell_i,\lnot m_j) = \theta$.
+
+    This rule is called binary resolution because it combines two clauses at a time.
+
+    The various strategies that have been proposed regarding the choice of clauses to be used during the inference are:
+    \begin{itemize}
+        \item \textbf{Unit preference}: select a unit clause (a clause with only one literal) if possible, the idea is that we're trying to produce an empty clause, so it might be a good idea to prefer inferences that produce shorter clauses.
+        \item \textbf{Unit resolution}: is a restricted form of resolution in which every resolution step must involve a unit clause.
+        It is incomplete in general, but it is complete for Horn clauses.
+        \item \textbf{Set of support}: select a set of clauses (the set of support) and use at least one element of the set in each step.
+        It is incomplete if the wrong set of support is chosen (Ex of a good set: the negated query)
+        \item \textbf{Input resolution}: every resolution combines one of the input senteces (from the KB or the query) with some other sentece.
+        It is complete if KB is in Horn form, but incomplete in the general case. 
+        Complete if modified: allows $P$ and $Q$ to be resolved together either if $P$ is in the original KB or if $P$ is an ancestor of $Q$ in the proof tree.
+        \item \textbf{Subsumption}: eliminates all senteces that are subsumed by other senteces in the KB\@.
+    \end{itemize}
+
+\end{enumerate}
+
+\section{Uncertainty}
+
+Agents may need to handle uncertainty, whether due to partial observability, nondeterminism, or a combination of the two.
+Agents that never fail must to know everything about the world and the various exception, but this is not possible in the real world:
+\begin{itemize}
+    \item \textbf{Laziness}: it's too expensive to enumerate all the possible cases.
+    \item \textbf{Theoretical ignorance}: most of the time we don't know the complete domain of the problem.
+    \item \textbf{Practical ignorance}: even if we know all the possible cases, there is uncertainty in applying this rules in some specific cases.
+\end{itemize}
+Probability provides a way of summarizing the uncertainty that comes from our laziness and ignorance,
+thereby solving the qualification problem (the problem of how to represent all the knowledge that an agent needs to know about the world).
+In \textbf{subjective} (degree of belief) or \textbf{Bayesian} (degree of belief given the evidence) probability relate propositions to 
+one's own state of knowledge (it might be learned from past experience of simular situations).
+Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + Utility theory (used to represent and infer preferences).
+
+\begin{enumerate}[label=\textbf{U.\arabic*}]
+    \item In the context of treatment of uncertainty, discuss what is the main computational challenge when using the joint probability distribution of the main involved variables.
+    
+    \textcolor{green}{\textbf{Answer:}}
+
+    \textbf{Definition:} for a set of random variables (r.v.s) $X_1,\ldots,X_n$, the joint probability distribution $P(X_1,\ldots,X_n)$ is a table that contains the probability of each possible combination of values for the random variables.
+
+    Joint probability distribution is used for inference by enumeration: for any proposition $\phi$ sum the atomic events where it is true:
+    \begin{equation}
+        P(\phi) = \sum_{\omega:\omega\vDash\phi}P(\omega)
+    \end{equation} 
+
+    The main computational challenge is that the number of possible worlds grows exponentially with the number of random variables.
+    Worst-case time complexity $O(d^n)$, where $d$ is the maximum number of values that any variable can take on.
+    Space complexity $O(d^n)$, because we need to store the probability of each possible combination of values.
+
+
+    \item In the context of the treatment of uncertainty, formally define the concept of conditional independence and how this can be used. 
+    In particular, discuss its role in the Bayesian Networks.
+
+    \textcolor{green}{\textbf{Answer:}}
+
+    \item What does a Bayesian Network consist of? 
+    Why is it useful?
+    What is its computational complexity in space and time (also discuss special cases) for the exact inference?
+
+    \textcolor{green}{\textbf{Answer:}}
 
 \end{enumerate}
 
 \section{First Call 23-01-2023}
 \begin{enumerate}[label=\textbf{A.\arabic*}]
 
-
-
-    \item In the context of inference in the first-order logic, introduce the resolution rule. 
-    Discuss in what form the clauses must be represented in order to apply effectively the resolution and how this form can be obtained.\label{l}
-
-    \textcolor{green}{\textbf{Answer:}}
-    
-    \item In the context of treatment of uncertainty, discuss what is the main computational challenge when using the joint probability distribution of the main involved variables.
-    
-    \textcolor{green}{\textbf{Answer:}}
 
     \item Give the formal definition for a constrain satisfaction system, and discuss the approaches presented in class on how to find solutions.
     
@@ -650,12 +840,6 @@
     \item In the context of informed search, present the approaches discussed in class to manage the case in which the path to reach a goal state is irrelevant. 
     For each approach discuss conditions of applicability, strengths and weaknesses.
     
-    \textcolor{green}{\textbf{Answer:}}
-
-    \item What does a Bayesian Network consist of? 
-    Why is it useful?
-    What is its computational complexity in space and time (also discuss special cases) for the exact inference?
-
     \textcolor{green}{\textbf{Answer:}}
 
     \item Introduce the main paradigms of machine learning, describing in particular the funda-mental ingredients of the supervised paradigm, and how the complexity of an hypothesis space can be measured in a useful way in the case of a binary classification task.
