@@ -1,10 +1,10 @@
 % BASIC START FOR TEX DOCUMENT with chapter
 
 \documentclass[12pt]{article}
-\usepackage{amsmath,amssymb,amsthm,amsfonts}
+\usepackage{amsmath,amssymb}
 \usepackage{color}
 \usepackage{enumitem}
-\usepackage{caption}
+\usepackage{hyperref}
 
 % MAKE TITLE AND AUTHOR
 \title{AI Questions \& Answers}
@@ -806,8 +806,27 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
         P(\phi) = \sum_{\omega:\omega\vDash\phi}P(\omega)
     \end{equation} 
 
+    It works also for conditional probability:
+    \begin{equation}\label{eq:cond_prob}
+        P(a|b) = \frac{P(a\land b)}{P(b)} \text{ if } P(b) \neq 0
+    \end{equation}
+    In the \ref{eq:cond_prob} the denominator act as a normalization factor, it is the probability of the event $b$.
+
+    Inference procedure: 
+    \begin{itemize}
+        \item X is a set of random variables 
+        \item Y is the set of query variables  
+        \item E is the set of evidence variables given specific values e
+        \item H is the set of hidden variables ($H = X - Y - E$)
+    \end{itemize}
+    Then the required summation of joint entries is done by summing out the hidden variables:
+    \begin{equation}
+        P(Y|E = e) = \alpha P(Y,E = e) = \alpha\sum_{h}P(Y,E = e,H = h)
+    \end{equation}
+    The terms in the summation are joint entries because $Y$, $E$ and $H$ are together exhaust the set of random variables.
+
     The main computational challenge is that the number of possible worlds grows exponentially with the number of random variables.
-    Worst-case time complexity $O(d^n)$, where $d$ is the maximum number of values that any variable can take on.
+    Worst-case time complexity $O(d^n)$, where $d$ is the maximum number of values that any variable can take on (arity).
     Space complexity $O(d^n)$, because we need to store the probability of each possible combination of values.
 
 
@@ -816,12 +835,76 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
 
     \textcolor{green}{\textbf{Answer:}}
 
+    \textbf{Definition:} two random variables $X$ and $Y$ are independent given a set of random variables $Z$ if and only if:
+    \begin{equation}\label{eq:prob_ind}
+        P(X|Y) = P(X) \text{ or } P(Y|X) = P(Y) \text{ or } P(X,Y) = P(X)P(Y)
+    \end{equation}
+
+    This means that in a given set of random variables, if we can find indipendent variables, than the full joint distribution
+    can be factored into smaller separated joint distributions on the subsets composed by the variables that are related to each other
+    (size of the representation from exponential in n to linear in n).
+    In this way the full joint distribution can be represented as the product of the smaller joint distributions.
+    In real world problems it's difficult to find a clean separation of variables by indipendence.
+    Conditional independence is our most basic and robust form of knowledge about uncertain environments.
+
+    Conditional independence:
+    \begin{equation}\label{eq:prob_cond_ind}
+        P(X|Y,Z) = P(X|Z)P(Y|Z)
+    \end{equation}
+
+    Full joint distribution:
+    \begin{equation}
+        P(\textit{Cause,Effect}_1,\ldots,\textit{Effect}_n) = P(Cause)\prod_{i} P(\textit{Effect}_i|Cause)
+    \end{equation}
+
+    Such probability distributions is called \textbf{naive Bayesian} model
+
+    In a Bayesian network, conditional indipendence is used to define the network topology.
+    The topological semantics specifies that each variable is conditionally independent of its nondescendants, given its parents.
+
     \item What does a Bayesian Network consist of? 
     Why is it useful?
     What is its computational complexity in space and time (also discuss special cases) for the exact inference?
 
     \textcolor{green}{\textbf{Answer:}}
 
+    A Bayesian network is a directed graph in which each node is annotated with quantitative probability information. 
+    The full specification is as follows:
+    \begin{enumerate}
+        \item Each node corresponds to a random variable, which may be discrete or continuous.
+        \item A set of directed links or arrows connects pairs of nodes. 
+        If there is an arrow from node $X$ to node $Y,X$ is said to be a parent of $Y$.
+        The graph has no directed cycles and hence is a directed acyclic graph, or DAG.
+        \item Each node $X_i$ has a conditional probability distribution $P(X_i|Parents(X_i))$ that quantifies the effect of the parents on the node.
+    \end{enumerate}
+
+    Bayesian networks are useful because they provide a compact representation of a full joint distribution, 
+    given from the combination of the topology (conditional indipendence) and the conditional distributions.
+    In the simplest case, conditional distribution represented as a conditional probability table (CPT) giving the distribution over $X_i$ for each combination of values for the parents.
+
+    In Bayesian networks we can do inference: computing the probability distribution of a set of query variables, given some observed evidence variables.
+    We can also do Inference by stochastic simulation:
+    \begin{itemize}
+        \item Draw $N$ samples from a sampling distribution $S$.
+        \item Compute an approximate posterior probability $\hat{P}$.
+        \item Show this converges to the true probability $P$.
+    \end{itemize}
+
+    Given the intractability of exact inference in large, multiply connected networks, it is essen-tial to consider approximate inference methods.
+    \begin{itemize}
+        \item Sampling from an empty network
+        \item Rejection sampling: reject samples disagreeing with evidence
+        \item Likelihood weighting: weight samples by likelihood of evidence
+        \item Markov chain Monte Carlo (MCMC): sample from a stochastic process whose stationary distribution is the true posterior
+    \end{itemize}
+
+    The complexity of exact inference in Bayesian networks depends strongly on the structure of the network.
+    \begin{itemize}
+        \item In single connected networks (or polytrees), any two nodes are connected by at most one (undirected) path, 
+        so the complexity of inference is linear in the size of the network ($O(d^kn)$).
+        \item In multiply connected networks, we can reduce 3SAT to exact inference to NP-Hard that is equivalent to
+        counting 3SAT solutions, thus \#P-complete.
+    \end{itemize}
 \end{enumerate}
 
 \section{First Call 23-01-2023}
