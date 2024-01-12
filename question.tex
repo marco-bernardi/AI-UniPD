@@ -907,6 +907,135 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
     \end{itemize}
 \end{enumerate}
 
+\section{Machine Learning}
+\begin{enumerate}[label=\textbf{ML.\arabic*}]
+    \item Introduce the main paradigms of machine learning, describing in particular the fundamental ingredients of the supervised paradigm, and how the complexity of an hypothesis space can be measured in a useful way in the case of a binary classification task.
+
+    \textcolor{green}{\textbf{Answer:}}
+
+    Machine learning is the study of computer algorithms that is able to learn from data.
+    A learning algorithm must have the following components:
+    \begin{itemize}
+        \item \textbf{Tasks}: how the machine learning algorithm should process an example.
+        \item \textbf{Performance measure}: how accurate is the function/model returned by the learning algorithm.
+        \item \textbf{Experience}: Dataset.
+    \end{itemize}
+    There are different paradigms of machine learning:
+    \begin{itemize}
+        \item \textbf{Supervised learning}\label{q:ml-paradigms}: given pre-classified examples (training set), $Tr = \{(x^{(i)}),f(x^{(i)})\}$, learn a general description $h(x)$ (hypothesis) which captures the information content of the examples.
+        Than given a new example $\tilde{x}$, we can predict the corresponding output $h(\tilde{h})$.
+        It's called supervised because is assume that an expert provides the value of $h$ for the corresponding training instance $x$. 
+        \item \textbf{Unsupervised learning}: given a set of examples $Tr = \{x^{(i)}\}$, discover regularities and/or patterns in the data.
+        In this case there is no expert to provide the correct answer.
+        \item \textbf{Reinforcement learning}: the agent learns by interacting with the environment.
+        The agent receives a reward that can be positive, negative or neutral for each action and the goal is to maximize the total reward.
+    \end{itemize}
+
+    The fundamental ingredients of the supervised paradigm are:
+    \begin{itemize}
+        \item \textbf{Training data}: data tha are drawn from the Instance Space, $X$.
+        \item \textbf{Hypothesis space}: it is the set of functions that the learning algorithm 
+        can choose the function $h$ that approximate the function $f$ (Function to be learned).
+        \item \textbf{Learning algorithm}: search algorithm into the hypothesis space.
+    \end{itemize}    
+    $H \neq \textit{set of possible functions}$, search into $H$ to be exhaustive $\rightarrow$ overfitting:
+    the algorithm learns the training data too well, so it doesn't generalize well to new examples.
+
+    There is inductive bias on $H$ and search algorithm: set of assumptions that the learning algorithm uses to predict outputs of new instances.
+
+    The complexity of an hypothesis space can be measured in a useful way by the \textbf{VC dimension}:
+    \begin{itemize}
+        \item \textbf{Definition}: the VC dimension of a hypothesis space $H$ is the size of the largest set of points that can be shattered by $H$.
+        \item \textbf{Shattering}: a set of points $S$ is shattered by $H$ if for every possible labeling of the points in $S$, there exists a function $h$ in $H$ that correctly classifies the points in $S$.
+    \end{itemize}
+    In the case of binary classification task, we have only two possible labels.
+    If we work with linear classification, we can classify the points in the plane with the sign of the position with respect to a line (positive or negative).
+    The VC dimension of the hypothesis space of linear classifiers is 3, because we can shatter 3 points, but not 4:
+    it is not possible to find a line that separates 4 points in all the possible ways, 
+    there alway exist two couples of points such that if we connect the two members by a segment, 
+    the two resulting segment will intersect so a curve is needed.
+
+    \item Explain in detail the supervised learning paradigm, describe the role of the training set, the validation set and the test set (how to use data in our hands).
+    Give the definition of true error and empirical error, highlighting the role of them during the learning process.
+
+    \textcolor{green}{\textbf{Answer:}}
+
+    Supervised Learning ref to answer \ref{q:ml-paradigms}.
+    
+    On learning tasks we have a set of data, this can be splitted into:
+    \begin{itemize}
+        \item \textbf{Training set}: used to train the model.
+        \item \textbf{Validation set}: it is a subset of the training set used to tune the hyperparameters of the model (hold-out, cross-validation).
+        \item \textbf{Test set}: used to evaluate the selected model.
+    \end{itemize}
+
+    Model selection is the process of choosing the best model for a given task by selecting the best hyperparameters:
+    \begin{itemize}
+        \item \textbf{Hold-out procedure}: split the training set into two parts, the first one is used to train the model and
+        the second one (validation set) is used to test the trained model with different hyperparameters.
+        \item \textbf{Cross-validation}: K-differrent classifier/regressors are trained on K-different subsets of $Tr$ ($Va_1,\ldots,Va_k$)
+        and then is iteratively applied the Hold-out procedure on the k-pairs ($Tr_i=Tr-Va_i,Va_i$).
+    \end{itemize}
+
+    The empirical error ($error_{Tr}(h)$) of hypothesis $h$ with respect to $Tr$ is the number of examples that $h$ misclassifies:
+    \begin{equation}\label{eq:empirical_error}
+        error_{Tr}(h) = \#\{(x,f(x)) \in Tr|f(x)\neq h(x)\}/|Tr|
+    \end{equation}
+
+    The true error ($error_D(h)$) of hypothesis $h$ with respect to target concept $c$ and distribution $D$ is the probability that $h$ will misclassify an instance drawn at random according to $D$:
+    \begin{equation}\label{eq:true_error}
+        error_D(h) \equiv \underset{x\in\mathcal{D}}{Pr}[c(x)\neq h(x)]
+    \end{equation}
+
+    We can say that $h\equiv\mathcal{H}$ overfits $Tr$ if $\exists h'\in\mathcal{H}$ such that $error_{Tr}(h)<error_{Tr}(h')$ and $error_D(h)>error_D(h')$.
+
+    The goal of machine learning is to solve a task with the lowest possible true error, but a classifier learn on training data so 
+    it generate empirical error and not true error.
+    It's possible to have bound on the true error from the empirical error with probability $1-\delta$:
+    \begin{equation}\label{eq:confidence_interval}
+        error_D(h^*_w) \leq \underbrace{error_{Tr}(h^*_w)}_A + \underbrace{\epsilon(n,VC(\mathcal{H}),\delta)}_B
+    \end{equation}
+
+    B (VC-confidence) depends on the ratio between $VC(\mathcal{H})$ and $n$ (number of training examples) and on $1- \delta$ (confidence level).
+
+    Problem: as the VC-dimension grows, the empirical risk (A) decreases, however the VC confidence (B) increases!
+    For minimizing the right hand of the confidence bound we can use the principle \textbf{Stuctural Risk Minimization}:
+    we get a tradeoff between A and B, we want to select the hypothesis with the lowest bound on the true risk.
+
+
+
+    \item In the context of machine learning, explain the fundamental ingredients of perceptron.
+    Provide a brief introduction of how this model can be extended by creating a multi-layer architecture.
+
+    \textcolor{green}{\textbf{Answer:}}
+
+    A perceptron given an input vector $\vec{x}$ and a weight vector $\vec{w}$ calculates $f(\sum{w_i*x_i})$ thas is the activation function of the perceptron.
+    A Neural Network is a system consisting of interconnected units that compute nonlinear functions.
+
+    In a Neural Network we can find:
+    \begin{itemize}
+        \item \textbf{Input Units}: represent input variables.
+        \item \textbf{Output Units}: represent output variables.
+        \item \textbf{Hidden Units}: represent internal variables that codify correlations between input and output variables.
+        \item \textbf{Weights}: are associated to connections between units.
+    \end{itemize}
+
+    Having decided on the mathematical model for individual “neurons,”  the next task isto connect them together to form a network.
+    \textbf{Feed-forward networks}: the information flows in one direction, from the input units, through the hidden units (if any) and to the output units.
+    Gradient descent for feed-forward: we need to optimize the weights of the network to minimize the error on the training set $\rightarrow$ backpropagation algorithm.
+    We define the function error with $c$ output units:
+    \begin{enumerate}
+        \item is defined a loss function which measure the error of the network on the training set.
+        \item the weights are randomly initialized.
+        \item it's executed the forward pass: the input is propagated through the network and the output is computed.
+        \item is calculated the gradient descent with respect to the weights.
+        \item the weights are updated in the opposite direction of the gradient multiplied by a learning rate.
+        \item steps c and e are repeated until a stop condition is reached (for example the error is below a threshold or the number of epochs is reached).
+    \end{enumerate}
+
+
+\end{enumerate}
+
 \section{First Call 23-01-2023}
 \begin{enumerate}[label=\textbf{A.\arabic*}]
 
@@ -925,10 +1054,6 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
     
     \textcolor{green}{\textbf{Answer:}}
 
-    \item Introduce the main paradigms of machine learning, describing in particular the funda-mental ingredients of the supervised paradigm, and how the complexity of an hypothesis space can be measured in a useful way in the case of a binary classification task.
-
-    \textcolor{green}{\textbf{Answer:}}
-
 \end{enumerate}
 
 \section{Example 2020/2021}
@@ -944,10 +1069,6 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
 
 \section{Call 13-02-2019 (Translated from Italian exam)}
 \begin{enumerate}[label=\textbf{D.\arabic*}]
-    \item Explain in detail the supervised learning paradigm, describe the role of the training set, the validation set and the test set (how to use data in our hands).
-    Give the definition of ideal error and empirical error, highlighting the role of them during the learning process.
-
-    \textcolor{green}{\textbf{Answer:}}
 
     \item In the field of NLP, explain the difference between the n-gram (in particular unigram and bigram) and bag-of-words models.
     Introduce the concept of TF-IDF, highlighting its main features, its advantages compared to the bag-of-words model.
