@@ -1035,35 +1035,176 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
 
 
 \end{enumerate}
+\section{Reinforcement Learning}
+\begin{enumerate}[label=\textbf{RL.\arabic*}]
+    \item Introduce the Reinforcement Learning paradigm.
+    Moreover, present the Q-Learning algorithm explaining its theoretical basis.
 
-\section{First Call 23-01-2023}
-\begin{enumerate}[label=\textbf{A.\arabic*}]
+    \textcolor{green}{\textbf{Answer:}}
 
+    Reinforcement Learning is a paradigm in which the agent learns by interacting with the environment.
+    The agent receives a reward that can be positive, negative or neutral for each action and the goal is to learn to choose actions
+    that maximize the total reward.
+    \begin{equation}
+        r_0+\gamma r_1+\gamma^2 r_2+\ldots 
+    \end{equation}
+    Where:
+    \begin{itemize}
+        \item $r_i$ is the reward received after the action at $a_i$ the state $s_i$.
+        \item $\gamma$ is the discount factor, it is a value between 0 and 1 that represents the importance of future rewards.
+    \end{itemize}
+    We've a finite set of states $S$ and a finite set of actions $A$; at each discrete time agent observes state $s_t\in S$ and selects action $a_t\in A$.
+    Then the agent receives a reward $r_t$ and the environment moves to a new state $s_{t+1}$.
+    All this should work under the Markov assumption: $s_{t+1} = \delta(s_t,a_t)$ and $r_t = r(s_t,a_t)$.
+    \begin{itemize}
+        \item $r_t$ and $s_{t+1}$ depend only on current state and action.
+        \item functions $\delta$ and $r$ may be nondeterministic and not necessarily known to the agent.
+    \end{itemize}
+    The agent's goal is to execute actions in environment, observe results, and: 
+    learn action policy $\pi():S\rightarrow A$ that maximizes $E[r_t+\gamma r_{t+1}+\gamma^2 r_{t+2}+\ldots]$ from any starting state in $S$.
+    (training examples of form $((s,a)r)$).
 
+    Considering deterministic environments, for each possible policy $\pi$ we can define an evaluation function over states: 
+    \begin{equation}
+        V^\pi(s) \equiv \sum_{i=0}^{\infty}\gamma^i r_{t+1}
+    \end{equation}
+    Here the task is to learn the optimal policy $\pi^*$ that maximizes $V^{\pi^*}(s)$ for all $s\in S$.
+
+    We want to have an agent that learn the evaluation function $V^{\pi^*}$, 
+    but for doing this the agent need to know the transition function $\delta$ and the reward function $r$.
+
+    In the case that the agent doesn't know the transition function $\delta$ and the reward function $r$, we can define the Q-function similar to $V^*$:
+    \begin{equation}
+        Q^*(s,a) \equiv r(s,a) + \gamma V^*(\delta(s,a))
+    \end{equation}
+    if agent learns Q, it can choose optimal action even without knowing $\delta$.
+    \begin{equation}
+        \pi^*(s) = arg\max_{a}Q(s,a)
+    \end{equation}
+    Thus, Q is the evaluation function the agent will learn.
+    Note that Q and $V^*$ are related by:
+    \begin{equation}
+        V^*(s) = \max_{a'}Q(s,a')
+    \end{equation}
+    which allows us to write Q recursively as:
+    \begin{equation}
+        \begin{split}
+            Q^*(s,a) = & r(s_t,a_t) + \gamma V^*(\delta(s_t,a_t)) \\
+            = & r(s_t,a_t) + \gamma\max_{a'}Q(s_{t+1},a')
+        \end{split}
+    \end{equation}
+    so we can define a training rule to learn Q:
+    \begin{equation}
+        \hat{Q}(s,a) \leftarrow r+\gamma\max_{a'}\hat{Q}(s',a')
+    \end{equation}
+
+    The Q-learning algorithm is:
+    \begin{enumerate}
+        \item Initialize table $\hat{Q}(s,a)\leftarrow 0$.
+        \item Observe current state $s$.
+        \item do forever:
+        \begin{enumerate}
+            \item select an action $a$ and execute it.(it could be randomly selected or using $arg\max_a\hat{Q}(s,a)$)
+            \item receive immediate reward $r$.
+            \item observe new state $s'$.
+            \item update the table entry for $\hat{Q}(s,a)$:
+            \begin{equation}
+                \hat{Q}(s,a) \leftarrow r+\gamma\max_{a'}\hat{Q}(s',a')
+            \end{equation}
+            \item $s\leftarrow s'$
+        \end{enumerate}
+    \end{enumerate}
+    We can show that $\hat{Q}$ converges to $Q$.
+
+    For non-deterministic environments, we redfine $V$ and $Q$ by taking expected values
+    \begin{equation}
+        V^\pi(s) \equiv E[\sum_{i=0}^{\infty}\gamma^i r_{t+1}]
+    \end{equation}
+    \begin{equation}
+        Q(s,a) \equiv E[r(s,a) + \gamma V^*(\delta(s,a))]
+    \end{equation}
+    and the training rule becomes:
+    \begin{equation}
+        \hat{Q}_n(s,a) \leftarrow (1-\alpha_n)\hat{Q}_{n-1}(s,a) + \alpha_n(r+\gamma\max_{a'}\hat{Q}_{n-1}(s',a'))
+    \end{equation}
+\end{enumerate}
+\section{Constraint satisfaction problems}
+\begin{enumerate}
     \item Give the formal definition for a constrain satisfaction system, and discuss the approaches presented in class on how to find solutions.
     
     \textcolor{green}{\textbf{Answer:}}
-
-\end{enumerate}
-
-\section{First and Second part 2021/2022}
-\begin{enumerate}[label=\textbf{B.\arabic*}]
-
-    \item In the context of informed search, present the approaches discussed in class to manage the case in which the path to reach a goal state is irrelevant. 
-    For each approach discuss conditions of applicability, strengths and weaknesses.
     
-    \textcolor{green}{\textbf{Answer:}}
+    A costraint satisfaction systems used to solve constraint satisfaction problems.
+    It is defined by:
+    \begin{itemize}
+        \item \textbf{state}: a set of variables $X_i$ with values from domains $D_i$.
+        \item \textbf{goal test}: a function that determines whether a given state is a goal state.
+    \end{itemize}
 
-\end{enumerate}
+    It can be helpful to visualize a CSP as a constraint graph, where each node represents a variable and each arc represents a constraint (in binary CSP at most two vars for each constraint).
+    A solution to a CSP is an assignment of values to all variables such that all constraints are satisfied.    
+    A constraint satisfaction problem can have \textbf{discrete} or \textbf{continuous} variables.
+    \begin{itemize}
+        \item \textbf{Discrete variables}: finite domains and infinite domains\ (integers, strings, etc).
+        For infinite domains it's needed a constraint language that allows for compact representation of constraints.
+        \item \textbf{Continuous variables}: common in real world problems, the most known is the \textbf{linear programming} (LP) problem.
+    \end{itemize}
+    The constraints could be:
+    \begin{itemize}
+        \item \textbf{Unary}: involve a single variable.
+        \item \textbf{Binary}: involve pairs of variables.
+        \item \textbf{Higher-order}: involve 3 or more variables.
+        \item \textbf{Preferences}: soft constraints, they are not required to be satisfied $\rightarrow$ costrained optimization problem.
+    \end{itemize}
 
-\section{Example 2020/2021}
-\begin{enumerate}[label=\textbf{C.\arabic*}]
+    The first approch to find solutions is \textbf{Standard search formulation} $\rightarrow$ \textbf{min-conflicts}:
+    \begin{itemize}
+        \item \textbf{Initial state}: the empty assignment, {}
+        \item \textbf{Successor function}: assign a value to an unassigned variable that does not conflict with current assignment.
+        \item \textbf{Goal test}: the current assignment is complete and satisfies all constraints.
+    \end{itemize}
+    It use deep-first search.
 
-
-    \item In the context of first order logic, describe in a complete and exhaustive way the Unifica-tion algorithm, further explaining why this is particularly useful for logical inference.
-    Explain in which case the logic inference couldn't help a smart agent.
+    There is an important property not considered by the previous approch: \textbf{commutativity}.
+    The commutativity property states that the order in which we assign values to variables does not matter, the result is the same.
     
-    \textcolor{green}{\textbf{Answer:}}
+    The term backtracking search is used for a depth-first search that chooses values for one variable at a time and backtracks when a variable has no legal values left to assign.
+
+    It repeatedly chooses an unassigned variable, and then triesall values in the domain of that variable in turn, trying to find a solution. 
+    If an inconsistency isdetected, then BACKTRACK returns failure, causing the previous call to try another value
+    We can improve the backtracking search with general-purpose methods:
+    \begin{itemize}
+        \item \textbf{Variable ordering}: choose the next variable to be assigned a value.\ (most constrained variable, most constraining variable, least constraining).
+        \item \textbf{Variable assignment}: forward checking: keep track of remaining legal values for unassigned variables and terminate search when any variable has no legal values.
+        \item \textbf{Detecting failure}: costraint propagation (arc and node consistency). 
+        \item \textbf{Problem structure}: the problem structure can give some advantages in the search:
+        \begin{itemize}
+            \item \textbf{indipendent subproblems}: indipendence can be ascertained by finding the connected components of the constraint graph.
+            Each component can be solved independently of the others in $O(d^cn/c)$ time, otherwise $O(d^n)$.
+            \item \textbf{Tree-structured CSPs}: graph is a tree when any two variables are connected by only one path and can be solved in linear time. $O(nd^2)$
+            Algorithms for tree-structured CSPs:
+            \begin{enumerate}
+                \item Choose a variable as root, order the variables from root to leaves such that every node's parent precedes it in the ordering.
+                \item For $i$ from $n$ down to $2$, impose arc consistency (A variable X is arc-consistent with respect to another variable Y if, 
+                for every value x in the domain of X, at least one value exists y in the domain of Y such that the pair (,) (x,y) 
+                respects all constraints between X e Y.) on the arc from $X_i$ to its parent.
+                \item For $i$ from $1$ up to $n$, assign $X_i$ consistently with all its ancestors.
+            \end{enumerate}
+        \end{itemize}
+    \end{itemize}
+
+    The last approch is based on the use of Iterative algorithms that repeatedly improve the quality of the current assignment.
+    (ex: hill climbing, simulated annealing, genetic algorithms).
+    To apply to CSPs: 
+    \begin{itemize}
+        \item allow states with unsatisfied constraints
+        \item operators reassign variable values
+    \end{itemize}
+    Variable selection: randomly select any conflicted variable 
+    Value selection by min-conflicts heuristic: 
+    \begin{itemize}
+        \item choose value that violates the fewest constraints i.e., hillclimb with h(n) = total number of violated constraints
+    \end{itemize}
 
 \end{enumerate}
 
@@ -1075,16 +1216,5 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
     Describe a possible application of TF-IDF in the field of information retrieval.
 
     \textcolor{green}{\textbf{Answer:}}
-
-    \item Si descriva il modello della pinhole camera ideale, il processo di proiezione prospettica e le equazioni che regolano la formazione dell'immagine a partire da punti nel 3D.
-    Si forniscano le motivazioni (e le principali differenze) che definiscono un modello basato su lenti ottiche.
-
-    Describe the model of ideal \textit{pinhole camera}, the process of perspective projection and the equations that regulate the creation of the image starting from the points on 3D.
-    Give the motivation (and the principal differences) that define a model based on optical lenses.
-
-    \textcolor{green}{\textbf{Answer:}}
-
-
-
 \end{enumerate}
 \end{document}
