@@ -1207,14 +1207,99 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
     \end{itemize}
 
 \end{enumerate}
+\section{NLP}
+NLP (Natural Language Processing) is the field of AI that is concerned with the processing and understanding of natural language, acquiring knowledge and
+communicating with humans.
+\begin{enumerate}[label=\textbf{NLP.\arabic*}]
 
-\section{Call 13-02-2019 (Translated from Italian exam)}
-\begin{enumerate}[label=\textbf{D.\arabic*}]
-
-    \item In the field of NLP, explain the difference between the n-gram (in particular unigram and bigram) and bag-of-words models.
-    Introduce the concept of TF-IDF, highlighting its main features, its advantages compared to the bag-of-words model.
-    Describe a possible application of TF-IDF in the field of information retrieval.
+    \item In the field of NLP, explain the difference between the n-gram (in particular unigram and bigram) 
+    and bag-of-words models.
+    Show how the n-gram model can be used for classification and information retrieval problems, 
+    detailing the relations and possible differences with models such as bag-of-words.
 
     \textcolor{green}{\textbf{Answer:}}
+
+    For NLP related tasks we need language models that predict the probability distribution of linguistic expressions.
+
+    \textbf{Definition:} a language model is a probability distribution over sequences of words.
+
+    One of this models is the \textbf{n-gram} model, it is defined as a probability distribution on sequences of characters.
+    \begin{equation}
+        P(c_{1:N}) = \textit{the probability of a sequence of N characters } c_1,\ldots,c_N
+    \end{equation}
+    A sequence of written symbols of length N is called an N-gram. (ex: unigram, bigram, trigram, etc)
+    \begin{center}
+        \textit{a pattern n-gram is a Markov chain of order n-1 $\rightarrow$ the probability depends only on the previous n-1 symbols} 
+    \end{center}
+    For trigram:
+    \begin{equation}
+        P(c_{1:N}) = \prod_{i=1}^{N}P(c_i|c_{i-2:i-1})
+    \end{equation}
+
+    The main problem on n-gram model is that the train corpus provide only an estimate of the true probability distribution,
+    for example it could lead to zero probability for unseen n-grams.
+    There are two main solution to this problem:
+    \begin{itemize}
+        \item \textbf{Laplace Smoothing}: assign non-zero probability to unseen n-grams.
+        If a random boolean variable $X$ is false in all n observations, then $P(X = true) = \frac{1}{n+2} \rightarrow$ one test could be true and one false.
+        \item \textbf{Backoff}: in which we start by estimating n-gram counts, 
+        but for any particular sequence that has a low (or zero) count, we back off to $(n-1)-grams$
+    \end{itemize}
+
+    We can evaluate a model with cross-validation but we would like to define a task indipendent quality model.
+    \begin{equation}
+        \textit{Perxplexity}(c_{1:N}) = P(c_{1:N})^{-\frac{1}{N}}
+    \end{equation}
+    Low perplexity means that the model is good at predicting the test set.
+    Perplexity is the inverse probability of the test set, normalized by the number of words.
+
+    N-gram models can be also used for words, with the difference that the vocabulary is significantly larger.
+    The objective is to calculate the probability of a sentece $P(w_1,\ldots,w_n)$.
+    Chain rule can be used to calculate the joint probability of words:
+    \begin{equation}
+        P(w_1,\ldots,w_n) = \prod_{i=1}^{n}P(w_i|w_1,\ldots,w_{i-1})
+    \end{equation}
+    We will never see enough data to estimate all these probabilities accurately, so we need to make some approximation.
+    By markov assumption we can approximate the probability of a word with the probability of the previous word:
+    \begin{equation}
+        P(w_1,\ldots,w_n) \approx \prod_{i=1}^{n}P(w_i|w_{i-k:i-1})
+    \end{equation}
+
+
+    \textbf{Bag-of-words} (also known as vector model) model: it is a simplifying representation used in natural language processing.
+    Represents the frequency of occurrence of each word in a document.
+
+    Difference between n-gram and bag-of-words:
+    \begin{itemize}
+        \item Feature vector are large and scattered in BoW.
+        \item BoWs and unigram return the same result.
+        \item The order of words is lost in BoW, while it is preserved a local notion of order in higher order n-grams.
+        \item in n-gram computational complexity increases with n.
+    \end{itemize}
+    A simple representation of a document is one-hot encoding, where each word of it present in the vocabulary is represented 
+    by one or zero in the vector (the word is present or not).
+    The problem is that one-hot vectors are orthogonal, so we can't capture any similarity between words.
+    Some possible solutions are:
+    \begin{itemize}
+        \item \textbf{Knowledge representation way}: rely on a list of synonyms or taxonomies of words to obtain similarity.
+        \item \textbf{Machine learning way}: learn to code the similarity in the vector themselves.
+        The idea is to construct a vector space where the distance between vectors is a measure of similarity between the words.
+        Example of this approach is the \textbf{word2vec} model: it use context for predict a target word (CBOW) or use a word for predict the context (skip-gram).
+
+    \end{itemize}
+
+    N-gram models can be used for classification problems.
+    Given a text of some kind decide which predefined group of classes it belongs to.\ (ex: spam detection)
+    There are two main approaches:
+    \begin{itemize}
+        \item \textbf{rules-based}: define a set of hard-coded rules that classify the text.
+        We define the rules based on a combination of words (or other features)
+
+        \textbf{Problem}: rule-based can lead to high accurancy result, but building such rules is very expensive and not always possible.
+        \item \textbf{linguistic modeling and machine learning}: we define a n-gram pattern for each class and we calculate the probability 
+        of the text to belong to each class with Naive Bayes (or other classifier). 
+    \end{itemize}
+
+
 \end{enumerate}
 \end{document}
