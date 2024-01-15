@@ -17,6 +17,7 @@
 }
 
 \date{\today}
+\makeindex
 \begin{document}
 \maketitle
 \section{Agents}
@@ -30,9 +31,10 @@
 
     PEAS helps us to define the task environment in which the agent is situated.
     \begin{itemize}
-        \item \textbf{Performance}: A measure of performance is set which evaluates the sequence of perceptions 
-        and a rational agent has to maximize the expected value of the performance measure up to the current time.
+        \item \textbf{Performance}: is the criteria that defines how well the agent is doing in the environment.
+        Performance with agents based on their different precepts.
         Performance measures could be a combination of different criteria. (Ex. Automated taxi driver: safety, legality, comfort, profit, time, etc.) 
+        
         \item \textbf{Environment}: It describes the task environment in which the agent is situated.
         An environment could be fully \textbf{observable} (Chess game) because you can see the whole state of the environment, otherwise it will be 
         or \textbf{partially observable} (Poker).
@@ -91,6 +93,7 @@
     \textcolor{green}{\textbf{Answer:}}
     Search strategies are used to find a solution to a problem defined by four components: 
     \textbf{initial state}, \textbf{successor function}, \textbf{goal test} and \textbf{path cost}.
+    Uninformed search strategies use only the information provided by the problem definition and operate systematically to find a solution.
     The solution is a sequence of actions that leads from the initial state to a goal state.
     There are different uninformed search strategies (We're working with trees):
     \begin{enumerate}
@@ -118,7 +121,7 @@
 
         \item \textbf{Iterative deepening search}: it is a combination of depth-first search and breadth-first search.
         It performs depth-first search up to a certain depth, then it performs breadth-first search up to that depth, 
-        then it performs depth-first search up to the next depth, etc.
+        and so on increasing the depth limit.        
         It is \textbf{complete} if \textit{b} is finite and \textbf{optimal} if the path costs are all equal.
         It has a \textbf{time complexity} of $O(b^d)$ and a \textbf{space complexity} of $O(bd)$.
 
@@ -241,9 +244,10 @@
     In the 8-puzzle example, the relaxed problem is to move the tiles without considering the other tiles.
     The optimal solution cost of a relaxed problem is no greater than the optimal solution cost of the real problem.
 \end{enumerate}
-\subsection{Iterative Improvement Algorithms}\label{iterativeimprovement}
-\begin{enumerate}[label=\textbf{IS.II.\arabic*}]
-    \item Introduce hill-climbing search, appropriately placing it among the various categories of problem solving approaches we discussed in class.
+\section{Iterative Improvement Algorithms}\label{iterativeimprovement}
+\begin{enumerate}[label=\textbf{II.\arabic*}]
+    \item\label{q-hillclimbing}
+    Introduce hill-climbing search, appropriately placing it among the various categories of problem solving approaches we discussed in class.
     Present the variants, the properties, and in the case of a search with restart, formally demonstrate the result relative to the number of expected searches before finding an optimal solution.
 
     \textcolor{green}{\textbf{Answer:}}
@@ -308,7 +312,7 @@
     
     \textcolor{green}{\textbf{Answer:}}
     \begin{itemize}
-        \item \textbf{hill climbing}: refer to previous question \ref{sec-informedsearch}.
+        \item \textbf{hill climbing}: refer to previous question \ref{q-hillclimbing}.
         \item \textbf{simulated annealing}(gradient descent): it's a combination between hill climbing and random walk. 
         It allows ``bad'' moves, but gradually decreases their size and frequency.
         The probability of selecting a ``bad'' move is controlled by a parameter $T$ called ``temperature'', $T$ is gradually decreased.
@@ -317,7 +321,7 @@
         If $T$ descreased slowly enough $\Rightarrow$ always reach best state $x^*$.
         \item \textbf{local beam search}: it keeps track of $k$ states instead of one.
         It starts with $k$ randomly generated states, and at each iteration it generates all the successors of the $k$ states and selects the best $k$ successors.
-        It halts when a goal state is found or when a certain criterion is met, otherwise it selects the best $k$ successors and repeat the process.
+        It halts when a goal state is found or when a certain criterion is met, otherwise it selects the best $n$ (beam width) successors and repeat the process.
 
         \textbf{Problem}: often all $k$ states end on same local hill.
 
@@ -335,8 +339,8 @@
 
     \end{itemize}
 \end{enumerate}
-\subsection{Online Search}\label{onlinesearch}
-\begin{enumerate}[label=\textbf{IS.OS.\arabic*}]
+\section{Online Search}\label{onlinesearch}
+\begin{enumerate}[label=\textbf{OS.\arabic*}]
     \item Introduce the concept of online search, and describe the algorithms we discussed in class.
     
     \textcolor{green}{\textbf{Answer:}}
@@ -415,7 +419,7 @@
         \item doubles the depth of exploration
     \end{itemize}
 
-    $alpha - \beta$ pruning suite well for games with perfect information; it work also for non-deterministic games.
+    $alpha - \beta$ pruning suite well for games with deterministic games; it work also for non-deterministic games.
     In the case of non-deterministic games, the states doesn't have definite values, we can compute only the expected value of a state.
     \textbf{Expectiminimax algorithm} help us to handle this problem, that works like minimax 
     except that it also handle chance nodes.
