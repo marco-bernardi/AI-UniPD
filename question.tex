@@ -251,10 +251,14 @@
     Present the variants, the properties, and in the case of a search with restart, formally demonstrate the result relative to the number of expected searches before finding an optimal solution.
 
     \textcolor{green}{\textbf{Answer:}}
-    Hill-climbing search is an iterative improvement algorithm making part of the local search algorithms (informed search: use problem-specific knowledge beyond the definition of the problem itself).
+    Hill-climbing search is an iterative improvement algorithm making part of the local search algorithms.
     Hill-climbing follow the iterative improvement paradigm, where the goal state itself is the solution and the path to reach it is irrelevant.
     As a local search algorithm, it doesn't keep track of the search tree, but only of the current state and try to improve it.
-
+    Although local search algorithms are not systematic, they have two key advantages:
+    \begin{enumerate}
+        \item they use very little memory, usually a constant amount;
+        \item they can often find reasonable solutions in large or infinite (continuous) state spaces for which systematic algorithms are unsuitable.
+    \end{enumerate} 
     Hill-climbing search at each iteration selects the best successor among the neighbors of the current state, and replaces the current state with it.
     (or lowest heuristic cost if a heuristic function is used)
     Hill-climbing is \textbf{not complete} because it never makes downhill moves, so it can get stuck in a local maximum.
@@ -274,7 +278,7 @@
         \end{itemize}
         \item local maxima:
         \begin{itemize}
-            \item \textbf{Stochastic hill climbing}(): choose at random from among the uphill moves; the probability of selection can vary with the steepness of the uphill move.
+            \item \textbf{Stochastic hill climbing}: choose at random from among the uphill moves; the probability of selection can vary with the steepness of the uphill move.
             This usually converges more slowly than regular hill climbing, but it can drive to better solutions.
             \item \textbf{random restart hill climbing}: 
             it conducts a series of hill-climbing searches from randomly generated initial states.
@@ -361,6 +365,8 @@
     \begin{itemize}
         \item \textbf{Depth-first online search}: it's a depth-first search that keep track of the current path.
         When the agent reaches a dead end, it backtracks until it finds a node with an unexplored successor.
+        For the backtracking the algorithm uses a table that maps each node to its unbacktracked parent node.
+
         It iterates this process until it reaches the goal state.
         It is \textbf{complete} if the state space is finite and \textbf{optimal}.
         It has a \textbf{time complexity} of $O(b^m)$ and a \textbf{space complexity} of $O(bm)$.
@@ -485,7 +491,7 @@
     \end{itemize}
 
     In the case of propositional logic, inference can be made by enumeration, that is a general algorithm for enumerating all the models of a sentence.
-    The algorithm consists in enumerating all models, and check that $\alpha$ is true in every model in which $KB$ is true ($KB\vDash \alpha$).
+    The algorithm consists in enumerating all models, and check that sentence $\alpha$ is true in every model in which $KB$ is true ($KB\vDash \alpha$).
     Models are assignments of \textit{true} or \textit{false} to each propositional symbol.
     The algorithm is \textbf{sound}\footnote{Soundness: $i$ is sound if whenever $KB\vdash_i\alpha$ 
     (sentence $\alpha$ can be derived from $KB$ by inference procedure $i$), it is also true that $KB\vDash\alpha$ } because it implements directly the definition of entailment, 
@@ -554,7 +560,7 @@
     which enables them to use a more restricted and efficient inference algorithm
     One such restricted forn is the \textbf{Horn form}.
 
-    With the horn form $KB$ is a conjunction of Horn clauses\footnote{Horn clauses are a disjunction of literals with at most one positive literal} where: 
+    With the horn form $KB$ is a conjunction of Horn clauses\footnote{Horn clauses are a disjunction of literals with at most one positive literal}: 
     \begin{itemize}
         \item proposition symbol
         \item (conjunction of symbols) $\Rightarrow$ symbol 
@@ -588,6 +594,12 @@
     Resolution algorithm:
     \begin{enumerate}[label=\arabic*.]
         \item Convert $KB \land \neg\alpha$ to CNF
+        \begin{enumerate}
+            \item Eliminate $\Leftrightarrow$ replacing $\alpha\Leftrightarrow\beta$ with $(\alpha\Rightarrow\beta)\land(\beta\Rightarrow\alpha)$
+            \item Eliminate $\Rightarrow$ replacing $\alpha\Rightarrow\beta$ with $\neg\alpha\lor\beta$
+            \item Move $\lnot$ inwards using De Morgan's laws and double negation
+            \item Apply distributivity law ($\lor \text{ over } \land$) and flatten
+        \end{enumerate}
         \item Appply resolution rule to resulting clauses
         \item Each pair that contains complementary literals is resolved to produce a new clause
         \item The process is repeated until one of two things happens:
