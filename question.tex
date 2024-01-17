@@ -32,7 +32,6 @@
     PEAS helps us to define the task environment in which the agent is situated.
     \begin{itemize}
         \item \textbf{Performance}: is the criteria that defines how well the agent is doing in the environment.
-        Performance with agents based on their different precepts.
         Performance measures could be a combination of different criteria. (Ex. Automated taxi driver: safety, legality, comfort, profit, time, etc.) 
         
         \item \textbf{Environment}: It describes the task environment in which the agent is situated.
@@ -153,7 +152,7 @@
     Greedy search and A\textsuperscript{*} algorithm are some special case of best-first search.
     Best-first search is a search algorithm that explores a graph by expanding the most promising node chosen according to a specified rule.
     The rule is specific to the problem, defined by a evaluation function \textit{f(n)} that estimates the cost of the 
-    cheapest path from the node \textit{n} to a goal node.
+    path from the node \textit{n} to a goal node.
     Most of the best-first search algorithms include a heuristic function \textit{h(n)} in \textit{f(n)} that estimates the cost of the cheapest path from the node \textit{n} to a goal node.
 
     \begin{itemize}
@@ -189,7 +188,7 @@
             During an iteration if $f(n) > cutoff$ then the node is not expanded.
             When the queue is empty, the cutoff is increased to the lowest value of $f(n)$.
 
-            \item \textbf{Recurisve Best-First Search}: imitates a deep search, using only linear space.
+            \item \textbf{Recursive Best-First Search}: imitates a deep search, using only linear space.
             It keeps track of the best alternative path available from any ancestor of the current node.
             When a node is expanded, the algorithm updates the value for the best alternative path.
             If the value of the best alternative path is smaller than the value of the current node, recursion goes back to the alternative path.
@@ -349,7 +348,7 @@
     
     \textcolor{green}{\textbf{Answer:}}
     Online search algorithms are used when the environment is partially observable, or it is dynamic/semydynamic 
-    the agent needs to interact with the environment to get information about it.
+    and the agent needs to interact with the environment to get information about it.
     It's not possible to compute a complete solution before starting to act, so the agent has to interleave computation and action.
     Online search work well for exploration problems.
     
@@ -377,10 +376,9 @@
         \item \textbf{LRTA\textsuperscript{*} search (Learning Real-Time A\textsuperscript{*})}: 
         it's a combination of hill climbing with memory + a strategy to overcome local optima.
         It store a ``current best estimate'' $H(s)$ of the cost of reaching the goal from each state that has been visited.
-        $H(s)$ starts out being just the heuristic estimate $h(s)$, but it is updated as the agent moves around the state space.
+        $H(s)$ starts out being just the heuristic estimate $h(s)$.
         Based on the current best estimate, the agent chooses the action that appears to lead most quickly to the goal.
-        When the agent reaches a new state, it updates the current best estimate of the cost of reaching the goal from 
-        the previous state.
+        When the agent reaches a new state, it updates the cost estimate for the state it has just left with actual node cost estimate plus the cost to reach the actual node.
 
         This optimism under uncertainty encourages the agent to explore new, possible promising paths.
         It is \textbf{complete} if the state space is finite.
@@ -600,7 +598,7 @@
             \item Move $\lnot$ inwards using De Morgan's laws and double negation
             \item Apply distributivity law ($\lor \text{ over } \land$) and flatten
         \end{enumerate}
-        \item Appply resolution rule to resulting clauses
+        \item Apply resolution rule to resulting clauses
         \item Each pair that contains complementary literals is resolved to produce a new clause
         \item The process is repeated until one of two things happens:
         \begin{itemize}
@@ -643,7 +641,7 @@
             
             cannot be than $\lnot P_1$ and $P_1$ simultaneously appear in $S$ otherwise the empty clause will appear in $RC(S)$.
             So $P_1 \leftarrow false$ if $\lnot P_1$ occurs in $S$, otherwise $P_1 \leftarrow true$.
-            \item Case $i$: Assume a partial model $m_(i-1)$ for symbols $P_1,\ldots,P_{i-1}\Rightarrow$ it is not possible to assign a truth value to $P_i$ if $RC(S)$
+            \item Case $i$: Assume a partial model $m_{(i-1)}$ for symbols $P_1,\ldots,P_{i-1}\Rightarrow$ it is not possible to assign a truth value to $P_i$ if $RC(S)$
             contains clauses:
             \begin{itemize}
                 \item $C\equiv B\lor P_i$ and $C'\equiv B'\lor\lnot P_i$, where $B$ and $B'$ only contain symbols in \{$P_1,\ldots,P_{i-1}$\}
@@ -680,7 +678,7 @@
     \end{itemize}
     Senteces are true with respect to a model and an interpretation.
 
-    The idea is to use the quantifiers to do inference and recondut to the inference in propositional logic, example:
+    The idea is to use the quantifiers to do inference and reconduct to the inference in propositional logic, example:
     \begin{itemize}
         \item\textbf{Universal quantification}: $\forall x P(x)$, it's true in a model $m$ $\iff P$ is true with $x$ being each 
         possible object in the model.
@@ -704,7 +702,7 @@
     
     \textcolor{green}{\textbf{Answer:}}
 
-    Proprositional logic seems to generate lots of irrelevant sentences:
+    Propositionalization seems to generate lots of irrelevant sentences:
     \begin{center}
         With $p$ $k-ary$ Predicates and $n$ constants, there are $p\cdot n^k$ instantiations.
     \end{center}
@@ -761,7 +759,7 @@
         \item \textbf{Standardize variables}: rename variables to avoid conflicts.
         \item \textbf{Skolemize}: eliminate existential quantifiers by replacing it with Skolem functions.
         In the existential instantiation rule, we drop the quantifier and substitute the variable with another one creating only ONE new sentence.
-        When the existential instantiation can't be appplied (The sentece doesn't match the pattern $\exists v\text{  }\alpha$), we replace 
+        When the existential instantiation can't be applied (The sentece doesn't match the pattern $\exists v\text{  }\alpha$), we replace 
         the existential quantifier variables with Skolem functions which has as arguments the universally quantified variables in whoose scope the existential quantifier appears.
 
         \item \textbf{Drop universal quantifiers}: we can drop universal quantifiers because they are implicit in CNF\@.
@@ -841,7 +839,7 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
     \end{equation}
     The terms in the summation are joint entries because $Y$, $E$ and $H$ are together exhaust the set of random variables.
 
-    The main computational challenge is that the number of possible worlds grows exponentially with the number of random variables.
+    The main computational challenge is that the space grows with the number of variables.
     Worst-case time complexity $O(d^n)$, where $d$ is the maximum number of values that any variable can take on (arity).
     Space complexity $O(d^n)$, because we need to store the probability of each possible combination of values.
 
@@ -939,7 +937,7 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
     There are different paradigms of machine learning:
     \begin{itemize}
         \item \textbf{Supervised learning}\label{q:ml-paradigms}: given pre-classified examples (training set), $Tr = \{(x^{(i)}),f(x^{(i)})\}$, learn a general description $h(x)$ (hypothesis) which captures the information content of the examples.
-        Than given a new example $\tilde{x}$, we can predict the corresponding output $h(\tilde{h})$.
+        Than given a new example $\tilde{x}$, we can predict the corresponding output $h(\tilde{x})$.
         It's called supervised because is assume that an expert provides the value of $h$ for the corresponding training instance $x$. 
         \item \textbf{Unsupervised learning}: given a set of examples $Tr = \{x^{(i)}\}$, discover regularities and/or patterns in the data.
         In this case there is no expert to provide the correct answer.
