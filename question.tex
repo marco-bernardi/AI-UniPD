@@ -551,9 +551,8 @@
         \item \textbf{Application of inference rules}: it uses logical entailment to determine the truth of a sentence. (Generation of new sentences from old ones)
     \end{itemize}
 
-    Truth table enumeration holds a problem: it is exponential in the number of propositional symbols.
+    Truth table enumeration holds a problem: it is exponential in the number of propositional symbols and in many cases is not needed the full power of resolution.
     We need to find a more efficient way to determine if $\alpha$ is entailed by $KB$.
-    Basically, we need to find the equivalent sentences written in a different way, so we can avoid them.
     Some real-world knowledgebases satisfy certain restrictions on the form of sentences  they contain, 
     which enables them to use a more restricted and efficient inference algorithm
     One such restricted forn is the \textbf{Horn form}.
@@ -702,14 +701,14 @@
     
     \textcolor{green}{\textbf{Answer:}}
 
-    Propositionalization seems to generate lots of irrelevant sentences:
+    Propositionalization seems to generate lots of irrelevant sentences (Instantiate the universal sentece in all possible ways, this can generate infinitely many ground terms with function symbols but we can solve this problem putting a limit):
     \begin{center}
         With $p$ $k-ary$ Predicates and $n$ constants, there are $p\cdot n^k$ instantiations.
     \end{center}
 
     If there is some substitution $\theta$ that makes each of the conjuncts of the premise of the implication identical 
     to senteces already in the KB, then we can assert the conclusion of the implication.
-    This inferece process is called \textbf{Generalize Modus Ponens}:
+    This inferece rule is called \textbf{Generalized Modus Ponens}:
     \begin{equation}
         \frac{p1',p2',\ldots,p'_n,\quad (p_1\land p_2\land\ldots\land p_n \Rightarrow q)}
         {q\theta}
@@ -809,13 +808,13 @@ one's own state of knowledge (it might be learned from past experience of simula
 Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + Utility theory (used to represent and infer preferences).
 
 \begin{enumerate}[label=\textbf{U.\arabic*}]
-    \item In the context of treatment of uncertainty, discuss what is the main computational challenge when using the joint probability distribution of the main involved variables.
+    \item\label{q:joint-prob} In the context of treatment of uncertainty, discuss what is the main computational challenge when using the joint probability distribution of the main involved variables.
     
     \textcolor{green}{\textbf{Answer:}}
 
     \textbf{Definition:} for a set of random variables (r.v.s) $X_1,\ldots,X_n$, the joint probability distribution $P(X_1,\ldots,X_n)$ is a table that contains the probability of each possible combination of values for the random variables.
 
-    Joint probability distribution is used for inference by enumeration: for any proposition $\phi$ sum the atomic events where it is true:
+    Joint probability distribution (completely determines a probability model) is used for inference by enumeration: for any proposition $\phi$ sum the atomic events where it is true:
     \begin{equation}
         P(\phi) = \sum_{\omega:\omega\vDash\phi}P(\omega)
     \end{equation} 
@@ -842,9 +841,9 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
     The main computational challenge is that the space grows with the number of variables.
     Worst-case time complexity $O(d^n)$, where $d$ is the maximum number of values that any variable can take on (arity).
     Space complexity $O(d^n)$, because we need to store the probability of each possible combination of values.
+    For reduce the complexity we can use conditional independence and Bayesian networks (can exploit conditional independence relationships and improve computational efficiency). Ref \ref{q:cond_ind} and \ref{q:Bayesian-Net}.
 
-
-    \item In the context of the treatment of uncertainty, formally define the concept of conditional independence and how this can be used. 
+    \item\label{q:cond_ind} In the context of the treatment of uncertainty, formally define the concept of conditional independence and how this can be used. 
     In particular, discuss its role in the Bayesian Networks.
 
     \textcolor{green}{\textbf{Answer:}}
@@ -876,7 +875,7 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
     In a Bayesian network, conditional indipendence is used to define the network topology.
     The topological semantics specifies that each variable is conditionally independent of its nondescendants, given its parents.
 
-    \item What does a Bayesian Network consist of? 
+    \item\label{q:Bayesian-Net} What does a Bayesian Network consist of? 
     Why is it useful?
     What is its computational complexity in space and time (also discuss special cases) for the exact inference?
 
@@ -889,13 +888,17 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
         \item A set of directed links or arrows connects pairs of nodes. 
         If there is an arrow from node $X$ to node $Y,X$ is said to be a parent of $Y$.
         The graph has no directed cycles and hence is a directed acyclic graph, or DAG.
-        \item Each node $X_i$ has a conditional probability distribution $P(X_i|Parents(X_i))$ that quantifies the effect of the parents on the node.
+        \item Each node $X_i$ has a conditional probability distribution \\$P(X_i|Parents(X_i))$ 
+        that quantifies the effect of the parents on the node.
     \end{enumerate}
 
     Bayesian networks are useful because they provide a compact representation of a full joint distribution, 
     given from the combination of the topology (conditional indipendence) and the conditional distributions.
     In the simplest case, conditional distribution represented as a conditional probability table (CPT) giving the distribution over $X_i$ for each combination of values for the parents.
-
+    A CPT for boolean $X_i$ with $k$ boolean parents has $2^k$ rows for the combinations of parent values.
+    If each variable has at most $k$ parents, the total number of parameters is $O(n2^k)$, where $n$ is the number of variables.
+    I.e. grows linearly with the $n$, vs $O(2^n)$ for the full joint distribution.
+w
     In Bayesian networks we can do inference: computing the probability distribution of a set of query variables, given some observed evidence variables.
     We can also do Inference by stochastic simulation:
     \begin{itemize}
@@ -912,7 +915,7 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
         \item Markov chain Monte Carlo (MCMC): sample from a stochastic process whose stationary distribution is the true posterior
     \end{itemize}
 
-    The complexity of exact inference in Bayesian networks depends strongly on the structure of the network.
+    The complexity (ref \ref{q:joint-prob}) of exact inference in Bayesian networks depends strongly on the structure of the network.
     \begin{itemize}
         \item In single connected networks (or polytrees), any two nodes are connected by at most one (undirected) path, 
         so the complexity of inference is linear in the size of the network ($O(d^kn)$).
@@ -1089,7 +1092,7 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
 
     In the case that the agent doesn't know the transition function $\delta$ and the reward function $r$, we can define the Q-function similar to $V^*$:
     \begin{equation}
-        Q^*(s,a) \equiv r(s,a) + \gamma V^*(\delta(s,a))
+        Q(s,a) \equiv r(s,a) + \gamma V^*(\delta(s,a))
     \end{equation}
     if agent learns Q, it can choose optimal action even without knowing $\delta$.
     \begin{equation}
@@ -1103,7 +1106,7 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
     which allows us to write Q recursively as:
     \begin{equation}
         \begin{split}
-            Q^*(s,a) = & r(s_t,a_t) + \gamma V^*(\delta(s_t,a_t)) \\
+            Q(s,a) = & r(s_t,a_t) + \gamma V^*(\delta(s_t,a_t)) \\
             = & r(s_t,a_t) + \gamma\max_{a'}Q(s_{t+1},a')
         \end{split}
     \end{equation}
@@ -1177,14 +1180,14 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
         \item \textbf{Successor function}: assign a value to an unassigned variable that does not conflict with current assignment.
         \item \textbf{Goal test}: the current assignment is complete and satisfies all constraints.
     \end{itemize}
-    It use deep-first search.
+    It use depth-first search.
 
     There is an important property not considered by the previous approch: \textbf{commutativity}.
     The commutativity property states that the order in which we assign values to variables does not matter, the result is the same.
     
     The term backtracking search is used for a depth-first search that chooses values for one variable at a time and backtracks when a variable has no legal values left to assign.
 
-    It repeatedly chooses an unassigned variable, and then triesall values in the domain of that variable in turn, trying to find a solution. 
+    It repeatedly chooses an unassigned variable, and then tries all values in the domain of that variable in turn, trying to find a solution. 
     If an inconsistency isdetected, then BACKTRACK returns failure, causing the previous call to try another value
     We can improve the backtracking search with general-purpose methods:
     \begin{itemize}
@@ -1199,12 +1202,13 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
             Algorithms for tree-structured CSPs:
             \begin{enumerate}
                 \item Choose a variable as root, order the variables from root to leaves such that every node's parent precedes it in the ordering.
-                \item For $i$ from $n$ down to $2$, impose arc consistency (A variable X is arc-consistent with respect to another variable Y if, 
-                for every value x in the domain of X, at least one value exists y in the domain of Y such that the pair (,) (x,y) 
-                respects all constraints between X e Y.) on the arc from $X_i$ to its parent.
+                \item For $i$ from $n$ down to $2$, impose arc consistency (A variable is is arc-consistent if every value in its domain satisfies the variable's binary constraints. 
+                More formally, $X_i$ is arc-consistent with respect to another variable $X_j$ if for every value in the current domain $D_i$ there is some value in the domain $D_j$
+                that satisfies the binary constraint on the $arc(X_i,X_j)$. 
+                A network is arc-consistent if every variable is arc-consistent with every other variable) on the arc from $X_i$ to its parent.
                 \item For $i$ from $1$ up to $n$, assign $X_i$ consistently with all its ancestors.
             \end{enumerate}
-        \end{itemize}
+        \end{itemize}w
     \end{itemize}
 
     The last approch is based on the use of Iterative algorithms that repeatedly improve the quality of the current assignment.
