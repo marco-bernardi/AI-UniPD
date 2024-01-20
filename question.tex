@@ -562,7 +562,7 @@
         \item proposition symbol
         \item (conjunction of symbols) $\Rightarrow$ symbol 
     \end{itemize}
-    Every definite clause can be written as an implication whose premise is a conjunctionof positive literals and whose conclusion is a single positive literal.
+    Every definite clause can be written as an implication whose premise is a conjunction of positive literals and whose conclusion is a single positive literal.
     
     \textbf{Modus Ponens} is a inference rule that can be used with the horn form: 
     \begin{equation}
@@ -729,8 +729,15 @@
     each sentece have to use different variables name (we can rename variables in a sentence without changing its meaning).
 
     \textbf{Unification algorithm}:
-    The algorithm works by comparing the structuresof the inputs, element by element.
+    The algorithm works by comparing the structures of the inputs, element by element.
     The substitution $\theta$ that is the argument to UNIFY is builtup along the way and is used to make sure that later comparisons are consistent with bindingsthat were established earlier.
+    At the beginning it checks if the two sentecens have the same function or predicate and the same number of arguments.
+    Then it checks arguments one by one and:
+    \begin{itemize}
+        \item if those args are variables, it adds the binding to $\theta$.
+        \item if those args are compounds, it recursively calls UNIFY on them.
+        \item if those args are lists, it recursively calls UNIFY on them.
+    \end{itemize}
 
     \textbf{Problem}: there could be more than one such unifier $\Rightarrow$ for each pair of sentences we need to find the most general unifier
     (MGU\@: that one which places the fewest restrictions on the variables), 
@@ -749,7 +756,7 @@
     It requires senteces to  be in \textbf{conjunctive normal form} (CNF\@: a conjunction of clauses, where a clause is a disjunction of literals).
     For achieving this form, we must follow these steps:
     \begin{enumerate}
-        \item \textbf{Eliminate implications}: $p\Rightarrow q$ is equivalent to $\lnot p\lor q$.
+        \item \textbf{Eliminate biconditionals and implications}: $p\Rightarrow q$ is equivalent to $\lnot p\lor q$.
         \item \textbf{Move negation inwards}: we need rules for negated quantifiers:
         \begin{itemize}
             \item $\lnot\forall x P(x)$ is equivalent to $\exists x \lnot P(x)$
@@ -898,8 +905,17 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
     A CPT for boolean $X_i$ with $k$ boolean parents has $2^k$ rows for the combinations of parent values.
     If each variable has at most $k$ parents, the total number of parameters is $O(n2^k)$, where $n$ is the number of variables.
     I.e. grows linearly with the $n$, vs $O(2^n)$ for the full joint distribution.
-w
+
     In Bayesian networks we can do inference: computing the probability distribution of a set of query variables, given some observed evidence variables.
+    
+    The complexity (ref \ref{q:joint-prob}) of exact inference in Bayesian networks depends strongly on the structure of the network.
+    \begin{itemize}
+        \item In single connected networks (or polytrees), any two nodes are connected by at most one (undirected) path, 
+        so the complexity of inference is linear in the size of the network ($O(d^kn)$).
+        \item In multiply connected networks, we can reduce 3SAT to exact inference to NP-Hard that is equivalent to
+        counting 3SAT solutions, thus \#P-complete.
+    \end{itemize}
+    
     We can also do Inference by stochastic simulation:
     \begin{itemize}
         \item Draw $N$ samples from a sampling distribution $S$.
@@ -913,14 +929,6 @@ w
         \item Rejection sampling: reject samples disagreeing with evidence
         \item Likelihood weighting: weight samples by likelihood of evidence
         \item Markov chain Monte Carlo (MCMC): sample from a stochastic process whose stationary distribution is the true posterior
-    \end{itemize}
-
-    The complexity (ref \ref{q:joint-prob}) of exact inference in Bayesian networks depends strongly on the structure of the network.
-    \begin{itemize}
-        \item In single connected networks (or polytrees), any two nodes are connected by at most one (undirected) path, 
-        so the complexity of inference is linear in the size of the network ($O(d^kn)$).
-        \item In multiply connected networks, we can reduce 3SAT to exact inference to NP-Hard that is equivalent to
-        counting 3SAT solutions, thus \#P-complete.
     \end{itemize}
 \end{enumerate}
 
@@ -950,7 +958,7 @@ w
 
     The fundamental ingredients of the supervised paradigm are:
     \begin{itemize}
-        \item \textbf{Training data}: data tha are drawn from the Instance Space, $X$.
+        \item \textbf{Training data}: data that are drawn from the Instance Space, $X$.
         \item \textbf{Hypothesis space}: it is the set of functions that the learning algorithm 
         can choose the function $h$ that approximate the function $f$ (Function to be learned).
         \item \textbf{Learning algorithm}: search algorithm into the hypothesis space.
@@ -1208,7 +1216,7 @@ w
                 A network is arc-consistent if every variable is arc-consistent with every other variable) on the arc from $X_i$ to its parent.
                 \item For $i$ from $1$ up to $n$, assign $X_i$ consistently with all its ancestors.
             \end{enumerate}
-        \end{itemize}w
+        \end{itemize}
     \end{itemize}
 
     The last approch is based on the use of Iterative algorithms that repeatedly improve the quality of the current assignment.
