@@ -201,7 +201,7 @@
             \item \textbf{Memory-bounded A\textsuperscript{*} (MA\textsuperscript{*})}:
             
             \item \textbf{Simplified memory-bounded A\textsuperscript{*} (SMA\textsuperscript{*})}:
-            it expand the best node until the memory is full.
+            it expands the best node until the memory is full.
             It removes the worst node from the memory to make space for a new node 
             and backup the f-value of the removed node on the parent node.
             The parent node will eventually be expanded if the other paths are worse.
@@ -235,8 +235,8 @@
 
     Example 8-puzzle:
     \begin{itemize}
-        \item $h_1(n)$ = number of misplaced tiles
-        \item $h_2(n)$ = total Manhattan distance
+        \item $h_1(n)$ = total Manhattan distance
+        \item $h_2(n)$ = number of misplaced tiles
     \end{itemize}
 
     An heuristic function can be systematically constructed by relaxing the problem.
@@ -264,7 +264,7 @@
 
     Problems:\\
     if the neighbors solutions are equivalent it can get stuck in a shoulder, otherwise if the neighbors solutions are worse it can get stuck in a local maximum.
-    If we've ridges (a sequence of local maxima not directly connected to each other) it will difficult to move from one local maximum to another.
+    If we've ridges (a sequence of local maxima not directly connected to each other) it will be difficult to move from one local maximum to another.
     In continuous space, it is difficult to pick the ``right'' step size and convergence can be very slow.
     
 
@@ -277,7 +277,7 @@
         \end{itemize}
         \item local maxima:
         \begin{itemize}
-            \item \textbf{Stochastic hill climbing}: choose at random from among the uphill moves; the probability of selection can vary with the steepness of the uphill move.
+            \item \textbf{Stochastic hill climbing}: chooses at random from among the uphill moves; the probability of selection can vary with the steepness of the uphill move.
             This usually converges more slowly than regular hill climbing, but it can drive to better solutions.
             \item \textbf{random restart hill climbing}: 
             it conducts a series of hill-climbing searches from randomly generated initial states.
@@ -347,7 +347,7 @@
     \item Introduce the concept of online search, and describe the algorithms we discussed in class.
     
     \textcolor{green}{\textbf{Answer:}}
-    Online search algorithms are used when the environment is partially observable, or it is dynamic/semydynamic 
+    Online search algorithms are used when the environment is partially observable, or it is dynamic/semidynamic 
     and the agent needs to interact with the environment to get information about it.
     It's not possible to compute a complete solution before starting to act, so the agent has to interleave computation and action.
     Online search work well for exploration problems.
@@ -423,7 +423,7 @@
         \item doubles the depth of exploration
     \end{itemize}
 
-    $alpha - \beta$ pruning suite well for games with deterministic games; it work also for non-deterministic games.
+    $\alpha - \beta$ pruning suite well for games with deterministic games; it work also for non-deterministic games.
     In the case of non-deterministic games, the states doesn't have definite values, we can compute only the expected value of a state.
     \textbf{Expectiminimax algorithm} help us to handle this problem, that works like minimax 
     except that it also handle chance nodes.
@@ -710,7 +710,7 @@
     to senteces already in the KB, then we can assert the conclusion of the implication.
     This inferece rule is called \textbf{Generalized Modus Ponens}:
     \begin{equation}
-        \frac{p1',p2',\ldots,p'_n,\quad (p_1\land p_2\land\ldots\land p_n \Rightarrow q)}
+        \frac{p_1',p_2',\ldots,p'_n,\quad (p_1\land p_2\land\ldots\land p_n \Rightarrow q)}
         {q\theta}
     \end{equation}
 
@@ -719,7 +719,7 @@
     For any definite clause $p$, we have $p\vDash p\theta$ by UI.
     \begin{itemize}
         \item $(p_1\land\ldots\land p_n \Rightarrow q)\vDash(p_1\land\ldots\land p_n \Rightarrow q)\theta=(p_1\theta\land\ldots p_n\theta\Rightarrow q\theta)$
-        \item $p'_1\land\ldots\land p_n \vDash p'_1\land\ldots\land p'_n\vDash p'_1\theta\land\ldots\land p'_n\theta$
+        \item $p'_1,\ldots, p'_n \vDash p'_1\land\ldots\land p'_n\vDash p'_1\theta\land\ldots\land p'_n\theta$
         \item From 1 and 2, $q\theta$ follows by ordinary Modus Ponens.
     \end{itemize}
 
@@ -730,7 +730,7 @@
 
     \textbf{Unification algorithm}:
     The algorithm works by comparing the structures of the inputs, element by element.
-    The substitution $\theta$ that is the argument to UNIFY is builtup along the way and is used to make sure that later comparisons are consistent with bindingsthat were established earlier.
+    The substitution $\theta$ that is the argument to UNIFY is builtup along the way and is used to make sure that later comparisons are consistent with bindings that were established earlier.
     At the beginning it checks if the two sentecens have the same function or predicate and the same number of arguments.
     Then it checks arguments one by one and:
     \begin{itemize}
@@ -743,7 +743,7 @@
     (MGU\@: that one which places the fewest restrictions on the variables), 
     that is unique up to renaming and substitution of variables.
 
-    This algorithm is particularly useful for logical inference because it is used in algorithms for logical inference like forward/backward chaining and resolution.
+    This algorithm is particularly useful because it is used in algorithms for logical inference like forward/backward chaining and resolution.
 
 
     \item In the context of inference in first-order logic, introduce the resolution rule.
@@ -1034,7 +1034,7 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
 
     \textcolor{green}{\textbf{Answer:}}
 
-    A perceptron given an input vector $\vec{x}$ and a weight vector $\vec{w}$ calculates $f(\sum{w_i*x_i})$ thas is the activation function of the perceptron.
+    A perceptron given an input vector $\vec{x}$ and a weight vector $\vec{w}$ calculates $f(\sum{w_i*x_i})$ that is the activation function of the perceptron.
     A Neural Network is a system consisting of interconnected units that compute nonlinear functions.
 
     In a Neural Network we can find:
@@ -1045,7 +1045,7 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
         \item \textbf{Weights}: are associated to connections between units.
     \end{itemize}
 
-    Having decided on the mathematical model for individual “neurons,”  the next task isto connect them together to form a network.
+    Having decided on the mathematical model for individual “neurons,”  the next task is to connect them together to form a network.
     \textbf{Feed-forward networks}: the information flows in one direction, from the input units, through the hidden units (if any) and to the output units.
     Gradient descent for feed-forward: we need to optimize the weights of the network to minimize the error on the training set $\rightarrow$ backpropagation algorithm.
     We define the function error with $c$ output units:
