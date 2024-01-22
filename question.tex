@@ -869,7 +869,7 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
 
     Conditional independence:
     \begin{equation}\label{eq:prob_cond_ind}
-        P(X|Y,Z) = P(X|Z)P(Y|Z)
+        P(X,Y|Z) = P(X|Z)P(Y|Z)
     \end{equation}
 
     Full joint distribution:
@@ -1012,7 +1012,7 @@ Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + 
         error_D(h) \equiv \underset{x\in\mathcal{D}}{Pr}[c(x)\neq h(x)]
     \end{equation}
 
-    We can say that $h\equiv\mathcal{H}$ overfits $Tr$ if $\exists h'\in\mathcal{H}$ such that $error_{Tr}(h)<error_{Tr}(h')$ and $error_D(h)>error_D(h')$.
+    We can say that $h\in\mathcal{H}$ overfits $Tr$ if $\exists h'\in\mathcal{H}$ such that $error_{Tr}(h)<error_{Tr}(h')$ and $error_D(h)>error_D(h')$.
 
     The goal of machine learning is to solve a task with the lowest possible true error, but a classifier learn on training data so 
     it generate empirical error and not true error.
