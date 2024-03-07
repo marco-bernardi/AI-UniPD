@@ -20,1217 +20,996 @@
 \makeindex
 \begin{document}
 \maketitle
+% Create a disclaimer page
+\newpage
+% big red disclaimer
+\textcolor{red}
+{\textbf{DISCLAIMER:} This document is a collection of questions and answers from the previous exams of the course of Artificial Intelligence.
+    The answers are written by the authors and are not guaranteed to be correct.}
+\newpage
+
 \section{Agents}
 \begin{enumerate}[label=\textbf{A.\arabic*}]
-    \item Explain in detail the meaning of the acronym PEAS in the context of the definition of an intelligent agent. 
-    According to the previous answer, introduce the various types of agents discussed in class.
-    
-    \textcolor{green}{\textbf{Answer:}}
-    
-    \textbf{PEAS} = Performance, Environment, Actuators, Sensors
+    \item Explain in detail the meaning of the acronym PEAS in the context of the definition of an intelligent agent.
+          According to the previous answer, introduce the various types of agents discussed in class.
 
-    PEAS helps us to define the task environment in which the agent is situated.
-    \begin{itemize}
-        \item \textbf{Performance}: is the criteria that defines how well the agent is doing in the environment.
-        Performance measures could be a combination of different criteria. (Ex. Automated taxi driver: safety, legality, comfort, profit, time, etc.) 
-        
-        \item \textbf{Environment}: It describes the task environment in which the agent is situated.
-        An environment could be fully \textbf{observable} (Chess game) because you can see the whole state of the environment, otherwise it will be 
-        or \textbf{partially observable} (Poker).
+          \textcolor{green}{\textbf{Answer:}}
 
-        It could be \textbf{deterministic} (chess game) because the next state of the environment is completely determined 
-        by the current state and the action executed by the agent,
-        or \textbf{stochastic} (poker) because the next state of the environment can't be predicted in a certain way.
+          PEAS helps us define the task environment in which the agent is situated.
 
-        It could be \textbf{episodic} if the current action depend on the previous/next actions or \textbf{sequential} if the action are independent.
-        
-        It could have only one agent or multiple agents.
+          \begin{itemize}
+              \item \textbf{Performance}: This criterion defines how well the agent is performing in the environment. Performance measures could be a combination of different criteria (e.g., an automated taxi driver's safety, legality, comfort, profit, time, etc.).
 
-        It could be \textbf{static} if the environment doesn't change while the agent is deliberating or \textbf{dynamic} if the environment can change while the agent is deliberating.
+              \item \textbf{Environment}: It describes the task environment in which the agent is situated. An environment could be fully \textbf{observable} (e.g., a chess game) because you can see the whole state of the environment, or \textbf{partially observable} (e.g., poker).
 
-        Depending on the environment variables, the environment could be \textbf{discrete} or \textbf{continuous}.
-        
-        (Ex. Automated taxi driver: roads and highways, other cars, pedestrians, traffic lights, etc.)
-        \item \textbf{Actuators}: They are the mechanism or devices through which the agent acts upon the environment.
-        Actuators translate decisions made by the agent into actions that can be performed on the environment.
-        (Ex. Automated taxi driver: steering wheel, accelerator, brake, signal, etc.)
-        \item \textbf{Sensors}: They are the mechanism or devices through which the agent perceives the environment.
-        (Ex. Automated taxi driver: camera, GPS, speedometer, odometer, etc.)
-    \end{itemize}
-    An agent is a perceiving and acting entity, it is considered rational if it tries to achieve the best outcome given the available information.
+                    It could be \textbf{deterministic} (e.g., chess game) because the next state of the environment is completely determined by the current state and the action executed by the agent, or \textbf{stochastic} (e.g., poker) because the next state of the environment can't be predicted in a certain way.
 
-    Exist different types of agents:
-    \begin{itemize}
-        \item \textbf{Simple reflex agents}: they select actions on the basis of the current percept, 
-        ignoring the rest of the percept history.
-        A simple reflex agent acts according to a rule whose condition matches the current state, as defined by the percept.
-        The disadvantage of this type of agent is that if the environment is partially observable, then the agent may select a wrong action.
+                    It could be \textbf{episodic} if the current action depends on the previous/next actions or \textbf{sequential} if the actions are independent.
 
-        \item \textbf{Model-based reflex agents}: they select actions on the basis of 
-        the current percept and some of the percept history.
-        The disadvantage of this type of agent is that it has hard-coded rules, so it can't learn from experience and it can't be flexible.
+                    It could have only one agent or multiple agents.
 
-        \item \textbf{Goal-based agents}: they select actions based on the goal they are trying to achieve, 
-        making the agent more flexible.
-        The disadvantage of this type of agent is that it can have several goals that may conflict with each other.
-        
-        \item \textbf{Utility-based agents}: they select actions based on a utility function that measures the performance of the agent.
-        The utility function helps the agent to choose the goal keeping in mind the likelihood of success and the importance of the goals.
-        No remarkable disadvantages.
+                    It could be \textbf{static} if the environment doesn't change while the agent is deliberating or \textbf{dynamic} if the environment can change while the agent is deliberating.
 
-        \item \textbf{Learning agents}: they select actions based on the knowledge gained from the environment and past experiences, and there is a problem generator
-        component that creates new situations to improve the agent's knowledge.
-        No remarkable disadvantages.
-    \end{itemize}
+                    Depending on the environment variables, the environment could be \textbf{discrete} or \textbf{continuous} (e.g., an automated taxi driver with roads and highways, other cars, pedestrians, traffic lights, etc.).
+
+              \item \textbf{Actuators}: These are the mechanisms or devices through which the agent acts upon the environment. Actuators translate decisions made by the agent into actions that can be performed on the environment (e.g., an automated taxi driver's steering wheel, accelerator, brake, signal, etc.).
+
+              \item \textbf{Sensors}: These are the mechanisms or devices through which the agent perceives the environment (e.g., an automated taxi driver's camera, GPS, speedometer, odometer, etc.).
+          \end{itemize}
+
+          An agent is a perceiving and acting entity; it is considered rational if it tries to achieve the best outcome given the available information.
+
+          Different types of agents exist:
+
+          \begin{itemize}
+              \item \textbf{Simple reflex agents}: They select actions based on the current percept, ignoring the rest of the percept history. A simple reflex agent acts according to a rule whose condition matches the current state, as defined by the percept. The disadvantage of this type of agent is that if the environment is partially observable, the agent may select a wrong action.
+
+              \item \textbf{Model-based reflex agents}: They select actions based on the current percept and some of the percept history. The disadvantage of this type of agent is that it has hard-coded rules, so it can't learn from experience and lacks flexibility.
+
+              \item \textbf{Goal-based agents}: They select actions based on the goal they are trying to achieve, making the agent more flexible. The disadvantage of this type of agent is that it can have several goals that may conflict with each other.
+
+              \item \textbf{Utility-based agents}: They select actions based on a utility function that measures the agent's performance. The utility function helps the agent choose the goal, keeping in mind the likelihood of success and the importance of the goals. There are no remarkable disadvantages.
+
+              \item \textbf{Learning agents}: They select actions based on the knowledge gained from the environment and past experiences. There is a problem generator component that creates new situations to improve the agent's knowledge. There are no remarkable disadvantages.
+          \end{itemize}
 \end{enumerate}
 
 \section{Uninformed Search}
 \begin{enumerate}[label=\textbf{US.\arabic*}]
-    \item Describe the principal uninformed search strategies, 
-    and compare them in terms of correctness, completeness (Can we find a solution?), time and space complexity.
+    \item Describe the principal uninformed search strategies,
+          and compare them in terms of correctness, completeness (Can we find a solution?), time and space complexity.
 
-    \textcolor{green}{\textbf{Answer:}}
-    Search strategies are used to find a solution to a problem defined by four components: 
-    \textbf{initial state}, \textbf{successor function}, \textbf{goal test} and \textbf{path cost}.
-    Uninformed search strategies use only the information provided by the problem definition and operate systematically to find a solution.
-    The solution is a sequence of actions that leads from the initial state to a goal state.
-    There are different uninformed search strategies (We're working with trees):
-    \begin{enumerate}
-        \item \textbf{Breadth-first search}: it explore the tree level by level, 
-        so the fringe is implemented as a FIFO queue.
-        The disadvantage of this strategy is that it requires a lot of memory, because it has to visit all the nodes.
-        It is \textbf{complete} (if branching factor \textit{b} is finite) and \textbf{optimal} if the path costs are all equal.
-        It has a \textbf{time complexity} of $O(b^d)$ and a \textbf{space complexity} of $O(b^d)$.
-    
-        \item \textbf{Uniform cost search}: if the path costs are all equal, it is equivalent to breadth-first search.
-        Otherwise it expands the least-cost unexpanded node (the node with the lowest path cost) and it uses a priority queue (fringe) 
-        orderd by path costs.
-        It is \textbf{complete} if the path costs are bounded below by a small positive constant and b is finite.
-        It is \textbf{optimal}.
-        It has a \textbf{time complexity} of $O(b^{1+\lfloor C^*/\epsilon \rfloor})$ (it can be greater than BFS time complexity because once it found a solution, it has to check if there is a better solution)
-        and a \textbf{space complexity} of $O(b^{1+\lfloor C^*/\epsilon \rfloor})$.
-    
-        \item \textbf{Depth-first search}: it explores the tree by expanding the deepest node in the current frontier of the search tree.
-        The fringe is implemented as a LIFO queue.
-        It is \textbf{not complete} because it can get stuck in an infinite path.
-        It is \textbf{not optimal}.
-        It has a \textbf{time complexity} of $O(b^m)$ and a \textbf{space complexity} of $O(bm)$.
+          \textcolor{green}{\textbf{Answer:}}
+          Search strategies are used to find a solution to a problem defined by four components:
+          \textbf{initial state}, \textbf{successor function}, \textbf{goal test}, and \textbf{path cost}.
+          Uninformed search strategies use only the information provided by the problem definition and operate systematically to find a solution.
+          The solution is a sequence of actions that leads from the initial state to a goal state.
+          There are different uninformed search strategies (We're working with trees):
+          \begin{enumerate}
+              \item \textbf{Breadth-first search}: it explores the tree level by level,
+                    so the fringe is implemented as a FIFO queue.
+                    The disadvantage of this strategy is that it requires a lot of memory because it has to visit all the nodes.
+                    It is \textbf{complete} (if the branching factor \textit{b} is finite) and \textbf{optimal} if the path costs are all equal.
+                    It has a \textbf{time complexity} of $O(b^d)$ and a \textbf{space complexity} of $O(b^d)$.
 
-        It requires less memory than breadth-first search, but it can get stuck in an infinite path.
+              \item \textbf{Uniform cost search}: if the path costs are all equal, it is equivalent to breadth-first search.
+                    Otherwise, it expands the least-cost unexpanded node (the node with the lowest path cost) and uses a priority queue (fringe)
+                    ordered by path costs.
+                    It is \textbf{complete} if the path costs are bounded below by a small positive constant and \textit{b} is finite.
+                    It is \textbf{optimal}.
+                    It has a \textbf{time complexity} of $O(b^{1+\lfloor C^*/\epsilon \rfloor})$ (it can be greater than BFS time complexity because once it found a solution, it has to check if there is a better solution)
+                    and a \textbf{space complexity} of $O(b^{1+\lfloor C^*/\epsilon \rfloor})$.
 
-        \item \textbf{Iterative deepening search}: it is a combination of depth-first search and breadth-first search.
-        It performs depth-first search up to a certain depth, then it performs breadth-first search up to that depth, 
-        and so on increasing the depth limit.        
-        It is \textbf{complete} if \textit{b} is finite and \textbf{optimal} if the path costs are all equal.
-        It has a \textbf{time complexity} of $O(b^d)$ and a \textbf{space complexity} of $O(bd)$.
+              \item \textbf{Depth-first search}: it explores the tree by expanding the deepest node in the current frontier of the search tree.
+                    The fringe is implemented as a LIFO queue.
+                    It is \textbf{not complete} because it can get stuck in an infinite path.
+                    It is \textbf{not optimal}.
+                    It has a \textbf{time complexity} of $O(b^m)$ and a \textbf{space complexity} of $O(bm)$.
 
-        It advantage is that it requires less memory than breadth-first search
+                    It requires less memory than breadth-first search, but it can get stuck in an infinite path.
 
-        \item \textbf{Depth-limited search}: it is a depth-first search with a depth limit that doesn't change.
-        It isn't \textbf{complete} and not \textbf{optimal}.
-        It has a \textbf{time complexity} of $O(b^l)$ and a \textbf{space complexity} of $O(bl)$.
+              \item \textbf{Iterative deepening search}: it is a combination of depth-first search and breadth-first search.
+                    It performs depth-first search up to a certain depth, then it performs breadth-first search up to that depth,
+                    and so on, increasing the depth limit.
+                    It is \textbf{complete} if \textit{b} is finite and \textbf{optimal} if the path costs are all equal.
+                    It has a \textbf{time complexity} of $O(b^d)$ and a \textbf{space complexity} of $O(bd)$.
 
-        \item \textbf{Bidirectional search}: it performs two simultaneous searches, one forward from the initial state and one backward from the goal.
-        It is \textbf{complete} if \textit{b} is finite and  both searches use breadth-first search.
-        It is \textbf{optimal} if the path costs are all equal and both searches use breadth-first search.
-        It has a \textbf{time complexity} of $O(b^{d/2})$ and a \textbf{space complexity} of $O(b^{d/2})$.
+                    Its advantage is that it requires less memory than breadth-first search.
 
-        May not find the optimal solution, but if it's applicable it is faster and lighter than breadth-first search.
+              \item \textbf{Depth-limited search}: it is a depth-first search with a depth limit that doesn't change.
+                    It isn't \textbf{complete} and not \textbf{optimal}.
+                    It has a \textbf{time complexity} of $O(b^l)$ and a \textbf{space complexity} of $O(bl)$.
 
-    \end{enumerate}
-    
+              \item \textbf{Bidirectional search}: it performs two simultaneous searches, one forward from the initial state and one backward from the goal.
+                    It is \textbf{complete} if \textit{b} is finite and both searches use breadth-first search.
+                    It is \textbf{optimal} if the path costs are all equal and both searches use breadth-first search.
+                    It has a \textbf{time complexity} of $O(b^{d/2})$ and a \textbf{space complexity} of $O(b^{d/2})$.
+
+                    May not find the optimal solution, but if it's applicable, it is faster and lighter than breadth-first search.
+          \end{enumerate}
+
 \end{enumerate}
 
 \section{Informed Search}\label{sec-informedsearch}
 \begin{enumerate}[label=\textbf{IS.\arabic*}]
     \item Define the concept of informed search, and describe the greedy search and the A\textsuperscript{*} algorithm.
-    Discuss the properties (optimality, completeness, time and space complexity) and conditions of applicability of the two algorithms.
+          Discuss the properties (optimality, completeness, time and space complexity) and conditions of applicability of the two algorithms.
 
-    \textcolor{green}{\textbf{Answer:}}
+          \textcolor{green}{\textbf{Answer:}}
 
-    Informed search algorithms use problem-specific knowledge beyond the definition of the problem itself.
-    Greedy search and A\textsuperscript{*} algorithm are some special case of best-first search.
-    Best-first search is a search algorithm that explores a graph by expanding the most promising node chosen according to a specified rule.
-    The rule is specific to the problem, defined by a evaluation function \textit{f(n)} that estimates the cost of the 
-    path from the node \textit{n} to a goal node.
-    Most of the best-first search algorithms include a heuristic function \textit{h(n)} in \textit{f(n)} that estimates the cost of the cheapest path from the node \textit{n} to a goal node.
+          Informed search algorithms use problem-specific knowledge beyond the definition of the problem itself.
+          Greedy search and A\textsuperscript{*} algorithm are some special cases of best-first search.
+          Best-first search is an algorithm that explores a graph by expanding the most promising node chosen according to a specified rule.
+          The rule is specific to the problem and defined by an evaluation function \textit{f(n)} that estimates the cost of the path from the node \textit{n} to a goal node. Most best-first search algorithms include a heuristic function \textit{h(n)} in \textit{f(n)} that estimates the cost of the cheapest path from the node \textit{n} to a goal node.
 
-    \begin{itemize}
-        \item \textbf{Greedy search}: it expands the node that appears to be closest to goal, according to the heuristic function \textit{h(n)}.
-        In this case \textit{f(n)} = \textit{h(n)}.
-        It is \textbf{not complete} because it can get stuck in a loop. In a finite space with repeated-state checking it is complete.
-        It is \textbf{not optimal}.
-        It has a \textbf{time complexity} of $O(b^m)$ and a \textbf{space complexity} of $O(b^m)$.
+          \begin{itemize}
+              \item \textbf{Greedy search}: It expands the node that appears to be closest to the goal, according to the heuristic function \textit{h(n)}. In this case, \textit{f(n)} = \textit{h(n)}. It is \textbf{not complete} because it can get stuck in a loop. In a finite space with repeated-state checking, it is complete. It is \textbf{not optimal}. It has a \textbf{time complexity} of $O(b^m)$ and a \textbf{space complexity} of $O(b^m)$.
 
-        \item \textbf{A\textsuperscript{*} algorithm}: The idea at the base of this algorithm is to avoid expanding paths that are already expensive.
-        It expands the node that has the lowest value of \textit{f(n)} = \textit{g(n)} + \textit{h(n)}.
-        Where:
-        \begin{itemize}
-            \item \textit{g(n)} is the cost of the path from the initial state to the node \textit{n}.
-            \item \textit{h(n)} is the heuristic function that estimates the cost of the cheapest path from the node \textit{n} to a goal node.
-            \item \textit{f(n)} is the evaluation function that estimates the cost of the cheapest solution through \textit{n}.
-        \end{itemize}
-        A\textsuperscript{*} uses an admisible heuristic function, that is a heuristic function that never overestimates the cost to reach the goal.
-        It is \textbf{optimal} for tree search because it will never select a suboptimal goal $G_2$ 
-        over an optimal goal $G_1$, since $f(G_2) > f(n)$ where $n$ is an unexpanded node that leads to $G_1$.
-        For graph search the previous statement is not true, and we need another proof that use consistent heuristic.
-        A heuristic is consistent if $h(n) \leq c(n,a,n') + h(n')$ where $n$ is the current node, $a$ is the action that leads to $n'$ and $n'$ is the successor of $n$.
-        $f(n)$ is non-decreasing along any path.
-        It is \textbf{complete}, unless there are infinitely many nodes with \textit{f(n)} $\leq$ \textit{f(G)}.
-        It has a \textbf{time complexity} exponential and a \textbf{space complexity} of $O(nodescount)$.
-        
-        No other optimal algorithm is guaranteed to expand fewer nodes than A\textsuperscript{*}.
+              \item \textbf{A\textsuperscript{*} algorithm}: The idea behind this algorithm is to avoid expanding paths that are already expensive. It expands the node that has the lowest value of \textit{f(n)} = \textit{g(n)} + \textit{h(n)}, where:
+                    \begin{itemize}
+                        \item \textit{g(n)} is the cost of the path from the initial state to the node \textit{n}.
+                        \item \textit{h(n)} is the heuristic function that estimates the cost of the cheapest path from the node \textit{n} to a goal node.
+                        \item \textit{f(n)} is the evaluation function that estimates the cost of the cheapest solution through \textit{n}.
+                    \end{itemize}
+                    A\textsuperscript{*} uses an admissible heuristic function, a heuristic function that never overestimates the cost to reach the goal. It is \textbf{optimal} for tree search because it will never select a suboptimal goal $G_2$ over an optimal goal $G_1$, since $f(G_2) > f(n)$ where $n$ is an unexpanded node that leads to $G_1$. For graph search, the previous statement is not true, and we need another proof that uses a consistent heuristic. A heuristic is consistent if $h(n) \leq c(n,a,n') + h(n')$ where $n$ is the current node, $a$ is the action that leads to $n'$, and $n'$ is the successor of $n$. $f(n)$ is non-decreasing along any path. It is \textbf{complete}, unless there are infinitely many nodes with \textit{f(n)} $\leq$ \textit{f(G)}. It has a \textbf{time complexity} exponential and a \textbf{space complexity} of $O(\text{nodes count})$.
 
-        A\textsuperscript{*} could be exponential in space $\Rightarrow$ Solutions:
-        \begin{itemize}
-            \item \textbf{Iterative deepening A\textsuperscript{*} (IDA\textsuperscript{*})}: 
-            it acts like A\textsuperscript{*} but it use a cutoff value instead of a depth limit.
-            During an iteration if $f(n) > cutoff$ then the node is not expanded.
-            When the queue is empty, the cutoff is increased to the lowest value of $f(n)$.
+                    No other optimal algorithm is guaranteed to expand fewer nodes than A\textsuperscript{*}. A\textsuperscript{*} could be exponential in space $\Rightarrow$ Solutions:
+                    \begin{itemize}
+                        \item \textbf{Iterative deepening A\textsuperscript{*} (IDA\textsuperscript{*})}: It acts like A\textsuperscript{*} but uses a cutoff value instead of a depth limit. During an iteration, if $f(n) > \text{cutoff}$, then the node is not expanded. When the queue is empty, the cutoff is increased to the lowest value of $f(n)$.
 
-            \item \textbf{Recursive Best-First Search}: imitates a deep search, using only linear space.
-            It keeps track of the best alternative path available from any ancestor of the current node.
-            When a node is expanded, the algorithm updates the value for the best alternative path.
-            If the value of the best alternative path is smaller than the value of the current node, recursion goes back to the alternative path.
-            On the return from the recursion, the algorithm updates the f-value of the best child node.
+                        \item \textbf{Recursive Best-First Search}: It imitates a deep search, using only linear space. It keeps track of the best alternative path available from any ancestor of the current node. When a node is expanded, the algorithm updates the value for the best alternative path. If the value of the best alternative path is smaller than the value of the current node, recursion goes back to the alternative path. On the return from the recursion, the algorithm updates the f-value of the best child node. It is \textbf{optimal} if the heuristic is consistent. Space complexity is $O(bd)$, and time complexity is exponential in the worst case. RBFS has a problem; it uses too little memory.
 
-            It is \textbf{optimal} if the heuristic is consistent.
-            Space complexity is $O(bd)$ and time complexity is exponential in the worst case.
-            RBFS has a problem, it use too litle memory.
+                        \item \textbf{Memory-bounded A\textsuperscript{*} (MA\textsuperscript{*})}:
 
-            \item \textbf{Memory-bounded A\textsuperscript{*} (MA\textsuperscript{*})}:
-            
-            \item \textbf{Simplified memory-bounded A\textsuperscript{*} (SMA\textsuperscript{*})}:
-            it expands the best node until the memory is full.
-            It removes the worst node from the memory to make space for a new node 
-            and backup the f-value of the removed node on the parent node.
-            The parent node will eventually be expanded if the other paths are worse.
+                        \item \textbf{Simplified memory-bounded A\textsuperscript{*} (SMA\textsuperscript{*})}: It expands the best node until the memory is full. It removes the worst node from the memory to make space for a new node and backs up the f-value of the removed node on the parent node. The parent node will eventually be expanded if the other paths are worse. It is \textbf{complete} only if the solution can be kept in memory. It is \textbf{optimal} if any optimal solution is reachable; otherwise, it returns the best solution found.
+                    \end{itemize}
+          \end{itemize}
 
-            It is \textbf{complete} only if solution can be kept in memory.
-            It is \textbf{optimal} if any optimal solution is reachable otherwise it returns the best solution found.
-        
-        \end{itemize}
-
-        
-
-
-    \end{itemize}
 
     \item Introduce the A\textsuperscript{*} algorithm in detail and exhaustively.
-    Formally prove its optimality prop-erties.
-    Finally, discuss the memory usage issues of A\textsuperscript{*} and how this can be solved/reduced.
+          Formally prove its optimality prop-erties.
+          Finally, discuss the memory usage issues of A\textsuperscript{*} and how this can be solved/reduced.
 
     \item Describe the concept of admisible heuristic function, and give the formal definition of heuristic admisible and consistent.
-    Choose a domain and give an example of two heuristic functions $h_1$ and $h_2$, they are both admisible and $h_1$ dominates $h_2$.
-    Discuss how a heuristic function can be systematically constructed.
+          Choose a domain and give an example of two heuristic functions $h_1$ and $h_2$, they are both admisible and $h_1$ dominates $h_2$.
+          Discuss how a heuristic function can be systematically constructed.
 
-    \textcolor{green}{\textbf{Answer:}}
+          \textcolor{green}{\textbf{Answer:}}
 
-    A heuristic function is a function that estimates the cost of the cheapest path from the node \textit{n} to a goal node.
-    A heuristic function is \textbf{admissible} if it never overestimates the cost to reach the goal ($h(n) \leq h^*(n)$).
-    A heuristic function is \textbf{consistent} if $h(n) \leq c(n,a,n') + h(n')$ where $n$ is the current node, 
-    $a$ is the action that leads to $n'$ and $n'$ is the successor of $n$.
-    Given two heuristic functions $h_1$ and $h_2$, $h_1$ dominates $h_2$ if $h_1(n) \geq h_2(n)$ for all nodes $n$; for research purposes,
-    it's better to use the dominant heuristic function. (but should not be too expensive to compute)
+          A heuristic function is a function that estimates the cost of the cheapest path from the node \textit{n} to a goal node. A heuristic function is \textbf{admissible} if it never overestimates the cost to reach the goal ($h(n) \leq h^*(n)$). A heuristic function is \textbf{consistent} if $h(n) \leq c(n, a, n') + h(n')$, where $n$ is the current node, $a$ is the action that leads to $n'$, and $n'$ is the successor of $n$. Given two heuristic functions $h_1$ and $h_2$, $h_1$ dominates $h_2$ if $h_1(n) \geq h_2(n)$ for all nodes $n$; for research purposes, it's better to use the dominant heuristic function (but it should not be too expensive to compute).
 
-    Example 8-puzzle:
-    \begin{itemize}
-        \item $h_1(n)$ = total Manhattan distance
-        \item $h_2(n)$ = number of misplaced tiles
-    \end{itemize}
+          Example 8-puzzle:
+          \begin{itemize}
+              \item $h_1(n)$ = total Manhattan distance
+              \item $h_2(n)$ = number of misplaced tiles
+          \end{itemize}
 
-    An heuristic function can be systematically constructed by relaxing the problem.
-    In the 8-puzzle example, the relaxed problem is to move the tiles without considering the other tiles.
-    The optimal solution cost of a relaxed problem is no greater than the optimal solution cost of the real problem.
+          A heuristic function can be systematically constructed by relaxing the problem. In the 8-puzzle example, the relaxed problem is to move the tiles without considering the other tiles. The optimal solution cost of a relaxed problem is no greater than the optimal solution cost of the real problem.
+
 \end{enumerate}
 \section{Iterative Improvement Algorithms}\label{iterativeimprovement}
 \begin{enumerate}[label=\textbf{II.\arabic*}]
     \item\label{q-hillclimbing}
-    Introduce hill-climbing search, appropriately placing it among the various categories of problem solving approaches we discussed in class.
-    Present the variants, the properties, and in the case of a search with restart, formally demonstrate the result relative to the number of expected searches before finding an optimal solution.
+          Introduce hill-climbing search, appropriately placing it among the various categories of problem solving approaches we discussed in class.
+          Present the variants, the properties, and in the case of a search with restart, formally demonstrate the result relative to the number of expected searches before finding an optimal solution.
 
-    \textcolor{green}{\textbf{Answer:}}
-    Hill-climbing search is an iterative improvement algorithm making part of the local search algorithms.
-    Hill-climbing follow the iterative improvement paradigm, where the goal state itself is the solution and the path to reach it is irrelevant.
-    As a local search algorithm, it doesn't keep track of the search tree, but only of the current state and try to improve it.
-    Although local search algorithms are not systematic, they have two key advantages:
-    \begin{enumerate}
-        \item they use very little memory, usually a constant amount;
-        \item they can often find reasonable solutions in large or infinite (continuous) state spaces for which systematic algorithms are unsuitable.
-    \end{enumerate} 
-    Hill-climbing search at each iteration selects the best successor among the neighbors of the current state, and replaces the current state with it.
-    (or lowest heuristic cost if a heuristic function is used)
-    Hill-climbing is \textbf{not complete} because it never makes downhill moves, so it can get stuck in a local maximum.
+          \textcolor{green}{\textbf{Answer:}}
+          Hill-climbing search is an iterative improvement algorithm that is part of local search algorithms. Hill-climbing follows the iterative improvement paradigm, where the goal state itself is the solution, and the path to reach it is irrelevant. As a local search algorithm, it doesn't keep track of the search tree but only of the current state and tries to improve it. Although local search algorithms are not systematic, they have two key advantages:
+          \begin{enumerate}
+              \item They use very little memory, usually a constant amount.
+              \item They can often find reasonable solutions in large or infinite (continuous) state spaces for which systematic algorithms are unsuitable.
+          \end{enumerate}
 
-    Problems:\\
-    if the neighbors solutions are equivalent it can get stuck in a shoulder, otherwise if the neighbors solutions are worse it can get stuck in a local maximum.
-    If we've ridges (a sequence of local maxima not directly connected to each other) it will be difficult to move from one local maximum to another.
-    In continuous space, it is difficult to pick the ``right'' step size and convergence can be very slow.
-    
+          Hill-climbing search, at each iteration, selects the best successor among the neighbors of the current state and replaces the current state with it (or the lowest heuristic cost if a heuristic function is used). Hill-climbing is \textbf{not complete} because it never makes downhill moves, so it can get stuck in a local maximum.
 
-    For outlast this problems, we can use:
-    \begin{itemize}
-        \item plateaux (flat values for h):
-        \begin{itemize}
-            \item allow sideways moves (moves to neighbors with equal h value), but if there are no uphill moves (flat maximum), 
-            an infinite loop will occur; so for outlast this side-problem we can put a limit on the number of sideways moves.
-        \end{itemize}
-        \item local maxima:
-        \begin{itemize}
-            \item \textbf{Stochastic hill climbing}: chooses at random from among the uphill moves; the probability of selection can vary with the steepness of the uphill move.
-            This usually converges more slowly than regular hill climbing, but it can drive to better solutions.
-            \item \textbf{random restart hill climbing}: 
-            it conducts a series of hill-climbing searches from randomly generated initial states.
-            If p is the probability to find an optimal solution in a single search, the expected number of searches before finding an optimal solution is $1/p$.
-            
-            We can derive the probability $1/p$ as follows:
-            \begin{equation}
-                x_i = 
-                \begin{cases}
-                    0 & \text{if i-th search doesn't find an optimal solution}\\ 
-                    1 & \text{if i-th search finds an optimal solution}
-                \end{cases}
-            \end{equation}
-            We known that $\forall i$, $p = P(x_i = 1) = p$, and $P(x_i = 0) = 1 - p$.
-            Variables $x_i$ are mutually independent, we have a Bernoulli Process for which we can use the geometric distribution 
-            to calculate the expected number of searches before finding an optimal solution.
-            The probability that the $k-th$ search finds an optimal solution is
-            \begin{equation}
-                P((\sum_{j=1}^{k-1} x_j = 0)\land(x_k = 1)) = (1-p)^{k-1}p
-            \end{equation}
-            The expected value of the quantity we are interested in is then:
-            \begin{equation}
-                \begin{split}
-                    \sum_{k=1}^{\infty} k{(1-p)}^{k-1}p = & p\sum_{k=1}^{\infty} k{(1-p)}^{k-1}\\
-                        = & -p\sum_{k=1}^{\infty} d\frac{(1-p)^k}{dp}\\
-                        = & -p\frac{d}{dp}(\sum_{k=0}^{\infty} {(1-p)}^k-1) = -p\frac{d}{dp}(\frac{1}{p}-1)\\
-                        = & p\frac{1}{p^2}= \frac{1}{p}
-                \end{split}
-            \end{equation}
-        \end{itemize}
-        For random walk algo is \textbf{complete} but extremely inefficient.
+          Problems:\\
+          If the neighboring solutions are equivalent, it can get stuck in a shoulder; otherwise, if the neighboring solutions are worse, it can get stuck in a local maximum. If there are ridges (a sequence of local maxima not directly connected to each other), it will be difficult to move from one local maximum to another. In continuous space, it is challenging to pick the "right" step size, and convergence can be very slow.
 
-    \end{itemize}\label{hillclimbing}
+          To overcome these problems, we can use:
+          \begin{itemize}
+              \item Plateaux (flat values for \(h\)):
+                    \begin{itemize}
+                        \item Allow sideways moves (moves to neighbors with equal \(h\) value), but if there are no uphill moves (flat maximum), an infinite loop will occur. To address this, a limit on the number of sideways moves can be imposed.
+                    \end{itemize}
+              \item Local maxima:
+                    \begin{itemize}
+                        \item \textbf{Stochastic hill climbing}: Chooses at random from among the uphill moves; the probability of selection can vary with the steepness of the uphill move. This usually converges more slowly than regular hill climbing, but it can lead to better solutions.
+                        \item \textbf{Random restart hill climbing}: Conducts a series of hill-climbing searches from randomly generated initial states. If \(p\) is the probability of finding an optimal solution in a single search, the expected number of searches before finding an optimal solution is \(1/p\). We can derive the probability \(1/p\) as follows:
+                              \begin{equation}
+                                  x_i =
+                                  \begin{cases}
+                                      0 & \text{if the \(i\)-th search doesn't find an optimal solution} \\
+                                      1 & \text{if the \(i\)-th search finds an optimal solution}
+                                  \end{cases}
+                              \end{equation}
+                              We know that \(\forall i\), \(p = P(x_i = 1) = p\), and \(P(x_i = 0) = 1 - p\). Variables \(x_i\) are mutually independent; we have a Bernoulli Process for which we can use the geometric distribution to calculate the expected number of searches before finding an optimal solution. The probability that the \(k\)-th search finds an optimal solution is:
+                              \begin{equation}
+                                  P\left(\left(\sum_{j=1}^{k-1} x_j = 0\right)\land(x_k = 1)\right) = (1-p)^{k-1}p
+                              \end{equation}
+                              The expected value of the quantity we are interested in is then:
+                              \begin{equation}
+                                  \begin{split}
+                                      \sum_{k=1}^{\infty} k(1-p)^{k-1}p = & p\sum_{k=1}^{\infty} k(1-p)^{k-1}                                                                   \\
+                                      =                                   & -p\sum_{k=1}^{\infty} \frac{d}{dp}\left((1-p)^k\right)                                              \\
+                                      =                                   & -p\frac{d}{dp}\left(\sum_{k=0}^{\infty} (1-p)^k-1\right) = -p\frac{d}{dp}\left(\frac{1}{p}-1\right) \\
+                                      =                                   & p\frac{1}{p^2}= \frac{1}{p}
+                                  \end{split}
+                              \end{equation}
+                    \end{itemize}
+                    For the random walk algorithm, it is \textbf{complete} but extremely inefficient.
+          \end{itemize}
     \item Local search algorithms:
-    
-    \textcolor{green}{\textbf{Answer:}}
-    \begin{itemize}
-        \item \textbf{hill climbing}: refer to previous question \ref{q-hillclimbing}.
-        \item \textbf{simulated annealing}(gradient descent): it's a combination between hill climbing and random walk. 
-        It allows ``bad'' moves, but gradually decreases their size and frequency.
-        The probability of selecting a ``bad'' move is controlled by a parameter $T$ called ``temperature'', $T$ is gradually decreased.
-        The algorithm halts when a certain criterion is met (e.g. $T$ is less than a certain threshold).
-        Bad moves are more likely to be selected at the beginning, and less likely as the temperature decreases.
-        If $T$ descreased slowly enough $\Rightarrow$ always reach best state $x^*$.
-        \item \textbf{local beam search}: it keeps track of $k$ states instead of one.
-        It starts with $k$ randomly generated states, and at each iteration it generates all the successors of the $k$ states and selects the best $k$ successors.
-        It halts when a goal state is found or when a certain criterion is met, otherwise it selects the best $n$ (beam width) successors and repeat the process.
 
-        \textbf{Problem}: often all $k$ states end on same local hill.
+          \textcolor{green}{\textbf{Answer:}}
+          \begin{itemize}
+              \item \textbf{hill climbing}: Refer to the previous question \ref{q-hillclimbing}.
+              \item \textbf{simulated annealing (gradient descent)}: It's a combination of hill climbing and random walk.
+                    It allows "bad" moves but gradually decreases their size and frequency.
+                    The probability of selecting a "bad" move is controlled by a parameter $T$ called "temperature," and $T$ is gradually decreased.
+                    The algorithm halts when a certain criterion is met (e.g., $T$ is less than a certain threshold).
+                    Bad moves are more likely to be selected at the beginning and less likely as the temperature decreases.
+                    If $T$ decreases slowly enough $\Rightarrow$ always reach the best state $x^*$.
+              \item \textbf{local beam search}: It keeps track of $k$ states instead of one.
+                    It starts with $k$ randomly generated states, and at each iteration, it generates all the successors of the $k$ states and selects the best $k$ successors.
+                    It halts when a goal state is found or when a certain criterion is met.
+                    Otherwise, it selects the best $n$ (beam width) successors and repeats the process.
 
-        \textbf{Idea}: choose $k$ successors randomly, biased towards better states: stochastic beam search.
-        
-        \item \textbf{genetic algorithms}: it's a variant of stochastic beam search in which successors
-        states are generated by combining two parent states rather than by modifying a single state.
-        \begin{enumerate}
-            \item are considered the best states of the current population
-            \item they are combined to generate a new population
-            \item there is a mutation probability $p_m$ that a state is randomly modified to explore new areas of the search space
-            \item the algorithm try to converge to an acceptable solution.
-        \end{enumerate}
+                    \textbf{Problem}: Often, all $k$ states end up on the same local hill.
 
+                    \textbf{Idea}: Choose $k$ successors randomly, biased towards better states: stochastic beam search.
 
-    \end{itemize}
+              \item \textbf{genetic algorithms}: It's a variant of stochastic beam search in which successor states are generated by combining two parent states rather than by modifying a single state.
+                    \begin{enumerate}
+                        \item Are considered the best states of the current population.
+                        \item They are combined to generate a new population.
+                        \item There is a mutation probability $p_m$ that a state is randomly modified to explore new areas of the search space.
+                        \item The algorithm tries to converge to an acceptable solution.
+                    \end{enumerate}
+          \end{itemize}
 \end{enumerate}
 \section{Online Search}\label{onlinesearch}
 \begin{enumerate}[label=\textbf{OS.\arabic*}]
     \item Introduce the concept of online search, and describe the algorithms we discussed in class.
-    
-    \textcolor{green}{\textbf{Answer:}}
-    Online search algorithms are used when the environment is partially observable, or it is dynamic/semidynamic 
-    and the agent needs to interact with the environment to get information about it.
-    It's not possible to compute a complete solution before starting to act, so the agent has to interleave computation and action.
-    Online search work well for exploration problems.
-    
-    \textbf{Problem}: if some actions are irreversible, the agent may get stuck in a dead end (THIS IS NOT AVOIDABLE).
 
-    The performance of an online search algorithm is measured by competitive ratio:
-    \begin{equation}
-        \frac{\text{total path cost online search}}{\text{total path cost knowing state space in advance}}
-        \label{eq:competitive-ratio}
-    \end{equation}
+          \textcolor{green}{\textbf{Answer:}}
+          Online search algorithms are used when the environment is partially observable, or it is dynamic/semidynamic,
+          and the agent needs to interact with the environment to get information about it.
+          It's not possible to compute a complete solution before starting to act, so the agent has to interleave computation and action.
+          Online search works well for exploration problems.
 
-    Type of online search algorithms:
-    \begin{itemize}
-        \item \textbf{Depth-first online search}: it's a depth-first search that keep track of the current path.
-        When the agent reaches a dead end, it backtracks until it finds a node with an unexplored successor.
-        For the backtracking the algorithm uses a table that maps each node to its unbacktracked parent node.
+          \textbf{Problem}: If some actions are irreversible, the agent may get stuck in a dead end (THIS IS NOT AVOIDABLE).
 
-        It iterates this process until it reaches the goal state.
-        It is \textbf{complete} if the state space is finite and \textbf{optimal}.
-        It has a \textbf{time complexity} of $O(b^m)$ and a \textbf{space complexity} of $O(bm)$.
-        \item \textbf{Random search}: it's like hill climbing, but it chooses a random successor instead of using random restart.
-        With this approach, the agent could escape from local maxima.
-        Random walk will eventually find a solution if it exists(if finite state spaces), but it could take a long time.
-        
-        \item \textbf{LRTA\textsuperscript{*} search (Learning Real-Time A\textsuperscript{*})}: 
-        it's a combination of hill climbing with memory + a strategy to overcome local optima.
-        It store a ``current best estimate'' $H(s)$ of the cost of reaching the goal from each state that has been visited.
-        $H(s)$ starts out being just the heuristic estimate $h(s)$.
-        Based on the current best estimate, the agent chooses the action that appears to lead most quickly to the goal.
-        When the agent reaches a new state, it updates the cost estimate for the state it has just left with actual node cost estimate plus the cost to reach the actual node.
+          The performance of an online search algorithm is measured by the competitive ratio:
+          \begin{equation}
+              \frac{\text{total path cost online search}}{\text{total path cost knowing state space in advance}}
+              \label{eq:competitive-ratio}
+          \end{equation}
 
-        This optimism under uncertainty encourages the agent to explore new, possible promising paths.
-        It is \textbf{complete} if the state space is finite.
-        It can explore an environment in $O(n^2)$ steps in the worst case.
+          Types of online search algorithms:
+          \begin{itemize}
+              \item \textbf{Depth-first online search}: It's a depth-first search that keeps track of the current path.
+                    When the agent reaches a dead end, it backtracks until it finds a node with an unexplored successor.
+                    For backtracking, the algorithm uses a table that maps each node to its unbacktracked parent node.
 
-    \end{itemize}
+                    It iterates this process until it reaches the goal state.
+                    It is \textbf{complete} if the state space is finite and \textbf{optimal}.
+                    It has a \textbf{time complexity} of $O(b^m)$ and a \textbf{space complexity} of $O(bm)$.
 
+              \item \textbf{Random search}: It's like hill climbing, but it chooses a random successor instead of using random restart.
+                    With this approach, the agent could escape from local maxima.
+                    Random walk will eventually find a solution if it exists (if finite state spaces), but it could take a long time.
+
+              \item \textbf{LRTA\textsuperscript{*} search (Learning Real-Time A\textsuperscript{*})}:
+                    It's a combination of hill climbing with memory + a strategy to overcome local optima.
+                    It stores a "current best estimate" $H(s)$ of the cost of reaching the goal from each state that has been visited.
+                    $H(s)$ starts out being just the heuristic estimate $h(s)$.
+                    Based on the current best estimate, the agent chooses the action that appears to lead most quickly to the goal.
+                    When the agent reaches a new state, it updates the cost estimate for the state it has just left with the actual node cost estimate plus the cost to reach the actual node.
+
+                    This optimism under uncertainty encourages the agent to explore new, possibly promising paths.
+                    It is \textbf{complete} if the state space is finite.
+                    It can explore an environment in $O(n^2)$ steps in the worst case.
+          \end{itemize}
 \end{enumerate}
 \section{Adversarial Search}
 \begin{enumerate}[label=\textbf{AS.\arabic*}]
-    \item In the context of adversarial search, explain in detail how games with elements of chance can be deal with. 
-    In the case of resources limit, explain what is the property of the evaluation function that allows the search to 
-    preserve optimal decision (i.e. obtained with no resources limit). 
-    Finally, explain why the same approach is not returning an optimal strategy in the case of partially observable games.
+    \item In the context of adversarial search, explain in detail how games with elements of chance can be deal with.
+          In the case of resources limit, explain what is the property of the evaluation function that allows the search to
+          preserve optimal decision (i.e. obtained with no resources limit).
+          Finally, explain why the same approach is not returning an optimal strategy in the case of partially observable games.
 
-    \textcolor{green}{\textbf{Answer:}}
-    In the context of adversarial search, non deterministic games are games with elements of chance 
-    introduced by some events like dice rolls or card-shuffling.
-    There are two types of non deterministic games: \textbf{perfect information} (backgammon or monopoli) and \textbf{imperfect information} (card games).
-    We can deal with non deterministic games by using $\alpha - \beta$ pruning, that is a generalization of the minimax algorithm.
+          \textcolor{green}{\textbf{Answer:}}
+          In the context of adversarial search, nondeterministic games are games with elements of chance introduced by events like dice rolls or card shuffling. There are two types of nondeterministic games: \textbf{perfect information} (backgammon or Monopoly) and \textbf{imperfect information} (card games). We can handle nondeterministic games by using $\alpha - \beta$ pruning, a generalization of the minimax algorithm.
 
-    \textbf{Minimax algorithm} is a recursive algorithm for choosing the next move in an n-player game, 
-    it achieve the best payoff assuming that the opponent is also playing optimally.
-    It is based on the idea of \textbf{minimizing the maximum loss}, 
-    that is the best we can do is to choose the move that minimize the maximum loss.
-    Minimax it's \textbf{complete} if tree is finite and \textbf{optimal} if both players play optimally.
-    It has a \textbf{time complexity} of $O(b^m)$ and a \textbf{space complexity} of $O(bm)$ (depth-first exploration).
+          \textbf{Minimax algorithm} is a recursive algorithm for choosing the next move in an n-player game. It achieves the best payoff assuming that the opponent is also playing optimally. The minimax algorithm is based on the idea of \textbf{minimizing the maximum loss}, meaning that the best move is chosen to minimize the maximum potential loss. Minimax is \textbf{complete} if the tree is finite and \textbf{optimal} if both players play optimally. It has a \textbf{time complexity} of $O(b^m)$ and a \textbf{space complexity} of $O(bm)$ (depth-first exploration).
 
-    \textbf{Minimax} can explore the whole tree also if it's not necessary, 
-    so we can use $\alpha - \beta$ pruning to avoid this problem: 
-    if it find a value $n$ less than the upper bound of another path, it halts the exploration of the current path.
+          \textbf{Minimax} can explore the entire tree, even if it's not necessary. To address this, we can use $\alpha - \beta$ pruning. If it finds a value $n$ less than the upper bound of another path, it halts the exploration of the current path.
 
-    $\alpha$ = best choice for the max player along the path to the root.
+          $\alpha$ is the best choice for the max player along the path to the root, and $\beta$ is the best choice for the min player along the path to the root.
 
-    $\beta$ = best choice for the min player along the path to the root.
+          \textbf{Properties of $\alpha - \beta$ pruning:}
+          \begin{itemize}
+              \item Pruning doesn't affect the final result.
+              \item A good ordering of the moves improves the effectiveness of pruning.
+              \item Perfect order (MAX: from highest to lowest, MIN: from lowest to highest) $\Rightarrow$ time complexity (almost) $O(b^{m/2})$.
+              \item Doubles the depth of exploration.
+          \end{itemize}
 
-    \textbf{Properties} of $\alpha - \beta$ pruning:
-    \begin{itemize}
-        \item pruning doesn't affect final result
-        \item a good ordering of the moves improves the effectiveness of pruning
-        \item perfect order (MAX\@: from highest to lowest, MIN\@: from lowest to highest) $\Rightarrow$ time complexity (almost) $O(b^{m/2})$
-        \item doubles the depth of exploration
-    \end{itemize}
+          $\alpha - \beta$ pruning suits well for games with deterministic outcomes and also works for nondeterministic games. In the case of nondeterministic games, the states don't have definite values; we can only compute the expected value of a state. The \textbf{Expectiminimax algorithm} helps us handle this problem. It works like minimax but also handles chance nodes. It computes the expected value of a state by multiplying the probability of each outcome by the utility of that outcome. The upper bound of a node is the sum of the expected values of its children. Stronger pruning can be obtained if it's possible to bound the values of the leaves.
 
-    $\alpha - \beta$ pruning suite well for games with deterministic games; it work also for non-deterministic games.
-    In the case of non-deterministic games, the states doesn't have definite values, we can compute only the expected value of a state.
-    \textbf{Expectiminimax algorithm} help us to handle this problem, that works like minimax 
-    except that it also handle chance nodes.
-    It compute the expected value of a state by multiplying the probability of each outcome by the utility of that outcome.
-    The upper bound of a node is the sum of the expected values of its children.
-    Stronger pruning can be obtained if possible to bound the leaves values.
+          \textbf{Problem:} Resource limits. In the real world, we have limited resources, so we can't explore the entire tree.
 
-    \textbf{Problem:} Resources limit, in real world we have limited resources, so we can't explore the whole tree.
-    
-    \textbf{Solution:} evaluation function \& cutoff test.
+          \textbf{Solution:} Evaluation function \& cutoff test.
 
-    An evaluation function is used to estimate the expected utility of the game from a given state.
-        An EV function should order the terminal states: 
-        states that are wins must evaluate higher than states that are draws or losses.
-        The computation must not take too long.
-        Most EV function work by calculating various features of the states.
-        With a good EV function, we can explore the tree to a limited depth (CUTOFF), obtaing a good approximation of the true minimax value.
-        Cutoff should be apply only to quiescent states (states in which the game is unlikely to change drastically in the near future).
-        Non quiescent states can be expanded further until a quiescent state is reached.
-    
-    With this approach, there is still a difficult problem to outlast: the horizon effect.
-    The horizon effect is the problem that the agent can't see beyond a certain depth, so it can't see a threat or an opportunity.
-    This cannot be avoided, but we can temporarly avoid it by delaying tatics; for mitigate it we can use the \textbf{SINGULAR EXTENSION} 
-    (Find and remember move that is clearly better than others, and consider it if is it legal when the search reaches the normal depth limit).
+          An evaluation function is used to estimate the expected utility of the game from a given state. An evaluation function should order the terminal states, where states that are wins should evaluate higher than states that are draws or losses. The computation must not take too long. Most evaluation functions work by calculating various features of the states. With a good evaluation function, we can explore the tree to a limited depth (CUTOFF), obtaining a good approximation of the true minimax value. The cutoff should be applied only to quiescent states (states in which the game is unlikely to change drastically in the near future). Non-quiescent states can be expanded further until a quiescent state is reached.
 
-    The previous approaches are not returning an optimal strategy in the case of partially observable games; in this types of games, 
-    the agent doesn't know the initial state of the game.
-    We can try to predict the optimal move with $N$ deals, during this process all the possible moves are considered and weighted by their probability 
-    to get the expected value of the state, will be picked the action that wins most tricks on average;
-    this will lead most of the time to a non-optimal strategy.
-    In this type of games, value of an action depends on the information state or belief state the agent is in.
+          With this approach, there is still a difficult problem to overcome: the horizon effect. The horizon effect is the problem that the agent can't see beyond a certain depth, so it can't see a threat or an opportunity. This cannot be avoided, but we can temporarily mitigate it by delaying tactics; to mitigate it, we can use the \textbf{SINGULAR EXTENSION} (Find and remember a move that is clearly better than others and consider it if it is legal when the search reaches the normal depth limit).
+
+          The previous approaches do not return an optimal strategy in the case of partially observable games. In these types of games, the agent doesn't know the initial state of the game. We can try to predict the optimal move with $N$ deals. During this process, all possible moves are considered and weighted by their probability to get the expected value of the state. The action that wins most tricks on average will be picked; this will lead most of the time to a non-optimal strategy. In these types of games, the value of an action depends on the information state or belief state the agent is in.
 
     \item In the context of adversarial search, discuss how huge search spaces, such as those gen-erated by the game of chess or Go, can be computationally managed.
-    Also explain how the algorithm $\alpha - \beta$ pruning can help in such cases.
+          Also explain how the algorithm $\alpha - \beta$ pruning can help in such cases.
 
-    \textcolor{green}{\textbf{Answer:}}
+          \textcolor{green}{\textbf{Answer:}}
 
     \item Describe the $\alpha - \beta$ pruning algorithm in detail. Prove its complexity in the best case.
-    
-    \textcolor{green}{\textbf{Answer:}}
+
+          \textcolor{green}{\textbf{Answer:}}
 \end{enumerate}
 \section{Propositional Logic}
 \begin{enumerate}[label=\textbf{PL.\arabic*}]
-    \item Give the abstract definition of knowledge-based agent, discussing its various components. 
-    In addition, in the case of propositional logic, introduce how inference can be made by enumeration, discussing its algorithmic and computational complexity aspects.
-    
-    \textcolor{green}{\textbf{Answer:}}
-    A knowledge-based agent is an agent that uses an internal representation of the world to decide what actions to perform.
-    The central component of a knowledge-based agent is the \textbf{knowledge base}, 
-    that is a set of sentences in a knowledge representation language 
-    and it represents the agent's knowledge about the world and may initial contain some background knowledge.
+    \item Give the abstract definition of knowledge-based agent, discussing its various components.
+          In addition, in the case of propositional logic, introduce how inference can be made by enumeration, discussing its algorithmic and computational complexity aspects.
 
-    A knowledge-based agent has also a \textbf{inference engine}, a component that uses the knowledge base to infer new information.
-    Usually you can comunicate with the agent through these operations: \textit{tell} and \textit{ask}.
+          \textcolor{green}{\textbf{Answer:}}
+          A knowledge-based agent is an agent that uses an internal representation of the world to decide what actions to perform. The central component of a knowledge-based agent is the \textbf{knowledge base}, which is a set of sentences in a knowledge representation language representing the agent's knowledge about the world and may initially contain some background knowledge.
 
-    A knowledge-based agent must be able to:
-    \begin{itemize}
-        \item Represent states, actions, etc.
-        \item Incorporate new percepts
-        \item Update internal representations of the world
-        \item Deduce hidden properties of the world
-        \item Deduce appropriate actions
-    \end{itemize}
+          A knowledge-based agent also has an \textbf{inference engine}, a component that uses the knowledge base to infer new information. Typically, you can communicate with the agent through operations such as \textit{tell} and \textit{ask}.
 
-    In the case of propositional logic, inference can be made by enumeration, that is a general algorithm for enumerating all the models of a sentence.
-    The algorithm consists in enumerating all models, and check that sentence $\alpha$ is true in every model in which $KB$ is true ($KB\vDash \alpha$).
-    Models are assignments of \textit{true} or \textit{false} to each propositional symbol.
-    The algorithm is \textbf{sound}\footnote{Soundness: $i$ is sound if whenever $KB\vdash_i\alpha$ 
-    (sentence $\alpha$ can be derived from $KB$ by inference procedure $i$), it is also true that $KB\vDash\alpha$ } because it implements directly the definition of entailment, 
-    and it is \textbf{complete}\footnote{Completness: $i$ is complete if whenever $KB\vDash\alpha$, it is also true that $KB\vdash_i\alpha$} because it works for any $KB$ and $\alpha$ and always terminates.
+          A knowledge-based agent must be able to:
+          \begin{itemize}
+              \item Represent states, actions, etc.
+              \item Incorporate new percepts
+              \item Update internal representations of the world
+              \item Deduce hidden properties of the world
+              \item Deduce appropriate actions
+          \end{itemize}
 
-    If $KB$ and $\alpha$ contain $n$ symbols in all, then there are $2^n$ models.
-    Thus, the time complexity of the algorithm is $O(2^n)$ and the space complexity is $O(n)$ because the enumeration is depth-first.
-    Unfortunately, this algorithm is co-NP-complete, so every known inference algorithm for propositional logic has a 
-    worst-case time complexity that is exponential in the size of the input.
+          In the case of propositional logic, inference can be made by enumeration, a general algorithm for enumerating all the models of a sentence. The algorithm involves enumerating all models and checking that the sentence $\alpha$ is true in every model in which $KB$ is true ($KB\vDash \alpha$). Models are assignments of \textit{true} or \textit{false} to each propositional symbol. The algorithm is \textbf{sound}\footnote{Soundness: $i$ is sound if whenever $KB\vdash_i\alpha$ (sentence $\alpha$ can be derived from $KB$ by the inference procedure $i$), it is also true that $KB\vDash\alpha$} because it directly implements the definition of entailment, and it is \textbf{complete}\footnote{Completeness: $i$ is complete if whenever $KB\vDash\alpha$, it is also true that $KB\vdash_i\alpha$} because it works for any $KB$ and $\alpha$ and always terminates.
+
+          If $KB$ and $\alpha$ contain $n$ symbols in total, then there are $2^n$ models. Thus, the time complexity of the algorithm is $O(2^n)$ and the space complexity is $O(n)$ because the enumeration is depth-first. Unfortunately, this algorithm is co-NP-complete, so every known inference algorithm for propositional logic has a worst-case time complexity that is exponential in the size of the input.
+
 
     \item In the context of propositional logic, explain in detail the Forward-chaining algorithm, discussing its algorithmic and computational complexity aspects.
-    
-    \textcolor{green}{\textbf{Answer:}}
 
-    Given a knowledge base $KB$ the idea is to fire any rule whose premises are satisfied in $KB$, and add the conclusion to $KB$ until query is found.
-    \begin{enumerate}[label=\roman*.]
-        \item Set the known leaves ($KB$)
-        \item Inference propagates up the graph as far as possible
-        \item if conjunction are found, waits until all conjuncts are known before proceeding
-    \end{enumerate}
+          \textcolor{green}{\textbf{Answer:}}
 
-    The algorithm is \textbf{sound} (every inference is an application of modus ponens, we're working with Horn clauses)
-    and \textbf{complete} (every entailed atomic sentence will be derived).
-    Proof of completeness:
-    \begin{enumerate}
-        \item FC reaches a fixed point (no new atomic sentences can be inferred)
-        \item Consider the final state as a model $m$, assigning true/false to symbols (inferred table: the table contains true for every inferred symbol, false otherwise)
-        \item every clause in the original KB is true in $m$ (because it's a fixed point)
-        Proof: assume the opposite, then there is a clause that is false in $m$: 
-        
-        $a_1\land\ldots\land a_k\Rightarrow b$ is false in $m$.
-        
-        $a_1\land\ldots\land a_k$ in the model must be true, so $b$ must be false, but $b$ is in the inferred table, 
-        so it must be true $\Rightarrow$ contradiction: the algorithm has not reached a fixed point.
-        \item $m$ is a model of $KB$
-        \item if $KB\vDash q,q$ is true in every model of $KB$, including $m$
-    \end{enumerate}
-    It runs in \textbf{linear time}.
+          Given a knowledge base $KB$, the idea is to fire any rule whose premises are satisfied in $KB$ and add the conclusion to $KB$ until the query is found.
 
-    Forward-chaining is an example of the general concept of \textbf{data-driven} (unconscious processing) reasoning, that is the reasoning is driven by known data.
-    One disadvantage of this approach is that it may do a lot of work that is irrelevant to the goal.
+          \begin{enumerate}[label=\roman*.]
+              \item Set the known leaves ($KB$).
+              \item Inference propagates up the graph as far as possible.
+              \item If conjunctions are found, wait until all conjuncts are known before proceeding.
+          \end{enumerate}
+
+          The algorithm is \textbf{sound} (every inference is an application of modus ponens, as we are working with Horn clauses) and \textbf{complete} (every entailed atomic sentence will be derived). Proof of completeness:
+
+          \begin{enumerate}
+              \item FC reaches a fixed point (no new atomic sentences can be inferred).
+              \item Consider the final state as a model $m$, assigning true/false to symbols (inferred table: the table contains true for every inferred symbol, false otherwise).
+              \item Every clause in the original KB is true in $m$ (because it's a fixed point). Proof: assume the opposite; then, there is a clause that is false in $m$:
+
+                    $a_1\land\ldots\land a_k\Rightarrow b$ is false in $m$.
+
+                    $a_1\land\ldots\land a_k$ in the model must be true, so $b$ must be false. However, $b$ is in the inferred table, so it must be true $\Rightarrow$ contradiction: the algorithm has not reached a fixed point.
+              \item $m$ is a model of $KB$.
+              \item If $KB\vDash q$, then $q$ is true in every model of $KB$, including $m$.
+          \end{enumerate}
+
+          It runs in \textbf{linear time}.
+
+          Forward-chaining is an example of the general concept of \textbf{data-driven} (unconscious processing) reasoning, where reasoning is driven by known data. One disadvantage of this approach is that it may perform a lot of work that is irrelevant to the goal.
 
     \item In the context of propositional logic, explain in detail the Backward-chaining algorithm, discussing its algorithmic and computational complexity aspects.
-    
-    \textcolor{green}{\textbf{Answer:}}
-    Backward-chaining is a goal-driven algorithm (unlike forward-chaining that is data-driven), that is the reasoning is driven by the query.
-    In fact the idea is to work backward from the query $q$.
-    If $q$ is known true, then no work is needed; otherwise we must find the premises that imply $q$.
-    Avoid repeated work by keeping track of subgoals that have already been proved true, 
-    and avoid loops by checking if a subgoal is already on the goal stack.
-    Complexity of BC can be much less than linear in the size of the KB\@.
-    \item In the context of inference in propositional logic, explain what is the role of horns form, discussing its strengths and weaknesses.
-    
-    \textcolor{green}{\textbf{Answer:}}
-    
-    Truth methods (are useful for testing the validity of a sentence) divide into two classes:
-    \begin{itemize}
-        \item \textbf{Model checking}: it checks if a given model satisfies a sentence. (Truth table enumeration is an example of model checking)
-        \item \textbf{Application of inference rules}: it uses logical entailment to determine the truth of a sentence. (Generation of new sentences from old ones)
-    \end{itemize}
 
-    Truth table enumeration holds a problem: it is exponential in the number of propositional symbols and in many cases is not needed the full power of resolution.
-    We need to find a more efficient way to determine if $\alpha$ is entailed by $KB$.
-    Some real-world knowledgebases satisfy certain restrictions on the form of sentences  they contain, 
-    which enables them to use a more restricted and efficient inference algorithm
-    One such restricted forn is the \textbf{Horn form}.
+          \textcolor{green}{\textbf{Answer:}}
+          Truth methods, which are useful for testing the validity of a sentence, divide into two classes:
+          \begin{itemize}
+              \item \textbf{Model checking}: This method checks if a given model satisfies a sentence. (Truth table enumeration is an example of model checking.)
+              \item \textbf{Application of inference rules}: This method uses logical entailment to determine the truth of a sentence. (It involves the generation of new sentences from old ones.)
+          \end{itemize}
 
-    With the horn form $KB$ is a conjunction of Horn clauses\footnote{Horn clauses are a disjunction of literals with at most one positive literal}: 
-    \begin{itemize}
-        \item proposition symbol
-        \item (conjunction of symbols) $\Rightarrow$ symbol 
-    \end{itemize}
-    Every definite clause can be written as an implication whose premise is a conjunction of positive literals and whose conclusion is a single positive literal.
-    
-    \textbf{Modus Ponens} is a inference rule that can be used with the horn form: 
-    \begin{equation}
-        \frac{\alpha_1,\ldots\alpha_n,\qquad \alpha_1\land\ldots\land\alpha_n\Rightarrow\beta}{\beta}
-    \end{equation}
-    Horn form simplifies the inference process, lowing the complexity from exponential to polynomial.
-    Lowering the complexity is a huge improvement, but it's come with a cost: less expressive power.
+          Truth table enumeration has a problem: it is exponential in the number of propositional symbols, and in many cases, the full power of resolution is not needed.
+          We need to find a more efficient way to determine if $\alpha$ is entailed by $KB$.
+          Some real-world knowledge bases satisfy certain restrictions on the form of sentences they contain,
+          enabling them to use a more restricted and efficient inference algorithm.
+          One such restricted form is the \textbf{Horn form}.
 
-    It can be used with the \textbf{forward chaining} and \textbf{backward chaining} algorithms.
+          With the Horn form, $KB$ is a conjunction of Horn clauses\footnote{Horn clauses are a disjunction of literals with at most one positive literal}:
+          \begin{itemize}
+              \item proposition symbol
+              \item (conjunction of symbols) $\Rightarrow$ symbol
+          \end{itemize}
+          Every definite clause can be written as an implication whose premise is a conjunction of positive literals and whose conclusion is a single positive literal.
+
+          \textbf{Modus Ponens} is an inference rule that can be used with the Horn form:
+          \begin{equation}
+              \frac{\alpha_1,\ldots,\alpha_n,\qquad \alpha_1\land\ldots\land\alpha_n\Rightarrow\beta}{\beta}
+          \end{equation}
+          The Horn form simplifies the inference process, lowering the complexity from exponential to polynomial.
+          Although this reduction in complexity is a significant improvement, it comes at a cost: reduced expressive power.
+
+          The Horn form can be utilized with the \textbf{forward chaining} and \textbf{backward chaining} algorithms.
 
     \item In the context of inference in propositional logic, introduce the resolution rule.
-    Then, explain how the resolution algorithm works.
-    Finally, prove its completeness.
+          Then, explain how the resolution algorithm works.
+          Finally, prove its completeness.
 
-    \textcolor{green}{\textbf{Answer:}}
+          \textcolor{green}{\textbf{Answer:}}
 
-    Resolution yields a complete inference algorithm when coupled with any complete search algorithm.
-    This rule applies only to clauses that is a disjunction of literals: 
-    every sentence of propositional logic can be converted into an equivalent conjunction of clauses $\Rightarrow$ conjunctive normal form (CNF).
+          Resolution yields a complete inference algorithm when coupled with any complete search algorithm. This rule applies only to clauses that are a disjunction of literals: every sentence of propositional logic can be converted into an equivalent conjunction of clauses, leading to conjunctive normal form (CNF).
 
-    Resolution rule:
-    \begin{equation}
-        \frac{\ell_1\lor\ldots\lor\ell_k,\qquad m_1\lor\ldots\lor m_n}{\ell_1\lor\ldots\lor\ell_{i-1}\lor\ell_{i+1}\lor\ldots\lor\ell_k\lor m_1\lor\ldots\lor m_{j-1}\lor m_{j+1}\lor\ldots\lor m_n}
-    \end{equation}
+          **Resolution rule:**
+          \begin{equation}
+              \frac{\ell_1 \lor \ldots \lor \ell_k, \quad m_1 \lor \ldots \lor m_n}{\ell_1 \lor \ldots \lor \ell_{i-1} \lor \ell_{i+1} \lor \ldots \lor \ell_k \lor m_1 \lor \ldots \lor m_{j-1} \lor m_{j+1} \lor \ldots \lor m_n}
+          \end{equation}
 
-    Resolution algorithm:
-    \begin{enumerate}[label=\arabic*.]
-        \item Convert $KB \land \neg\alpha$ to CNF
-        \begin{enumerate}
-            \item Eliminate $\Leftrightarrow$ replacing $\alpha\Leftrightarrow\beta$ with $(\alpha\Rightarrow\beta)\land(\beta\Rightarrow\alpha)$
-            \item Eliminate $\Rightarrow$ replacing $\alpha\Rightarrow\beta$ with $\neg\alpha\lor\beta$
-            \item Move $\lnot$ inwards using De Morgan's laws and double negation
-            \item Apply distributivity law ($\lor \text{ over } \land$) and flatten
-        \end{enumerate}
-        \item Apply resolution rule to resulting clauses
-        \item Each pair that contains complementary literals is resolved to produce a new clause
-        \item The process is repeated until one of two things happens:
-        \begin{itemize}
-            \item there are no new clauses that can be added, $KB$ does not entail $\alpha$
-            \item two clauses resolve to yield the empty clause $\Rightarrow$ $\alpha$ is entailed by $KB$ (The empty clause is equivalent to false, because disjunction is true only if at least one of the disjuncts is true)
-        \end{itemize}
-    \end{enumerate}
+          **Resolution algorithm:**
+          \begin{enumerate}[label=\arabic*.]
+              \item Convert $KB \land \neg\alpha$ to CNF.
+                    \begin{enumerate}
+                        \item Eliminate $\Leftrightarrow$ by replacing $\alpha \Leftrightarrow \beta$ with $(\alpha \Rightarrow \beta) \land (\beta \Rightarrow \alpha)$.
+                        \item Eliminate $\Rightarrow$ by replacing $\alpha \Rightarrow \beta$ with $\neg\alpha \lor \beta$.
+                        \item Move $\lnot$ inwards using De Morgan's laws and double negation.
+                        \item Apply the distributivity law ($\lor$ over $\land$) and flatten.
+                    \end{enumerate}
+              \item Apply the resolution rule to resulting clauses.
+              \item Each pair containing complementary literals is resolved to produce a new clause.
+              \item The process is repeated until one of two things happens:
+                    \begin{itemize}
+                        \item There are no new clauses that can be added, indicating that $KB$ does not entail $\alpha$.
+                        \item Two clauses resolve to yield the empty clause $\Rightarrow$ $\alpha$ is entailed by $KB$ (The empty clause is equivalent to false because disjunction is true only if at least one of the disjuncts is true).
+                    \end{itemize}
+          \end{enumerate}
 
-    The algorithm is sound because it implements directly the definition of entailment, 
-    and it is complete because it works for any $KB$ and $\alpha$ and always terminates.
+          The algorithm is sound because it directly implements the definition of entailment, and it is complete because it works for any $KB$ and $\alpha$ and always terminates.
 
-    \textbf{Proof of completeness}:
+          \textbf{Proof of completeness:}
 
-    The completeness theorem for resolution in propositional logic is called the ground resolution theorem:
-    \begin{center}
-        \textit{
-        If a set of clauses is unsatisfiable, then the resolution closure of those clauses contains the empty clause. 
-        (Resolution Closure: the set of all clauses that can be derived by repeated application of the resolution rule)
-        }
-    \end{center}
-    The proof of this theorem is proved by demonstrating its contrapositive:
-    \begin{center}
-        \textit{
-        If the resolution closure of a set of clauses does not contain the empty clause, then the set of clauses is satisfiable.
-        }
-    \end{center}
+          The completeness theorem for resolution in propositional logic is called the ground resolution theorem:
+          \begin{center}
+              *If a set of clauses is unsatisfiable, then the resolution closure of those clauses contains the empty clause.*
+              *(Resolution Closure: the set of all clauses that can be derived by repeated application of the resolution rule)*
+          \end{center}
 
-    \begin{enumerate}
-        \item Construct a model for $S$ with suitable truth value for $P_1,\ldots,P_k$:
-        
-        For $i$ from $1$ to $k$:
-        \begin{itemize}
-            \item if a clause in $RC(S)$ contains $\lnot P_i$ and all its other literals are false under the assignment choosen for $P_1,\ldots,P_{i-1}$, 
-            then assign false to $P_i$.
-            \item Otherwise, assign true to $P_i$.       
-        \end{itemize}
-        \item Show that the the previous point always ends up with a model for $S$, this is done by induction:
-        \begin{itemize}
-            \item Base case: $i = 1$:
-            
-            cannot be than $\lnot P_1$ and $P_1$ simultaneously appear in $S$ otherwise the empty clause will appear in $RC(S)$.
-            So $P_1 \leftarrow false$ if $\lnot P_1$ occurs in $S$, otherwise $P_1 \leftarrow true$.
-            \item Case $i$: Assume a partial model $m_{(i-1)}$ for symbols $P_1,\ldots,P_{i-1}\Rightarrow$ it is not possible to assign a truth value to $P_i$ if $RC(S)$
-            contains clauses:
-            \begin{itemize}
-                \item $C\equiv B\lor P_i$ and $C'\equiv B'\lor\lnot P_i$, where $B$ and $B'$ only contain symbols in \{$P_1,\ldots,P_{i-1}$\}
-                \item both $B$ and $B'$ are false under $m_{i-1}$
-            \end{itemize}
-            In the case we had these clauses the resolution of them will return $B\lor B'$, so either $B$ or $B'$ should be true by the induction hypothesis. 
-            This means that:
-            \begin{itemize}
-                \item if $B$ is true $\Rightarrow$ $P_i$ is false
-                \item if $B'$ is true $\Rightarrow$ $P_i$ is true
-            \end{itemize}
-            Thus it will be possible to extend model $m_{i-1}$ to either $m_i = m_{i-1}\cup\{P_i \leftarrow false\}$ or $m_i = m_{i-1}\cup\{P_i \leftarrow true\}$.
-            So it's possible to extend the model up to $k$ and $S$ is satisfiable.
-        \end{itemize}
-    \end{enumerate}
+          The proof of this theorem is demonstrated by proving its contrapositive:
+          \begin{center}
+              *If the resolution closure of a set of clauses does not contain the empty clause, then the set of clauses is satisfiable.*
+          \end{center}
+
+          \begin{enumerate}
+              \item Construct a model for $S$ with a suitable truth value for $P_1, \ldots, P_k$:
+
+                    For $i$ from $1$ to $k$:
+                    \begin{itemize}
+                        \item If a clause in $RC(S)$ contains $\lnot P_i$ and all its other literals are false under the assignment chosen for $P_1, \ldots, P_{i-1}$, then assign false to $P_i$.
+                        \item Otherwise, assign true to $P_i$.
+                    \end{itemize}
+              \item Show that the previous point always ends up with a model for $S$, which is done by induction:
+                    \begin{itemize}
+                        \item **Base case: $i = 1$:**
+
+                              It cannot be that $\lnot P_1$ and $P_1$ simultaneously appear in $S$, otherwise the empty clause will appear in $RC(S)$. So $P_1 \leftarrow false$ if $\lnot P_1$ occurs in $S$, otherwise $P_1 \leftarrow true$.
+                        \item **Case $i$:** Assume a partial model $m_{(i-1)}$ for symbols $P_1, \ldots, P_{i-1}$. It is not possible to assign a truth value to $P_i$ if $RC(S)$ contains clauses:
+                              \begin{itemize}
+                                  \item $C\equiv B\lor P_i$ and $C'\equiv B'\lor\lnot P_i$, where $B$ and $B'$ only contain symbols in $\{P_1, \ldots, P_{i-1}\}$.
+                                  \item Both $B$ and $B'$ are false under $m_{i-1}$.
+                              \end{itemize}
+                              In the case we had these clauses, the resolution of them will return $B\lor B'$, so either $B$ or $B'$ should be true by the induction hypothesis. This means that:
+                              \begin{itemize}
+                                  \item If $B$ is true $\Rightarrow$ $P_i$ is false.
+                                  \item If $B'$ is true $\Rightarrow$ $P_i$ is true.
+                              \end{itemize}
+                              Thus, it will be possible to extend model $m_{i-1}$ to either $m_i = m_{i-1}\cup\{P_i \leftarrow false\}$ or $m_i = m_{i-1}\cup\{P_i \leftarrow true\}$. So it's possible to extend the model up to $k$, and $S$ is satisfiable.
+                    \end{itemize}
+          \end{enumerate}
+
 \end{enumerate}
 \section{First-Order Logic}
 \begin{enumerate}[label=\textbf{FOL.\arabic*}]
 
     \item Describe the fundamental elements to be able to carry out inference in the first-order logic through the resolution rule.
-    Discuss the various strategies used by the resolution rule, highlighting the strengths and weaknesses.
-    At the end discuss the computational aspects.
+          Discuss the various strategies used by the resolution rule, highlighting the strengths and weaknesses.
+          At the end discuss the computational aspects.
 
-    \textcolor{green}{\textbf{Answer:}}
-    The fundamental elements of first-order logic are:
-    \begin{itemize}
-        \item \textbf{Constants}: represent objects in the domain of discourse.
-        \item \textbf{Predicates}: represent properties of objects in the domain of discourse.
-        \item \textbf{Functions}: represent relations between objects in the domain of discourse.
-        \item \textbf{Variables}: represent unspecified objects in the domain of discourse.
-        \item \textbf{Connectives}: $\land,\lor,\lnot,\Rightarrow,\Leftrightarrow$.
-        \item \textbf{Quantifiers}: $\forall,\exists$.
-        \item \textbf{Equality}: $=$.
-    \end{itemize}
-    Senteces are true with respect to a model and an interpretation.
+          \textcolor{green}{\textbf{Answer:}}
+          The fundamental elements of first-order logic are:
+          \begin{itemize}
+              \item \textbf{Constants}: These represent objects in the domain of discourse.
+              \item \textbf{Predicates}: These represent properties of objects in the domain of discourse.
+              \item \textbf{Functions}: These represent relations between objects in the domain of discourse.
+              \item \textbf{Variables}: These represent unspecified objects in the domain of discourse.
+              \item \textbf{Connectives}: $\land, \lor, \lnot, \Rightarrow, \Leftrightarrow$.
+              \item \textbf{Quantifiers}: $\forall, \exists$.
+              \item \textbf{Equality}: $=$.
+          \end{itemize}
+          Sentences are true with respect to a model and an interpretation.
 
-    The idea is to use the quantifiers to do inference and reconduct to the inference in propositional logic, example:
-    \begin{itemize}
-        \item\textbf{Universal quantification}: $\forall x P(x)$, it's true in a model $m$ $\iff P$ is true with $x$ being each 
-        possible object in the model.
+          The idea is to use quantifiers to perform inference and reduce it to inference in propositional logic. For example:
+          \begin{itemize}
+              \item \textbf{Universal quantification}: $\forall x P(x)$ is true in a model $m$ if and only if $P$ is true with $x$ representing every possible object in the model.
 
-        \textbf{Universal instantiation}: every instance of a universally quantified sentence is entailed by: 
-        \begin{equation}
-            \frac{\forall v \quad \alpha}{SUBST(\{v/g\},\alpha)}
-        \end{equation}
-        for any variable $v$ and ground term $g$. It can be applied serveral times to add new sentences, the new $KB$ is equivalent to the original one.
-        \item\textbf{Existential quantification}: $\exists x P(x)$, it's true in a model $m$ $\iff P$ is true with $x$ being 
-        at least one object in the model.
-        \textbf{Existential instantiation}: for any sentece $\alpha$, variable $v$ and constant symbol $k$ that does not appear elsewhere in the KB:
-        \begin{equation}
-            \frac{\exists v \quad \alpha}{SUBST(\{v/k\},\alpha)}
-        \end{equation}
-        EI can be applied only once to replace the existential sentece, the new $KB$ is not equivalent to the original one, but it satisfiable
-        if the original one is.
-    \end{itemize}
+                    \textbf{Universal instantiation}: Every instance of a universally quantified sentence is entailed by:
+                    \begin{equation}
+                        \frac{\forall v \quad \alpha}{SUBST(\{v/g\},\alpha)}
+                    \end{equation}
+                    for any variable $v$ and ground term $g$. It can be applied several times to add new sentences, and the new $KB$ is equivalent to the original one.
+
+              \item \textbf{Existential quantification}: $\exists x P(x)$ is true in a model $m$ if and only if $P$ is true with $x$ representing at least one object in the model.
+
+                    \textbf{Existential instantiation}: For any sentence $\alpha$, variable $v$, and constant symbol $k$ that does not appear elsewhere in the KB:
+                    \begin{equation}
+                        \frac{\exists v \quad \alpha}{SUBST(\{v/k\},\alpha)}
+                    \end{equation}
+                    EI can be applied only once to replace the existential sentence, and the new $KB$ is not equivalent to the original one, but it is satisfiable if the original one is.
+          \end{itemize}
+
 
     \item In the context of first order logic, describe in a complete and exhaustive way the Unification algorithm, further explaining why this is particularly useful for logical inference
-    
-    \textcolor{green}{\textbf{Answer:}}
 
-    Propositionalization seems to generate lots of irrelevant sentences (Instantiate the universal sentece in all possible ways, this can generate infinitely many ground terms with function symbols but we can solve this problem putting a limit):
-    \begin{center}
-        With $p$ $k-ary$ Predicates and $n$ constants, there are $p\cdot n^k$ instantiations.
-    \end{center}
+          \textcolor{green}{\textbf{Answer:}}
 
-    If there is some substitution $\theta$ that makes each of the conjuncts of the premise of the implication identical 
-    to senteces already in the KB, then we can assert the conclusion of the implication.
-    This inferece rule is called \textbf{Generalized Modus Ponens}:
-    \begin{equation}
-        \frac{p_1',p_2',\ldots,p'_n,\quad (p_1\land p_2\land\ldots\land p_n \Rightarrow q)}
-        {q\theta}
-    \end{equation}
+          Propositionalization seems to generate lots of irrelevant sentences (Instantiate the universal sentence in all possible ways; this can generate infinitely many ground terms with function symbols, but we can solve this problem by putting a limit):
+          \begin{center}
+              With $p$ $k$-ary predicates and $n$ constants, there are $p \cdot n^k$ instantiations.
+          \end{center}
 
-    Soundness GMP:
+          If there is some substitution $\theta$ that makes each of the conjuncts of the premise of the implication identical to sentences already in the KB, then we can assert the conclusion of the implication. This inference rule is called \textbf{Generalized Modus Ponens}:
+          \begin{equation}
+              \frac{p_1',p_2',\ldots,p'_n,\quad (p_1\land p_2\land\ldots\land p_n \Rightarrow q)}
+              {q\theta}
+          \end{equation}
 
-    For any definite clause $p$, we have $p\vDash p\theta$ by UI.
-    \begin{itemize}
-        \item $(p_1\land\ldots\land p_n \Rightarrow q)\vDash(p_1\land\ldots\land p_n \Rightarrow q)\theta=(p_1\theta\land\ldots p_n\theta\Rightarrow q\theta)$
-        \item $p'_1,\ldots, p'_n \vDash p'_1\land\ldots\land p'_n\vDash p'_1\theta\land\ldots\land p'_n\theta$
-        \item From 1 and 2, $q\theta$ follows by ordinary Modus Ponens.
-    \end{itemize}
+          Soundness GMP:
 
-    \textbf{Unification} is a process that find substitutions for variables that make two sentences identical.
-    We can get the inference immediately if we can find a substitution $\theta$ such that $\alpha\theta = \beta\theta$.
-    For avoiding failures, we need to eliminate overlap of variables in $\alpha$ and $\beta$ $\Rightarrow$ \textbf{Standardizing apart}:
-    each sentece have to use different variables name (we can rename variables in a sentence without changing its meaning).
+          For any definite clause $p$, we have $p \vDash p\theta$ by UI.
+          \begin{itemize}
+              \item $(p_1\land\ldots\land p_n \Rightarrow q) \vDash (p_1\land\ldots\land p_n \Rightarrow q)\theta = (p_1\theta\land\ldots p_n\theta\Rightarrow q\theta)$
+              \item $p'_1,\ldots, p'_n \vDash p'_1\land\ldots\land p'_n \vDash p'_1\theta\land\ldots\land p'_n\theta$
+              \item From 1 and 2, $q\theta$ follows by ordinary Modus Ponens.
+          \end{itemize}
 
-    \textbf{Unification algorithm}:
-    The algorithm works by comparing the structures of the inputs, element by element.
-    The substitution $\theta$ that is the argument to UNIFY is builtup along the way and is used to make sure that later comparisons are consistent with bindings that were established earlier.
-    At the beginning it checks if the two sentecens have the same function or predicate and the same number of arguments.
-    Then it checks arguments one by one and:
-    \begin{itemize}
-        \item if those args are variables, it adds the binding to $\theta$.
-        \item if those args are compounds, it recursively calls UNIFY on them.
-        \item if those args are lists, it recursively calls UNIFY on them.
-    \end{itemize}
+          \textbf{Unification} is a process that finds substitutions for variables that make two sentences identical. We can get the inference immediately if we can find a substitution $\theta$ such that $\alpha\theta = \beta\theta$. To avoid failures, we need to eliminate the overlap of variables in $\alpha$ and $\beta$ $\Rightarrow$ \textbf{Standardizing apart}: each sentence has to use different variable names (we can rename variables in a sentence without changing its meaning).
 
-    \textbf{Problem}: there could be more than one such unifier $\Rightarrow$ for each pair of sentences we need to find the most general unifier
-    (MGU\@: that one which places the fewest restrictions on the variables), 
-    that is unique up to renaming and substitution of variables.
+          \textbf{Unification algorithm}:
+          The algorithm works by comparing the structures of the inputs, element by element. The substitution $\theta$ that is the argument to UNIFY is built up along the way and is used to make sure that later comparisons are consistent with bindings that were established earlier. At the beginning, it checks if the two sentences have the same function or predicate and the same number of arguments. Then it checks arguments one by one:
+          \begin{itemize}
+              \item If those arguments are variables, it adds the binding to $\theta$.
+              \item If those arguments are compounds, it recursively calls UNIFY on them.
+              \item If those arguments are lists, it recursively calls UNIFY on them.
+          \end{itemize}
 
-    This algorithm is particularly useful because it is used in algorithms for logical inference like forward/backward chaining and resolution.
+          \textbf{Problem}: there could be more than one such unifier $\Rightarrow$ for each pair of sentences, we need to find the most general unifier (MGU: that one which places the fewest restrictions on the variables), which is unique up to renaming and substitution of variables.
 
+          This algorithm is particularly useful because it is used in algorithms for logical inference like forward/backward chaining and resolution.
 
     \item In the context of inference in first-order logic, introduce the resolution rule.
-    Discuss in what form the clauses need to be represented in order to efficiently enforce the resolution and how that form can be achieved.
-    Finally, present the various strategies that have been proposed regarding the choice of clauses to be used during the inference.
+          Discuss in what form the clauses need to be represented in order to efficiently enforce the resolution and how that form can be achieved.
+          Finally, present the various strategies that have been proposed regarding the choice of clauses to be used during the inference.
 
-    \textcolor{green}{\textbf{Answer:}}
+          \textcolor{green}{\textbf{Answer:}}
 
-    The resolution rule is an inferece procedure based on the resolution for propositional logic and extended to first-order logic.
-    It requires senteces to  be in \textbf{conjunctive normal form} (CNF\@: a conjunction of clauses, where a clause is a disjunction of literals).
-    For achieving this form, we must follow these steps:
-    \begin{enumerate}
-        \item \textbf{Eliminate biconditionals and implications}: $p\Rightarrow q$ is equivalent to $\lnot p\lor q$.
-        \item \textbf{Move negation inwards}: we need rules for negated quantifiers:
-        \begin{itemize}
-            \item $\lnot\forall x P(x)$ is equivalent to $\exists x \lnot P(x)$
-            \item $\lnot\exists x P(x)$ is equivalent to $\forall x \lnot P(x)$
-        \end{itemize}
-        \item \textbf{Standardize variables}: rename variables to avoid conflicts.
-        \item \textbf{Skolemize}: eliminate existential quantifiers by replacing it with Skolem functions.
-        In the existential instantiation rule, we drop the quantifier and substitute the variable with another one creating only ONE new sentence.
-        When the existential instantiation can't be applied (The sentece doesn't match the pattern $\exists v\text{  }\alpha$), we replace 
-        the existential quantifier variables with Skolem functions which has as arguments the universally quantified variables in whoose scope the existential quantifier appears.
+          The resolution rule is an inference procedure based on resolution for propositional logic and extended to first-order logic. It requires sentences to be in \textbf{conjunctive normal form} (CNF: a conjunction of clauses, where a clause is a disjunction of literals). To achieve this form, we must follow these steps:
 
-        \item \textbf{Drop universal quantifiers}: we can drop universal quantifiers because they are implicit in CNF\@.
-        \item \textbf{Distribute $\lor$ over $\land$}: $p\lor(q\land r)$ is equivalent to $(p\lor q)\land(p\lor r)$.
-    \end{enumerate}
+          \begin{enumerate}
+              \item \textbf{Eliminate biconditionals and implications}: $p\Rightarrow q$ is equivalent to $\lnot p\lor q$.
+              \item \textbf{Move negation inwards}: we need rules for negated quantifiers:
+                    \begin{itemize}
+                        \item $\lnot\forall x P(x)$ is equivalent to $\exists x \lnot P(x)$
+                        \item $\lnot\exists x P(x)$ is equivalent to $\forall x \lnot P(x)$
+                    \end{itemize}
+              \item \textbf{Standardize variables}: rename variables to avoid conflicts.
+              \item \textbf{Skolemize}: eliminate existential quantifiers by replacing them with Skolem functions. In the existential instantiation rule, we drop the quantifier and substitute the variable with another one, creating only ONE new sentence. When the existential instantiation can't be applied (The sentence doesn't match the pattern $\exists v\text{ }\alpha$), we replace the existential quantifier variables with Skolem functions, which have as arguments the universally quantified variables in whose scope the existential quantifier appears.
+              \item \textbf{Drop universal quantifiers}: we can drop universal quantifiers because they are implicit in CNF.
+              \item \textbf{Distribute $\lor$ over $\land$}: $p\lor(q\land r)$ is equivalent to $(p\lor q)\land(p\lor r)$.
+          \end{enumerate}
 
-    Once the sentences are in CNF, we can apply the resolution rule:
+          Once the sentences are in CNF, we can apply the resolution rule:
 
-    Two sentences (standarding apart) are resolvable if they contain complementary literals: propositional literals are complementary if one unifies with the negation of the other.
-    Thus we have:
-    \begin{equation}
-        \frac{\ell_1\lor\ldots\lor \ell_k,\quad m_1\lor\ldots\lor m_n}
-        {SUBST(\theta,\ell_1\lor\ldots\lor\ell_{i-1}\lor\ell_{i+1}\lor\ldots\lor\ell_k\lor m_1\lor\ldots\lor m_{j-1}\lor m_{j+1}\lor\ldots\lor m_n)}
-    \end{equation}
-    where $UNIFY(\ell_i,\lnot m_j) = \theta$.
+          Two sentences (standardizing apart) are resolvable if they contain complementary literals: propositional literals are complementary if one unifies with the negation of the other. Thus, we have:
 
-    This rule is called binary resolution because it combines two clauses at a time.
+          \begin{equation}
+              \frac{\ell_1\lor\ldots\lor \ell_k,\quad m_1\lor\ldots\lor m_n}
+              {SUBST(\theta,\ell_1\lor\ldots\lor\ell_{i-1}\lor\ell_{i+1}\lor\ldots\lor\ell_k\lor m_1\lor\ldots\lor m_{j-1}\lor m_{j+1}\lor\ldots\lor m_n)}
+          \end{equation}
+          where $UNIFY(\ell_i,\lnot m_j) = \theta$.
 
-    The various strategies that have been proposed regarding the choice of clauses to be used during the inference are:
-    \begin{itemize}
-        \item \textbf{Unit preference}: select a unit clause (a clause with only one literal) if possible, the idea is that we're trying to produce an empty clause, so it might be a good idea to prefer inferences that produce shorter clauses.
-        \item \textbf{Unit resolution}: is a restricted form of resolution in which every resolution step must involve a unit clause.
-        It is incomplete in general, but it is complete for Horn clauses.
-        \item \textbf{Set of support}: select a set of clauses (the set of support) and use at least one element of the set in each step.
-        It is incomplete if the wrong set of support is chosen (Ex of a good set: the negated query)
-        \item \textbf{Input resolution}: every resolution combines one of the input senteces (from the KB or the query) with some other sentece.
-        It is complete if KB is in Horn form, but incomplete in the general case. 
-        Complete if modified: allows $P$ and $Q$ to be resolved together either if $P$ is in the original KB or if $P$ is an ancestor of $Q$ in the proof tree.
-        \item \textbf{Subsumption}: eliminates all senteces that are subsumed by other senteces in the KB\@.
-    \end{itemize}
+          This rule is called binary resolution because it combines two clauses at a time.
+
+          The various strategies that have been proposed regarding the choice of clauses to be used during the inference are:
+
+          \begin{itemize}
+              \item \textbf{Unit preference}: select a unit clause (a clause with only one literal) if possible. The idea is that we're trying to produce an empty clause, so it might be a good idea to prefer inferences that produce shorter clauses.
+              \item \textbf{Unit resolution}: is a restricted form of resolution in which every resolution step must involve a unit clause. It is incomplete in general, but it is complete for Horn clauses.
+              \item \textbf{Set of support}: select a set of clauses (the set of support) and use at least one element of the set in each step. It is incomplete if the wrong set of support is chosen (Example of a good set: the negated query).
+              \item \textbf{Input resolution}: every resolution combines one of the input sentences (from the KB or the query) with some other sentence. It is complete if KB is in Horn form but incomplete in the general case. Complete if modified: allows $P$ and $Q$ to be resolved together either if $P$ is in the original KB or if $P$ is an ancestor of $Q$ in the proof tree.
+              \item \textbf{Subsumption}: eliminates all sentences that are subsumed by other sentences in the KB.
+          \end{itemize}
 
 \end{enumerate}
 
 \section{Uncertainty}
 
-Agents may need to handle uncertainty, whether due to partial observability, nondeterminism, or a combination of the two.
-Agents that never fail must to know everything about the world and the various exception, but this is not possible in the real world:
+Agents may need to handle uncertainty, whether due to partial observability, nondeterminism, or a combination of the two. Agents that never fail must know everything about the world and various exceptions, but this is not possible in the real world:
+
 \begin{itemize}
-    \item \textbf{Laziness}: it's too expensive to enumerate all the possible cases.
-    \item \textbf{Theoretical ignorance}: most of the time we don't know the complete domain of the problem.
-    \item \textbf{Practical ignorance}: even if we know all the possible cases, there is uncertainty in applying this rules in some specific cases.
+    \item \textbf{Laziness}: It's too expensive to enumerate all the possible cases.
+    \item \textbf{Theoretical ignorance}: Most of the time, we don't know the complete domain of the problem.
+    \item \textbf{Practical ignorance}: Even if we know all the possible cases, there is uncertainty in applying these rules in some specific cases.
 \end{itemize}
-Probability provides a way of summarizing the uncertainty that comes from our laziness and ignorance,
-thereby solving the qualification problem (the problem of how to represent all the knowledge that an agent needs to know about the world).
-In \textbf{subjective} (degree of belief) or \textbf{Bayesian} (degree of belief given the evidence) probability relate propositions to 
-one's own state of knowledge (it might be learned from past experience of simular situations).
-Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + Utility theory (used to represent and infer preferences).
+
+Probability provides a way of summarizing the uncertainty that comes from our laziness and ignorance, thereby solving the qualification problem (the problem of how to represent all the knowledge that an agent needs to know about the world). In \textbf{subjective} (degree of belief) or \textbf{Bayesian} (degree of belief given the evidence), probability relates propositions to one's own state of knowledge (it might be learned from past experience of similar situations). Decision under uncertainty $\Rightarrow$ Decision theory = Probability theory + Utility theory (used to represent and infer preferences).
+
 
 \begin{enumerate}[label=\textbf{U.\arabic*}]
     \item\label{q:joint-prob} In the context of treatment of uncertainty, discuss what is the main computational challenge when using the joint probability distribution of the main involved variables.
-    
-    \textcolor{green}{\textbf{Answer:}}
 
-    \textbf{Definition:} for a set of random variables (r.v.s) $X_1,\ldots,X_n$, the joint probability distribution $P(X_1,\ldots,X_n)$ is a table that contains the probability of each possible combination of values for the random variables.
+          \textcolor{green}{\textbf{Answer:}}
 
-    Joint probability distribution (completely determines a probability model) is used for inference by enumeration: for any proposition $\phi$ sum the atomic events where it is true:
-    \begin{equation}
-        P(\phi) = \sum_{\omega:\omega\vDash\phi}P(\omega)
-    \end{equation} 
+          Joint probability distribution (completely determines a probability model) is used for inference by enumeration: for any proposition $\phi$, sum the atomic events where it is true:
+          \begin{equation}
+              P(\phi) = \sum_{\omega : \omega \vDash \phi} P(\omega)
+          \end{equation}
 
-    It works also for conditional probability:
-    \begin{equation}\label{eq:cond_prob}
-        P(a|b) = \frac{P(a\land b)}{P(b)} \text{ if } P(b) \neq 0
-    \end{equation}
-    In the \ref{eq:cond_prob} the denominator act as a normalization factor, it is the probability of the event $b$.
+          It works also for conditional probability:
+          \begin{equation}\label{eq:cond_prob}
+              P(a | b) = \frac{P(a \land b)}{P(b)} \text{ if } P(b) \neq 0
+          \end{equation}
+          In \ref{eq:cond_prob}, the denominator acts as a normalization factor; it is the probability of the event $b$.
 
-    Inference procedure: 
-    \begin{itemize}
-        \item X is a set of random variables 
-        \item Y is the set of query variables  
-        \item E is the set of evidence variables given specific values e
-        \item H is the set of hidden variables ($H = X - Y - E$)
-    \end{itemize}
-    Then the required summation of joint entries is done by summing out the hidden variables:
-    \begin{equation}
-        P(Y|E = e) = \alpha P(Y,E = e) = \alpha\sum_{h}P(Y,E = e,H = h)
-    \end{equation}
-    The terms in the summation are joint entries because $Y$, $E$ and $H$ are together exhaust the set of random variables.
+          Inference procedure:
+          \begin{itemize}
+              \item $X$ is a set of random variables.
+              \item $Y$ is the set of query variables.
+              \item $E$ is the set of evidence variables given specific values $e$.
+              \item $H$ is the set of hidden variables ($H = X - Y - E$).
+          \end{itemize}
+          Then the required summation of joint entries is done by summing out the hidden variables:
+          \begin{equation}
+              P(Y | E = e) = \alpha P(Y, E = e) = \alpha\sum_{h} P(Y, E = e, H = h)
+          \end{equation}
+          The terms in the summation are joint entries because $Y$, $E$, and $H$ together exhaust the set of random variables.
 
-    The main computational challenge is that the space grows with the number of variables.
-    Worst-case time complexity $O(d^n)$, where $d$ is the maximum number of values that any variable can take on (arity).
-    Space complexity $O(d^n)$, because we need to store the probability of each possible combination of values.
-    For reduce the complexity we can use conditional independence and Bayesian networks (can exploit conditional independence relationships and improve computational efficiency). Ref \ref{q:cond_ind} and \ref{q:Bayesian-Net}.
+          The main computational challenge is that the space grows with the number of variables. Worst-case time complexity $O(d^n)$, where $d$ is the maximum number of values that any variable can take on (arity). Space complexity $O(d^n)$ because we need to store the probability of each possible combination of values. To reduce complexity, we can use conditional independence and Bayesian networks (which can exploit conditional independence relationships and improve computational efficiency). Ref \ref{q:cond_ind} and \ref{q:Bayesian-Net}.
 
-    \item\label{q:cond_ind} In the context of the treatment of uncertainty, formally define the concept of conditional independence and how this can be used. 
-    In particular, discuss its role in the Bayesian Networks.
+    \item\label{q:cond_ind} In the context of the treatment of uncertainty, formally define the concept of conditional independence and how this can be used. In particular, discuss its role in Bayesian Networks.
 
-    \textcolor{green}{\textbf{Answer:}}
+          \textcolor{green}{\textbf{Answer:}}
 
-    \textbf{Definition:} two random variables $X$ and $Y$ are independent given a set of random variables $Z$ if and only if:
-    \begin{equation}\label{eq:prob_ind}
-        P(X|Y) = P(X) \text{ or } P(Y|X) = P(Y) \text{ or } P(X,Y) = P(X)P(Y)
-    \end{equation}
+          \textbf{Definition:} Two random variables $X$ and $Y$ are independent given a set of random variables $Z$ if and only if:
+          \begin{equation}\label{eq:prob_ind}
+              P(X|Y) = P(X) \text{ or } P(Y|X) = P(Y) \text{ or } P(X,Y) = P(X)P(Y)
+          \end{equation}
 
-    This means that in a given set of random variables, if we can find indipendent variables, than the full joint distribution
-    can be factored into smaller separated joint distributions on the subsets composed by the variables that are related to each other
-    (size of the representation from exponential in n to linear in n).
-    In this way the full joint distribution can be represented as the product of the smaller joint distributions.
-    In real world problems it's difficult to find a clean separation of variables by indipendence.
-    Conditional independence is our most basic and robust form of knowledge about uncertain environments.
+          This means that in a given set of random variables, if we can find independent variables, then the full joint distribution can be factored into smaller separated joint distributions on the subsets composed of the variables that are related to each other (size of the representation from exponential in $n$ to linear in $n$). In this way, the full joint distribution can be represented as the product of the smaller joint distributions. In real-world problems, it's difficult to find a clean separation of variables by independence. Conditional independence is our most basic and robust form of knowledge about uncertain environments.
 
-    Conditional independence:
-    \begin{equation}\label{eq:prob_cond_ind}
-        P(X,Y|Z) = P(X|Z)P(Y|Z)
-    \end{equation}
+          Conditional independence:
+          \begin{equation}\label{eq:prob_cond_ind}
+              P(X,Y|Z) = P(X|Z)P(Y|Z)
+          \end{equation}
 
-    Full joint distribution:
-    \begin{equation}
-        P(\textit{Cause,Effect}_1,\ldots,\textit{Effect}_n) = P(Cause)\prod_{i} P(\textit{Effect}_i|Cause)
-    \end{equation}
+          Full joint distribution:
+          \begin{equation}
+              P(\textit{Cause, Effect}_1, \ldots, \textit{Effect}_n) = P(Cause) \prod_{i} P(\textit{Effect}_i | Cause)
+          \end{equation}
 
-    Such probability distributions is called \textbf{naive Bayesian} model
+          Such probability distributions are called \textbf{naive Bayesian} models.
 
-    In a Bayesian network, conditional indipendence is used to define the network topology.
-    The topological semantics specifies that each variable is conditionally independent of its nondescendants, given its parents.
+          In a Bayesian network, conditional independence is used to define the network topology. The topological semantics specify that each variable is conditionally independent of its nondescendants, given its parents.
 
-    \item\label{q:Bayesian-Net} What does a Bayesian Network consist of? 
-    Why is it useful?
-    What is its computational complexity in space and time (also discuss special cases) for the exact inference?
 
-    \textcolor{green}{\textbf{Answer:}}
+    \item\label{q:Bayesian-Net} What does a Bayesian Network consist of?
+          Why is it useful?
+          What is its computational complexity in space and time (also discuss special cases) for the exact inference?
 
-    A Bayesian network is a directed graph in which each node is annotated with quantitative probability information. 
-    The full specification is as follows:
-    \begin{enumerate}
-        \item Each node corresponds to a random variable, which may be discrete or continuous.
-        \item A set of directed links or arrows connects pairs of nodes. 
-        If there is an arrow from node $X$ to node $Y,X$ is said to be a parent of $Y$.
-        The graph has no directed cycles and hence is a directed acyclic graph, or DAG.
-        \item Each node $X_i$ has a conditional probability distribution \\$P(X_i|Parents(X_i))$ 
-        that quantifies the effect of the parents on the node.
-    \end{enumerate}
+          \textcolor{green}{\textbf{Answer:}}
 
-    Bayesian networks are useful because they provide a compact representation of a full joint distribution, 
-    given from the combination of the topology (conditional indipendence) and the conditional distributions.
-    In the simplest case, conditional distribution represented as a conditional probability table (CPT) giving the distribution over $X_i$ for each combination of values for the parents.
-    A CPT for boolean $X_i$ with $k$ boolean parents has $2^k$ rows for the combinations of parent values.
-    If each variable has at most $k$ parents, the total number of parameters is $O(n2^k)$, where $n$ is the number of variables.
-    I.e. grows linearly with the $n$, vs $O(2^n)$ for the full joint distribution.
+          A Bayesian network is a directed graph in which each node is annotated with quantitative probability information. The full specification is as follows:
+          \begin{enumerate}
+              \item Each node corresponds to a random variable, which may be discrete or continuous.
+              \item A set of directed links or arrows connects pairs of nodes. If there is an arrow from node $X$ to node $Y$, $X$ is said to be a parent of $Y$. The graph has no directed cycles and hence is a directed acyclic graph, or DAG.
+              \item Each node $X_i$ has a conditional probability distribution $P(X_i|\text{Parents}(X_i))$ that quantifies the effect of the parents on the node.
+          \end{enumerate}
 
-    In Bayesian networks we can do inference: computing the probability distribution of a set of query variables, given some observed evidence variables.
-    
-    The complexity (ref \ref{q:joint-prob}) of exact inference in Bayesian networks depends strongly on the structure of the network.
-    \begin{itemize}
-        \item In single connected networks (or polytrees), any two nodes are connected by at most one (undirected) path, 
-        so the complexity of inference is linear in the size of the network ($O(d^kn)$).
-        \item In multiply connected networks, we can reduce 3SAT to exact inference to NP-Hard that is equivalent to
-        counting 3SAT solutions, thus \#P-complete.
-    \end{itemize}
-    
-    We can also do Inference by stochastic simulation:
-    \begin{itemize}
-        \item Draw $N$ samples from a sampling distribution $S$.
-        \item Compute an approximate posterior probability $\hat{P}$.
-        \item Show this converges to the true probability $P$.
-    \end{itemize}
+          Bayesian networks are useful because they provide a compact representation of a full joint distribution, given the combination of the topology (conditional independence) and the conditional distributions. In the simplest case, the conditional distribution is represented as a Conditional Probability Table (CPT), giving the distribution over $X_i$ for each combination of values for the parents. A CPT for a boolean $X_i$ with $k$ boolean parents has $2^k$ rows for the combinations of parent values. If each variable has at most $k$ parents, the total number of parameters is $O(n2^k)$, where $n$ is the number of variables, i.e., it grows linearly with $n$ vs $O(2^n)$ for the full joint distribution.
 
-    Given the intractability of exact inference in large, multiply connected networks, it is essen-tial to consider approximate inference methods.
-    \begin{itemize}
-        \item Sampling from an empty network
-        \item Rejection sampling: reject samples disagreeing with evidence
-        \item Likelihood weighting: weight samples by likelihood of evidence
-        \item Markov chain Monte Carlo (MCMC): sample from a stochastic process whose stationary distribution is the true posterior
-    \end{itemize}
+          In Bayesian networks, we can perform inference by computing the probability distribution of a set of query variables given some observed evidence variables.
+
+          The complexity (ref \ref{q:joint-prob}) of exact inference in Bayesian networks depends strongly on the structure of the network.
+          \begin{itemize}
+              \item In singly connected networks (or polytrees), any two nodes are connected by at most one (undirected) path, so the complexity of inference is linear in the size of the network ($O(d^kn)$).
+              \item In multiply connected networks, we can reduce 3SAT to exact inference, which is NP-Hard and is equivalent to counting 3SAT solutions, thus \#P-complete.
+          \end{itemize}
+
+          We can also perform inference by stochastic simulation:
+          \begin{itemize}
+              \item Draw $N$ samples from a sampling distribution $S$.
+              \item Compute an approximate posterior probability $\hat{P}$.
+              \item Show this converges to the true probability $P$.
+          \end{itemize}
+
+          Given the intractability of exact inference in large, multiply connected networks, it is essential to consider approximate inference methods.
+          \begin{itemize}
+              \item Sampling from an empty network
+              \item Rejection sampling: reject samples disagreeing with evidence
+              \item Likelihood weighting: weight samples by the likelihood of evidence
+              \item Markov Chain Monte Carlo (MCMC): sample from a stochastic process whose stationary distribution is the true posterior
+          \end{itemize}
+
 \end{enumerate}
 
 \section{Machine Learning}
 \begin{enumerate}[label=\textbf{ML.\arabic*}]
     \item Introduce the main paradigms of machine learning, describing in particular the fundamental ingredients of the supervised paradigm, and how the complexity of an hypothesis space can be measured in a useful way in the case of a binary classification task.
 
-    \textcolor{green}{\textbf{Answer:}}
+          \textcolor{green}{\textbf{Answer:}}
 
-    Machine learning is the study of computer algorithms that is able to learn from data.
-    A learning algorithm must have the following components:
-    \begin{itemize}
-        \item \textbf{Tasks}: how the machine learning algorithm should process an example.
-        \item \textbf{Performance measure}: how accurate is the function/model returned by the learning algorithm.
-        \item \textbf{Experience}: Dataset.
-    \end{itemize}
-    There are different paradigms of machine learning:
-    \begin{itemize}
-        \item \textbf{Supervised learning}\label{q:ml-paradigms}: given pre-classified examples (training set), $Tr = \{(x^{(i)}),f(x^{(i)})\}$, learn a general description $h(x)$ (hypothesis) which captures the information content of the examples.
-        Than given a new example $\tilde{x}$, we can predict the corresponding output $h(\tilde{x})$.
-        It's called supervised because is assume that an expert provides the value of $h$ for the corresponding training instance $x$. 
-        \item \textbf{Unsupervised learning}: given a set of examples $Tr = \{x^{(i)}\}$, discover regularities and/or patterns in the data.
-        In this case there is no expert to provide the correct answer.
-        \item \textbf{Reinforcement learning}: the agent learns by interacting with the environment.
-        The agent receives a reward that can be positive, negative or neutral for each action and the goal is to maximize the total reward.
-    \end{itemize}
+          Machine learning is the study of computer algorithms capable of learning from data. A learning algorithm must have the following components:
+          \begin{itemize}
+              \item \textbf{Tasks}: Define how the machine learning algorithm should process an example.
+              \item \textbf{Performance measure}: Evaluate the accuracy of the function/model returned by the learning algorithm.
+              \item \textbf{Experience}: Refers to the dataset.
+          \end{itemize}
 
-    The fundamental ingredients of the supervised paradigm are:
-    \begin{itemize}
-        \item \textbf{Training data}: data that are drawn from the Instance Space, $X$.
-        \item \textbf{Hypothesis space}: it is the set of functions that the learning algorithm 
-        can choose the function $h$ that approximate the function $f$ (Function to be learned).
-        \item \textbf{Learning algorithm}: search algorithm into the hypothesis space.
-    \end{itemize}    
-    $H \neq \textit{set of possible functions}$, search into $H$ to be exhaustive $\rightarrow$ overfitting:
-    the algorithm learns the training data too well, so it doesn't generalize well to new examples.
+          There are different paradigms of machine learning:
+          \begin{itemize}
+              \item \textbf{Supervised learning}\label{q:ml-paradigms}: Given pre-classified examples (training set) $Tr = \{(x^{(i)}),f(x^{(i)})\}$, learn a general description $h(x)$ (hypothesis) that captures the information content of the examples. Then, given a new example $\tilde{x}$, we can predict the corresponding output $h(\tilde{x})$. It's called supervised because it assumes that an expert provides the value of $h$ for the corresponding training instance $x$.
+              \item \textbf{Unsupervised learning}: Given a set of examples $Tr = \{x^{(i)}\}$, discover regularities and/or patterns in the data. In this case, there is no expert to provide the correct answer.
+              \item \textbf{Reinforcement learning}: The agent learns by interacting with the environment. The agent receives a reward that can be positive, negative, or neutral for each action, and the goal is to maximize the total reward.
+          \end{itemize}
 
-    There is inductive bias on $H$ and search algorithm: set of assumptions that the learning algorithm uses to predict outputs of new instances.
+          The fundamental ingredients of the supervised paradigm are:
+          \begin{itemize}
+              \item \textbf{Training data}: Data drawn from the Instance Space, $X$.
+              \item \textbf{Hypothesis space}: The set of functions that the learning algorithm can choose from to approximate the function $f$ (Function to be learned).
+              \item \textbf{Learning algorithm}: A search algorithm into the hypothesis space.
+          \end{itemize}
+          $H \neq \textit{set of possible functions}$; searching into $H$ exhaustively can lead to overfitting, where the algorithm learns the training data too well and doesn't generalize well to new examples.
 
-    The complexity of an hypothesis space can be measured in a useful way by the \textbf{VC dimension}:
-    \begin{itemize}
-        \item \textbf{Definition}: the VC dimension of a hypothesis space $H$ is the size of the largest set of points that can be shattered by $H$.
-        \item \textbf{Shattering}: a set of points $S$ is shattered by $H$ if for every possible labeling of the points in $S$, there exists a function $h$ in $H$ that correctly classifies the points in $S$.
-    \end{itemize}
-    In the case of binary classification task, we have only two possible labels.
-    If we work with linear classification, we can classify the points in the plane with the sign of the position with respect to a line (positive or negative).
-    The VC dimension of the hypothesis space of linear classifiers is 3, because we can shatter 3 points, but not 4:
-    it is not possible to find a line that separates 4 points in all the possible ways, 
-    there alway exist two couples of points such that if we connect the two members by a segment, 
-    the two resulting segment will intersect so a curve is needed.
+          There is an inductive bias on $H$ and the search algorithm: a set of assumptions that the learning algorithm uses to predict outputs of new instances.
+
+          The complexity of a hypothesis space can be measured effectively by the \textbf{VC dimension}:
+          \begin{itemize}
+              \item \textbf{Definition}: The VC dimension of a hypothesis space $H$ is the size of the largest set of points that can be shattered by $H$.
+              \item \textbf{Shattering}: A set of points $S$ is shattered by $H$ if for every possible labeling of the points in $S$, there exists a function $h$ in $H$ that correctly classifies the points in $S$.
+          \end{itemize}
+
+          In the case of a binary classification task, we have only two possible labels. If we work with linear classification, we can classify the points in the plane with the sign of the position with respect to a line (positive or negative). The VC dimension of the hypothesis space of linear classifiers is 3 because we can shatter 3 points but not 4. It is not possible to find a line that separates 4 points in all possible ways; there always exist two couples of points such that if we connect the two members by a segment, the two resulting segments will intersect, so a curve is needed.
+
 
     \item Explain in detail the supervised learning paradigm, describe the role of the training set, the validation set and the test set (how to use data in our hands).
-    Give the definition of true error and empirical error, highlighting the role of them during the learning process.
+          Give the definition of true error and empirical error, highlighting the role of them during the learning process.
 
-    \textcolor{green}{\textbf{Answer:}}
+          \textcolor{green}{\textbf{Answer:}}
 
-    Supervised Learning ref to answer \ref{q:ml-paradigms}.
-    
-    On learning tasks we have a set of data, this can be splitted into:
-    \begin{itemize}
-        \item \textbf{Training set}: used to train the model.
-        \item \textbf{Validation set}: it is a subset of the training set used to tune the hyperparameters of the model (hold-out, cross-validation).
-        \item \textbf{Test set}: used to evaluate the selected model.
-    \end{itemize}
+          Supervised Learning, referring to answer \ref{q:ml-paradigms}.
 
-    Model selection is the process of choosing the best model for a given task by selecting the best hyperparameters:
-    \begin{itemize}
-        \item \textbf{Hold-out procedure}: split the training set into two parts, the first one is used to train the model and
-        the second one (validation set) is used to test the trained model with different hyperparameters.
-        \item \textbf{Cross-validation}: K-differrent classifier/regressors are trained on K-different subsets of $Tr$ ($Va_1,\ldots,Va_k$)
-        and then is iteratively applied the Hold-out procedure on the k-pairs ($Tr_i=Tr-Va_i,Va_i$).
-    \end{itemize}
+          On learning tasks, we have a set of data that can be split into:
+          \begin{itemize}
+              \item \textbf{Training set}: Used to train the model.
+              \item \textbf{Validation set}: A subset of the training set used to tune the hyperparameters of the model (hold-out, cross-validation).
+              \item \textbf{Test set}: Used to evaluate the selected model.
+          \end{itemize}
 
-    The empirical error ($error_{Tr}(h)$) of hypothesis $h$ with respect to $Tr$ is the number of examples that $h$ misclassifies:
-    \begin{equation}\label{eq:empirical_error}
-        error_{Tr}(h) = \#\{(x,f(x)) \in Tr|f(x)\neq h(x)\}/|Tr|
-    \end{equation}
+          Model selection is the process of choosing the best model for a given task by selecting the best hyperparameters:
+          \begin{itemize}
+              \item \textbf{Hold-out procedure}: Split the training set into two parts; the first one is used to train the model, and the second one (validation set) is used to test the trained model with different hyperparameters.
+              \item \textbf{Cross-validation}: K-different classifiers/regressors are trained on K-different subsets of $Tr$ ($Va_1,\ldots,Va_k$), and then the Hold-out procedure is iteratively applied to the k-pairs ($Tr_i=Tr-Va_i,Va_i$).
+          \end{itemize}
 
-    The true error ($error_D(h)$) of hypothesis $h$ with respect to target concept $c$ and distribution $D$ is the probability that $h$ will misclassify an instance drawn at random according to $D$:
-    \begin{equation}\label{eq:true_error}
-        error_D(h) \equiv \underset{x\in\mathcal{D}}{Pr}[c(x)\neq h(x)]
-    \end{equation}
+          The empirical error ($error_{Tr}(h)$) of hypothesis $h$ with respect to $Tr$ is the number of examples that $h$ misclassifies:
+          \begin{equation}\label{eq:empirical_error}
+              error_{Tr}(h) = \frac{\# \{(x,f(x)) \in Tr|f(x)\neq h(x)\}}{|Tr|}
+          \end{equation}
 
-    We can say that $h\in\mathcal{H}$ overfits $Tr$ if $\exists h'\in\mathcal{H}$ such that $error_{Tr}(h)<error_{Tr}(h')$ and $error_D(h)>error_D(h')$.
+          The true error ($error_D(h)$) of hypothesis $h$ with respect to the target concept $c$ and distribution $D$ is the probability that $h$ will misclassify an instance drawn at random according to $D$:
+          \begin{equation}\label{eq:true_error}
+              error_D(h) \equiv \underset{x\in\mathcal{D}}{Pr}[c(x)\neq h(x)]
+          \end{equation}
 
-    The goal of machine learning is to solve a task with the lowest possible true error, but a classifier learn on training data so 
-    it generate empirical error and not true error.
-    It's possible to have bound on the true error from the empirical error with probability $1-\delta$:
-    \begin{equation}\label{eq:confidence_interval}
-        error_D(h^*_w) \leq \underbrace{error_{Tr}(h^*_w)}_A + \underbrace{\epsilon(n,VC(\mathcal{H}),\delta)}_B
-    \end{equation}
+          We can say that $h\in\mathcal{H}$ overfits $Tr$ if $\exists h'\in\mathcal{H}$ such that $error_{Tr}(h)<error_{Tr}(h')$ and $error_D(h)>error_D(h')$.
 
-    B (VC-confidence) depends on the ratio between $VC(\mathcal{H})$ and $n$ (number of training examples) and on $1- \delta$ (confidence level).
+          The goal of machine learning is to solve a task with the lowest possible true error, but a classifier learns on training data, so it generates empirical error and not true error. It's possible to have a bound on the true error from the empirical error with a probability of $1-\delta$:
+          \begin{equation}\label{eq:confidence_interval}
+              error_D(h^*_w) \leq \underbrace{error_{Tr}(h^*_w)}_A + \underbrace{\epsilon(n,VC(\mathcal{H}),\delta)}_B
+          \end{equation}
 
-    Problem: as the VC-dimension grows, the empirical risk (A) decreases, however the VC confidence (B) increases!
-    For minimizing the right hand of the confidence bound we can use the principle \textbf{Stuctural Risk Minimization}:
-    we get a tradeoff between A and B, we want to select the hypothesis with the lowest bound on the true risk.
+          B (VC-confidence) depends on the ratio between $VC(\mathcal{H})$ and $n$ (number of training examples) and on $1- \delta$ (confidence level).
 
-
+          Problem: As the VC-dimension grows, the empirical risk (A) decreases; however, the VC confidence (B) increases! To minimize the right hand of the confidence bound, we can use the principle of \textbf{Structural Risk Minimization}: we get a tradeoff between A and B, aiming to select the hypothesis with the lowest bound on the true risk.
 
     \item In the context of machine learning, explain the fundamental ingredients of perceptron.
-    Provide a brief introduction of how this model can be extended by creating a multi-layer architecture.
+          Provide a brief introduction of how this model can be extended by creating a multi-layer architecture.
 
-    \textcolor{green}{\textbf{Answer:}}
+          \textcolor{green}{\textbf{Answer:}}
 
-    A perceptron given an input vector $\vec{x}$ and a weight vector $\vec{w}$ calculates $f(\sum{w_i*x_i})$ that is the activation function of the perceptron.
-    A Neural Network is a system consisting of interconnected units that compute nonlinear functions.
+          A perceptron, given an input vector $\vec{x}$ and a weight vector $\vec{w}$, calculates $f(\sum{w_i*x_i})$, which is the activation function of the perceptron. A Neural Network is a system consisting of interconnected units that compute nonlinear functions.
 
-    In a Neural Network we can find:
-    \begin{itemize}
-        \item \textbf{Input Units}: represent input variables.
-        \item \textbf{Output Units}: represent output variables.
-        \item \textbf{Hidden Units}: represent internal variables that codify correlations between input and output variables.
-        \item \textbf{Weights}: are associated to connections between units.
-    \end{itemize}
+          In a Neural Network, we can find:
+          \begin{itemize}
+              \item \textbf{Input Units}: Represent input variables.
+              \item \textbf{Output Units}: Represent output variables.
+              \item \textbf{Hidden Units}: Represent internal variables that codify correlations between input and output variables.
+              \item \textbf{Weights}: Are associated with connections between units.
+          \end{itemize}
 
-    Having decided on the mathematical model for individual “neurons,”  the next task is to connect them together to form a network.
-    \textbf{Feed-forward networks}: the information flows in one direction, from the input units, through the hidden units (if any) and to the output units.
-    Gradient descent for feed-forward: we need to optimize the weights of the network to minimize the error on the training set $\rightarrow$ backpropagation algorithm.
-    We define the function error with $c$ output units:
-    \begin{enumerate}
-        \item is defined a loss function which measure the error of the network on the training set.
-        \item the weights are randomly initialized.
-        \item it's executed the forward pass: the input is propagated through the network and the output is computed.
-        \item is calculated the gradient descent with respect to the weights.
-        \item the weights are updated in the opposite direction of the gradient multiplied by a learning rate.
-        \item steps c and e are repeated until a stop condition is reached (for example the error is below a threshold or the number of epochs is reached).
-    \end{enumerate}
+          Having decided on the mathematical model for individual “neurons,” the next task is to connect them together to form a network. \textbf{Feed-forward networks} have information flowing in one direction, from the input units, through the hidden units (if any), and to the output units.
 
-
+          For gradient descent in feed-forward networks, we need to optimize the weights of the network to minimize the error on the training set using the backpropagation algorithm. The process involves the following steps:
+          \begin{enumerate}
+              \item Define a loss function that measures the error of the network on the training set.
+              \item Randomly initialize the weights.
+              \item Execute the forward pass: propagate the input through the network, and compute the output.
+              \item Calculate the gradient descent with respect to the weights.
+              \item Update the weights in the opposite direction of the gradient, multiplied by a learning rate.
+              \item Repeat steps c and e until a stop condition is reached (e.g., the error is below a threshold or the number of epochs is reached).
+          \end{enumerate}
 \end{enumerate}
+
 \section{Reinforcement Learning}
 \begin{enumerate}[label=\textbf{RL.\arabic*}]
     \item Introduce the Reinforcement Learning paradigm.
-    Moreover, present the Q-Learning algorithm explaining its theoretical basis.
+          Moreover, present the Q-Learning algorithm explaining its theoretical basis.
 
-    \textcolor{green}{\textbf{Answer:}}
+          \textcolor{green}{\textbf{Answer:}}
 
-    Reinforcement Learning is a paradigm in which the agent learns by interacting with the environment.
-    The agent receives a reward that can be positive, negative or neutral for each action and the goal is to learn to choose actions
-    that maximize the total reward.
-    \begin{equation}
-        r_0+\gamma r_1+\gamma^2 r_2+\ldots 
-    \end{equation}
-    Where:
-    \begin{itemize}
-        \item $r_i$ is the reward received after the action at $a_i$ the state $s_i$.
-        \item $\gamma$ is the discount factor, it is a value between 0 and 1 that represents the importance of future rewards.
-    \end{itemize}
-    We've a finite set of states $S$ and a finite set of actions $A$; at each discrete time agent observes state $s_t\in S$ and selects action $a_t\in A$.
-    Then the agent receives a reward $r_t$ and the environment moves to a new state $s_{t+1}$.
-    All this should work under the Markov assumption: $s_{t+1} = \delta(s_t,a_t)$ and $r_t = r(s_t,a_t)$.
-    \begin{itemize}
-        \item $r_t$ and $s_{t+1}$ depend only on current state and action.
-        \item functions $\delta$ and $r$ may be nondeterministic and not necessarily known to the agent.
-    \end{itemize}
-    The agent's goal is to execute actions in environment, observe results, and: 
-    learn action policy $\pi():S\rightarrow A$ that maximizes $E[r_t+\gamma r_{t+1}+\gamma^2 r_{t+2}+\ldots]$ from any starting state in $S$.
-    (training examples of form $((s,a)r)$).
+          Reinforcement Learning is a paradigm in which the agent learns by interacting with the environment. The agent receives a reward that can be positive, negative, or neutral for each action, and the goal is to learn to choose actions that maximize the total reward:
 
-    Considering deterministic environments, for each possible policy $\pi$ we can define an evaluation function over states: 
-    \begin{equation}
-        V^\pi(s) \equiv \sum_{i=0}^{\infty}\gamma^i r_{t+1}
-    \end{equation}
-    Here the task is to learn the optimal policy $\pi^*$ that maximizes $V^{\pi^*}(s)$ for all $s\in S$.
+          \[
+              r_0 + \gamma r_1 + \gamma^2 r_2 + \ldots
+          \]
 
-    We want to have an agent that learn the evaluation function $V^{\pi^*}$, 
-    but for doing this the agent need to know the transition function $\delta$ and the reward function $r$.
+          Here:
+          \begin{itemize}
+              \item $r_i$ is the reward received after the action at $a_i$ in the state $s_i$.
+              \item $\gamma$ is the discount factor, a value between 0 and 1 that represents the importance of future rewards.
+          \end{itemize}
 
-    In the case that the agent doesn't know the transition function $\delta$ and the reward function $r$, we can define the Q-function similar to $V^*$:
-    \begin{equation}
-        Q(s,a) \equiv r(s,a) + \gamma V^*(\delta(s,a))
-    \end{equation}
-    if agent learns Q, it can choose optimal action even without knowing $\delta$.
-    \begin{equation}
-        \pi^*(s) = arg\max_{a}Q(s,a)
-    \end{equation}
-    Thus, Q is the evaluation function the agent will learn.
-    Note that Q and $V^*$ are related by:
-    \begin{equation}
-        V^*(s) = \max_{a'}Q(s,a')
-    \end{equation}
-    which allows us to write Q recursively as:
-    \begin{equation}
-        \begin{split}
-            Q(s,a) = & r(s_t,a_t) + \gamma V^*(\delta(s_t,a_t)) \\
-            = & r(s_t,a_t) + \gamma\max_{a'}Q(s_{t+1},a')
-        \end{split}
-    \end{equation}
-    so we can define a training rule to learn Q:
-    \begin{equation}
-        \hat{Q}(s,a) \leftarrow r+\gamma\max_{a'}\hat{Q}(s',a')
-    \end{equation}
+          We have a finite set of states $S$ and a finite set of actions $A$. At each discrete time, the agent observes state $s_t \in S$ and selects action $a_t \in A$. The agent receives a reward $r_t$, and the environment moves to a new state $s_{t+1}$. This works under the Markov assumption: $s_{t+1} = \delta(s_t, a_t)$ and $r_t = r(s_t, a_t)$, where:
+          \begin{itemize}
+              \item $r_t$ and $s_{t+1}$ depend only on the current state and action.
+              \item Functions $\delta$ and $r$ may be nondeterministic and not necessarily known to the agent.
+          \end{itemize}
 
-    The Q-learning algorithm is:
-    \begin{enumerate}
-        \item Initialize table $\hat{Q}(s,a)\leftarrow 0$.
-        \item Observe current state $s$.
-        \item do forever:
-        \begin{enumerate}
-            \item select an action $a$ and execute it.(it could be randomly selected or using $arg\max_a\hat{Q}(s,a)$)
-            \item receive immediate reward $r$.
-            \item observe new state $s'$.
-            \item update the table entry for $\hat{Q}(s,a)$:
-            \begin{equation}
-                \hat{Q}(s,a) \leftarrow r+\gamma\max_{a'}\hat{Q}(s',a')
-            \end{equation}
-            \item $s\leftarrow s'$
-        \end{enumerate}
-    \end{enumerate}
-    We can show that $\hat{Q}$ converges to $Q$.
+          The agent's goal is to execute actions in the environment, observe results, and learn an action policy $\pi(): S \rightarrow A$ that maximizes $E[r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} + \ldots]$ from any starting state in $S$ (training examples of the form $((s, a)r)$).
 
-    For non-deterministic environments, we redfine $V$ and $Q$ by taking expected values
-    \begin{equation}
-        V^\pi(s) \equiv E[\sum_{i=0}^{\infty}\gamma^i r_{t+1}]
-    \end{equation}
-    \begin{equation}
-        Q(s,a) \equiv E[r(s,a) + \gamma V^*(\delta(s,a))]
-    \end{equation}
-    and the training rule becomes:
-    \begin{equation}
-        \hat{Q}_n(s,a) \leftarrow (1-\alpha_n)\hat{Q}_{n-1}(s,a) + \alpha_n(r+\gamma\max_{a'}\hat{Q}_{n-1}(s',a'))
-    \end{equation}
+          For deterministic environments, we define an evaluation function over states for each possible policy $\pi$:
+          \[
+              V^\pi(s) \equiv \sum_{i=0}^{\infty} \gamma^i r_{t+1}
+          \]
+
+          The task is to learn the optimal policy $\pi^*$ that maximizes $V^{\pi^*}(s)$ for all $s \in S$.
+
+          In cases where the agent doesn't know the transition function $\delta$ and the reward function $r$, we can define the Q-function, similar to $V^*$:
+          \[
+              Q(s,a) \equiv r(s,a) + \gamma V^*(\delta(s,a))
+          \]
+
+          If the agent learns Q, it can choose the optimal action even without knowing $\delta$:
+          \[
+              \pi^*(s) = \arg\max_{a} Q(s,a)
+          \]
+
+          Q is the evaluation function the agent will learn. Note that Q and $V^*$ are related by:
+          \[
+              V^*(s) = \max_{a'} Q(s,a')
+          \]
+
+          which allows us to write Q recursively as:
+          \[
+              Q(s,a) = r(s_t,a_t) + \gamma\max_{a'}Q(s_{t+1},a')
+          \]
+
+          So, we can define a training rule to learn Q:
+          \[
+              \hat{Q}(s,a) \leftarrow r + \gamma\max_{a'}\hat{Q}(s',a')
+          \]
+
+          The Q-learning algorithm is as follows:
+          \begin{enumerate}
+              \item Initialize table $\hat{Q}(s,a) \leftarrow 0$.
+              \item Observe the current state $s$.
+              \item Do forever:
+                    \begin{enumerate}
+                        \item Select an action $a$ and execute it (it could be randomly selected or using $\arg\max_a \hat{Q}(s,a)$).
+                        \item Receive immediate reward $r$.
+                        \item Observe new state $s'$.
+                        \item Update the table entry for $\hat{Q}(s,a)$:
+                              \[
+                                  \hat{Q}(s,a) \leftarrow r + \gamma\max_{a'}\hat{Q}(s',a')
+                              \]
+                        \item $s \leftarrow s'$
+                    \end{enumerate}
+          \end{enumerate}
+
+          It can be shown that $\hat{Q}$ converges to $Q$.
+
+          For non-deterministic environments, we redefine $V$ and $Q$ by taking expected values:
+          \[
+              V^\pi(s) \equiv E[\sum_{i=0}^{\infty} \gamma^i r_{t+1}]
+          \]
+          \[
+              Q(s,a) \equiv E[r(s,a) + \gamma V^*(\delta(s,a))]
+          \]
+
+          And the training rule becomes:
+          \[
+              \hat{Q}_n(s,a) \leftarrow (1-\alpha_n)\hat{Q}_{n-1}(s,a) + \alpha_n(r + \gamma\max_{a'}\hat{Q}_{n-1}(s',a'))
+          \]
+
 \end{enumerate}
 \section{Constraint satisfaction problems}
 \begin{enumerate}
     \item Give the formal definition for a constrain satisfaction system, and discuss the approaches presented in class on how to find solutions.
-    
-    \textcolor{green}{\textbf{Answer:}}
-    
-    A costraint satisfaction systems used to solve constraint satisfaction problems.
-    It is defined by:
-    \begin{itemize}
-        \item \textbf{state}: a set of variables $X_i$ with values from domains $D_i$.
-        \item \textbf{goal test}: a function that determines whether a given state is a goal state.
-    \end{itemize}
 
-    It can be helpful to visualize a CSP as a constraint graph, where each node represents a variable and each arc represents a constraint (in binary CSP at most two vars for each constraint).
-    A solution to a CSP is an assignment of values to all variables such that all constraints are satisfied.    
-    A constraint satisfaction problem can have \textbf{discrete} or \textbf{continuous} variables.
-    \begin{itemize}
-        \item \textbf{Discrete variables}: finite domains and infinite domains\ (integers, strings, etc).
-        For infinite domains it's needed a constraint language that allows for compact representation of constraints.
-        \item \textbf{Continuous variables}: common in real world problems, the most known is the \textbf{linear programming} (LP) problem.
-    \end{itemize}
-    The constraints could be:
-    \begin{itemize}
-        \item \textbf{Unary}: involve a single variable.
-        \item \textbf{Binary}: involve pairs of variables.
-        \item \textbf{Higher-order}: involve 3 or more variables.
-        \item \textbf{Preferences}: soft constraints, they are not required to be satisfied $\rightarrow$ costrained optimization problem.
-    \end{itemize}
+          \textcolor{green}{\textbf{Answer:}}
 
-    The first approch to find solutions is \textbf{Standard search formulation} $\rightarrow$ \textbf{min-conflicts}:
-    \begin{itemize}
-        \item \textbf{Initial state}: the empty assignment, {}
-        \item \textbf{Successor function}: assign a value to an unassigned variable that does not conflict with current assignment.
-        \item \textbf{Goal test}: the current assignment is complete and satisfies all constraints.
-    \end{itemize}
-    It use depth-first search.
+          A Constraint Satisfaction System (CSP) is used to solve constraint satisfaction problems. It is defined by:
+          \begin{itemize}
+              \item \textbf{State}: A set of variables $X_i$ with values from domains $D_i$.
+              \item \textbf{Goal Test}: A function that determines whether a given state is a goal state.
+          \end{itemize}
 
-    There is an important property not considered by the previous approch: \textbf{commutativity}.
-    The commutativity property states that the order in which we assign values to variables does not matter, the result is the same.
-    
-    The term backtracking search is used for a depth-first search that chooses values for one variable at a time and backtracks when a variable has no legal values left to assign.
+          It can be helpful to visualize a CSP as a constraint graph, where each node represents a variable, and each arc represents a constraint (in binary CSP, at most two vars for each constraint). A solution to a CSP is an assignment of values to all variables such that all constraints are satisfied.
 
-    It repeatedly chooses an unassigned variable, and then tries all values in the domain of that variable in turn, trying to find a solution. 
-    If an inconsistency isdetected, then BACKTRACK returns failure, causing the previous call to try another value
-    We can improve the backtracking search with general-purpose methods:
-    \begin{itemize}
-        \item \textbf{Variable ordering}: choose the next variable to be assigned a value.\ (most constrained variable, most constraining variable, least constraining).
-        \item \textbf{Variable assignment}: forward checking: keep track of remaining legal values for unassigned variables and terminate search when any variable has no legal values.
-        \item \textbf{Detecting failure}: costraint propagation (arc and node consistency). 
-        \item \textbf{Problem structure}: the problem structure can give some advantages in the search:
-        \begin{itemize}
-            \item \textbf{indipendent subproblems}: indipendence can be ascertained by finding the connected components of the constraint graph.
-            Each component can be solved independently of the others in $O(d^cn/c)$ time, otherwise $O(d^n)$.
-            \item \textbf{Tree-structured CSPs}: graph is a tree when any two variables are connected by only one path and can be solved in linear time. $O(nd^2)$
-            Algorithms for tree-structured CSPs:
-            \begin{enumerate}
-                \item Choose a variable as root, order the variables from root to leaves such that every node's parent precedes it in the ordering.
-                \item For $i$ from $n$ down to $2$, impose arc consistency (A variable is is arc-consistent if every value in its domain satisfies the variable's binary constraints. 
-                More formally, $X_i$ is arc-consistent with respect to another variable $X_j$ if for every value in the current domain $D_i$ there is some value in the domain $D_j$
-                that satisfies the binary constraint on the $arc(X_i,X_j)$. 
-                A network is arc-consistent if every variable is arc-consistent with every other variable) on the arc from $X_i$ to its parent.
-                \item For $i$ from $1$ up to $n$, assign $X_i$ consistently with all its ancestors.
-            \end{enumerate}
-        \end{itemize}
-    \end{itemize}
+          A constraint satisfaction problem can have \textbf{discrete} or \textbf{continuous} variables.
+          \begin{itemize}
+              \item \textbf{Discrete Variables}: Finite domains and infinite domains (integers, strings, etc.). For infinite domains, a constraint language allowing for compact representation of constraints is needed.
+              \item \textbf{Continuous Variables}: Common in real-world problems, with linear programming (LP) being a well-known example.
+          \end{itemize}
 
-    The last approch is based on the use of Iterative algorithms that repeatedly improve the quality of the current assignment.
-    (ex: hill climbing, simulated annealing, genetic algorithms).
-    To apply to CSPs: 
-    \begin{itemize}
-        \item allow states with unsatisfied constraints
-        \item operators reassign variable values
-    \end{itemize}
-    Variable selection: randomly select any conflicted variable 
-    Value selection by min-conflicts heuristic: 
-    \begin{itemize}
-        \item choose value that violates the fewest constraints i.e., hillclimb with h(n) = total number of violated constraints
-    \end{itemize}
+          The constraints could be:
+          \begin{itemize}
+              \item \textbf{Unary}: Involve a single variable.
+              \item \textbf{Binary}: Involve pairs of variables.
+              \item \textbf{Higher-order}: Involve 3 or more variables.
+              \item \textbf{Preferences}: Soft constraints, not required to be satisfied $\rightarrow$ constrained optimization problem.
+          \end{itemize}
+
+          The first approach to finding solutions is the \textbf{Standard Search Formulation} $\rightarrow$ \textbf{Min-Conflicts}:
+          \begin{itemize}
+              \item \textbf{Initial State}: The empty assignment, \{\}
+              \item \textbf{Successor Function}: Assign a value to an unassigned variable that does not conflict with the current assignment.
+              \item \textbf{Goal Test}: The current assignment is complete and satisfies all constraints.
+          \end{itemize}
+          It uses depth-first search.
+
+          There is an important property not considered by the previous approach: \textbf{Commutativity}.
+          The commutativity property states that the order in which we assign values to variables does not matter; the result is the same.
+
+          The term backtracking search is used for a depth-first search that chooses values for one variable at a time and backtracks when a variable has no legal values left to assign. It repeatedly chooses an unassigned variable and then tries all values in the domain of that variable in turn, trying to find a solution. If an inconsistency is detected, then BACKTRACK returns failure, causing the previous call to try another value. We can improve the backtracking search with general-purpose methods:
+          \begin{itemize}
+              \item \textbf{Variable Ordering}: Choose the next variable to be assigned a value (most constrained variable, most constraining variable, least constraining).
+              \item \textbf{Variable Assignment}: Forward checking: Keep track of remaining legal values for unassigned variables and terminate the search when any variable has no legal values.
+              \item \textbf{Detecting Failure}: Constraint propagation (arc and node consistency).
+              \item \textbf{Problem Structure}: The problem structure can give some advantages in the search:
+                    \begin{itemize}
+                        \item \textbf{Independent Subproblems}: Independence can be ascertained by finding the connected components of the constraint graph. Each component can be solved independently of the others in $O(d^cn/c)$ time; otherwise $O(d^n)$.
+                        \item \textbf{Tree-Structured CSPs}: A graph is a tree when any two variables are connected by only one path and can be solved in linear time, $O(nd^2)$. Algorithms for tree-structured CSPs:
+                              \begin{enumerate}
+                                  \item Choose a variable as the root, order the variables from root to leaves such that every node's parent precedes it in the ordering.
+                                  \item For $i$ from $n$ down to $2$, impose arc consistency on the arc from $X_i$ to its parent.
+                                  \item For $i$ from $1$ up to $n$, assign $X_i$ consistently with all its ancestors.
+                              \end{enumerate}
+                    \end{itemize}
+          \end{itemize}
+
+          The last approach is based on the use of iterative algorithms that repeatedly improve the quality of the current assignment (e.g., hill climbing, simulated annealing, genetic algorithms). To apply to CSPs:
+          \begin{itemize}
+              \item Allow states with unsatisfied constraints.
+              \item Operators reassign variable values.
+          \end{itemize}
+          Variable selection: Randomly select any conflicted variable. Value selection by min-conflicts heuristic: choose a value that violates the fewest constraints, i.e., hill climb with $h(n) = $ the total number of violated constraints.
 
 \end{enumerate}
 \section{NLP}
@@ -1238,94 +1017,72 @@ NLP (Natural Language Processing) is the field of AI that is concerned with the 
 communicating with humans.
 \begin{enumerate}[label=\textbf{NLP.\arabic*}]
 
-    \item In the field of NLP, explain the difference between the n-gram (in particular unigram and bigram) 
-    and bag-of-words models.
-    Show how the n-gram model can be used for classification and information retrieval problems, 
-    detailing the relations and possible differences with models such as bag-of-words.
+    \item In the field of NLP, explain the difference between the n-gram (in particular unigram and bigram)
+          and bag-of-words models.
+          Show how the n-gram model can be used for classification and information retrieval problems,
+          detailing the relations and possible differences with models such as bag-of-words.
 
-    \textcolor{green}{\textbf{Answer:}}
+          \textcolor{green}{\textbf{Answer:}}
 
-    For NLP related tasks we need language models that predict the probability distribution of linguistic expressions.
+          For NLP-related tasks, we need language models that predict the probability distribution of linguistic expressions.
 
-    \textbf{Definition:} a language model is a probability distribution over sequences of words.
+          \textbf{Definition:} A language model is a probability distribution over sequences of words.
 
-    One of this models is the \textbf{n-gram} model, it is defined as a probability distribution on sequences of characters.
-    \begin{equation}
-        P(c_{1:N}) = \textit{the probability of a sequence of N characters } c_1,\ldots,c_N
-    \end{equation}
-    A sequence of written symbols of length N is called an N-gram. (ex: unigram, bigram, trigram, etc)
-    \begin{center}
-        \textit{a pattern n-gram is a Markov chain of order n-1 $\rightarrow$ the probability depends only on the previous n-1 symbols} 
-    \end{center}
-    For trigram:
-    \begin{equation}
-        P(c_{1:N}) = \prod_{i=1}^{N}P(c_i|c_{i-2:i-1})
-    \end{equation}
+          One such model is the \textbf{n-gram} model, defined as a probability distribution on sequences of characters.
+          \begin{equation}
+              P(c_{1:N}) = \textit{the probability of a sequence of N characters } c_1,\ldots,c_N
+          \end{equation}
+          A sequence of written symbols of length N is called an N-gram (e.g., unigram, bigram, trigram, etc.).
+          \begin{center}
+              \textit{A pattern n-gram is a Markov chain of order n-1 $\rightarrow$ the probability depends only on the previous n-1 symbols.}
+          \end{center}
+          For a trigram:
+          \begin{equation}
+              P(c_{1:N}) = \prod_{i=1}^{N}P(c_i|c_{i-2:i-1})
+          \end{equation}
 
-    The main problem on n-gram model is that the train corpus provide only an estimate of the true probability distribution,
-    for example it could lead to zero probability for unseen n-grams.
-    There are two main solution to this problem:
-    \begin{itemize}
-        \item \textbf{Laplace Smoothing}: assign non-zero probability to unseen n-grams.
-        If a random boolean variable $X$ is false in all n observations, then $P(X = true) = \frac{1}{n+2} \rightarrow$ one test could be true and one false.
-        \item \textbf{Backoff}: in which we start by estimating n-gram counts, 
-        but for any particular sequence that has a low (or zero) count, we back off to $(n-1)-grams$
-    \end{itemize}
+          The main problem with the n-gram model is that the training corpus provides only an estimate of the true probability distribution, which could lead to zero probability for unseen n-grams. Two main solutions to this problem are:
+          \begin{itemize}
+              \item \textbf{Laplace Smoothing}: Assign a non-zero probability to unseen n-grams.
+              \item \textbf{Backoff}: Start by estimating n-gram counts, but for any particular sequence with a low (or zero) count, back off to $(n-1)$-grams.
+          \end{itemize}
 
-    We can evaluate a model with cross-validation but we would like to define a task indipendent quality model.
-    \begin{equation}
-        \textit{Perxplexity}(c_{1:N}) = P(c_{1:N})^{-\frac{1}{N}}
-    \end{equation}
-    Low perplexity means that the model is good at predicting the test set.
-    Perplexity is the inverse probability of the test set, normalized by the number of words.
+          We can evaluate a model with cross-validation, but we would like to define a task-independent quality model.
+          \begin{equation}
+              \textit{Perplexity}(c_{1:N}) = P(c_{1:N})^{-\frac{1}{N}}
+          \end{equation}
+          Low perplexity means that the model is good at predicting the test set. Perplexity is the inverse probability of the test set, normalized by the number of words.
 
-    N-gram models can be also used for words, with the difference that the vocabulary is significantly larger.
-    The objective is to calculate the probability of a sentece $P(w_1,\ldots,w_n)$.
-    Chain rule can be used to calculate the joint probability of words:
-    \begin{equation}
-        P(w_1,\ldots,w_n) = \prod_{i=1}^{n}P(w_i|w_1,\ldots,w_{i-1})
-    \end{equation}
-    We will never see enough data to estimate all these probabilities accurately, so we need to make some approximation.
-    By markov assumption we can approximate the probability of a word with the probability of the previous word:
-    \begin{equation}
-        P(w_1,\ldots,w_n) \approx \prod_{i=1}^{n}P(w_i|w_{i-k:i-1})
-    \end{equation}
+          N-gram models can also be used for words, where the vocabulary is significantly larger. The objective is to calculate the probability of a sentence $P(w_1,\ldots,w_n)$. The chain rule can be used to calculate the joint probability of words:
+          \begin{equation}
+              P(w_1,\ldots,w_n) = \prod_{i=1}^{n}P(w_i|w_1,\ldots,w_{i-1})
+          \end{equation}
+          We will never see enough data to estimate all these probabilities accurately, so we need to make some approximation. By the Markov assumption, we can approximate the probability of a word with the probability of the previous word:
+          \begin{equation}
+              P(w_1,\ldots,w_n) \approx \prod_{i=1}^{n}P(w_i|w_{i-k:i-1})
+          \end{equation}
 
+          \textbf{Bag-of-Words} (also known as a vector model): It is a simplifying representation used in natural language processing, representing the frequency of occurrence of each word in a document.
 
-    \textbf{Bag-of-words} (also known as vector model) model: it is a simplifying representation used in natural language processing.
-    Represents the frequency of occurrence of each word in a document.
+          Differences between n-gram and bag-of-words:
+          \begin{itemize}
+              \item Feature vectors are large and scattered in BoW.
+              \item BoWs and unigram return the same result.
+              \item The order of words is lost in BoW, while a local notion of order is preserved in higher-order n-grams.
+              \item In n-grams, computational complexity increases with n.
+          \end{itemize}
+          A simple representation of a document is one-hot encoding, where each word present in the vocabulary is represented by one or zero in the vector (the word is present or not). The problem is that one-hot vectors are orthogonal, so we can't capture any similarity between words. Some possible solutions are:
+          \begin{itemize}
+              \item \textbf{Knowledge Representation Way}: Rely on a list of synonyms or taxonomies of words to obtain similarity.
+              \item \textbf{Machine Learning Way}: Learn to code the similarity in the vectors themselves. The idea is to construct a vector space where the distance between vectors is a measure of similarity between the words. An example of this approach is the \textbf{word2vec} model: it uses context to predict a target word (CBOW) or uses a word to predict the context (skip-gram).
+          \end{itemize}
 
-    Difference between n-gram and bag-of-words:
-    \begin{itemize}
-        \item Feature vector are large and scattered in BoW.
-        \item BoWs and unigram return the same result.
-        \item The order of words is lost in BoW, while it is preserved a local notion of order in higher order n-grams.
-        \item in n-gram computational complexity increases with n.
-    \end{itemize}
-    A simple representation of a document is one-hot encoding, where each word of it present in the vocabulary is represented 
-    by one or zero in the vector (the word is present or not).
-    The problem is that one-hot vectors are orthogonal, so we can't capture any similarity between words.
-    Some possible solutions are:
-    \begin{itemize}
-        \item \textbf{Knowledge representation way}: rely on a list of synonyms or taxonomies of words to obtain similarity.
-        \item \textbf{Machine learning way}: learn to code the similarity in the vector themselves.
-        The idea is to construct a vector space where the distance between vectors is a measure of similarity between the words.
-        Example of this approach is the \textbf{word2vec} model: it use context for predict a target word (CBOW) or use a word for predict the context (skip-gram).
-
-    \end{itemize}
-
-    N-gram models can be used for classification problems.
-    Given a text of some kind decide which predefined group of classes it belongs to.\ (ex: spam detection)
-    There are two main approaches:
-    \begin{itemize}
-        \item \textbf{rules-based}: define a set of hard-coded rules that classify the text.
-        We define the rules based on a combination of words (or other features)
-
-        \textbf{Problem}: rule-based can lead to high accurancy result, but building such rules is very expensive and not always possible.
-        \item \textbf{linguistic modeling and machine learning}: we define a n-gram pattern for each class and we calculate the probability 
-        of the text to belong to each class with Naive Bayes (or other classifier). 
-    \end{itemize}
-
+          N-gram models can be used for classification problems, such as spam detection. There are two main approaches:
+          \begin{itemize}
+              \item \textbf{Rules-Based}: Define a set of hard-coded rules that classify the text based on a combination of words (or other features).
+                    \textbf{Problem}: Rule-based approaches can lead to high accuracy results, but building such rules is very expensive and not always possible.
+              \item \textbf{Linguistic Modeling and Machine Learning}: Define an n-gram pattern for each class and calculate the probability of the text belonging to each class with Naive Bayes (or other classifiers).
+          \end{itemize}
 
 \end{enumerate}
 \end{document}
